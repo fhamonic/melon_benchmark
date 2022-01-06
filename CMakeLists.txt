@@ -37,6 +37,7 @@ find_package(LEMON REQUIRED)
 
 add_executable(lemon_benchmark src/lemon_benchmark.cpp)
 set_target_properties(lemon_benchmark PROPERTIES CXX_STANDARD 17)
+target_include_directories(lemon_benchmark PUBLIC include)
 target_include_directories(lemon_benchmark PUBLIC ${LEMON_INCLUDE_DIRS})
 target_link_libraries(lemon_benchmark ${LEMON_LIBRARIES})
 target_compile_options_if_exists(lemon_benchmark PRIVATE ${WARNINGS}
@@ -50,6 +51,7 @@ target_compile_options_if_exists(lemon_benchmark PRIVATE ${COMPILE_WITH_LTO}
                             
 add_executable(bgl_benchmark src/bgl_benchmark.cpp)
 set_target_properties(bgl_benchmark PROPERTIES CXX_STANDARD 20)
+target_include_directories(bgl_benchmark PUBLIC include)
 target_link_libraries(bgl_benchmark CONAN_PKG::boost)
 target_compile_options_if_exists(bgl_benchmark PRIVATE ${WARNINGS}
                                  ${WARNINGS_LIST})

@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++-10
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/home/plaiseek/Projects/melon_benchmark/include
 
 CXX_FLAGS = -O3 -DNDEBUG -Wall -Wextra -march=native -flto -std=gnu++17
 

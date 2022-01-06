@@ -32,12 +32,13 @@ auto parse_gr(std::string file_name) {
                     StaticDigraph::Node from, to;
                     double length;
                     if(iss >> from >> to >> length) {
-                        builder.addArc(from, to, length);
+                        builder.addArc(from - 1, to - 1, length);
                     }
                     break;
                 }
-                default:
-                    assert(false);
+                default: 
+                    std::cerr << "Error in reading " << file_name << std::endl;
+                    std::abort();
             }
         }
     }
@@ -47,12 +48,14 @@ auto parse_gr(std::string file_name) {
 
 int main() {
     std::vector<std::string> gr_files(
-        {"data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr"});
+        {"data/rome99.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr"});
 
     for(const auto gr_file : gr_files) {
         auto [graph, lenght_map] = parse_gr(gr_file);
 
-        std::cout << gr_file << " : " << graph.nb_nodes() << " nodes , " << graph.nb_arcs() << " arcs" << std::endl;
+        std::cout << gr_file << " : " << graph.nb_nodes() << " nodes , "
+                  << graph.nb_arcs() << " arcs" << std::endl;
 
         for(StaticDigraph::Node u : graph.nodes()) {
             Chrono chrono;
@@ -60,10 +63,11 @@ int main() {
             Dijkstra dijkstra(graph, lenght_map);
             dijkstra.init(u);
             while(!dijkstra.emptyQueue()) {
-                (void) dijkstra.processNextNode();
+                (void)dijkstra.processNextNode();
             }
 
-            std::cout << "Dijkstra from " << u << " takes " << chrono.timeMs() << " ms" << std::endl;
+            std::cout << "Dijkstra from " << u << " takes "
+                      << (chrono.timeUs() / 1000.0) << " ms" << std::endl;
         }
     }
 

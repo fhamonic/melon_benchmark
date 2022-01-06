@@ -3,7 +3,10 @@
 
 CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark.cpp \
   /usr/include/stdc-predef.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/iostream \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/fstream \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/istream \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ios \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/iosfwd \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/c++config.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/os_defines.h \
   /usr/include/features.h \
@@ -14,9 +17,6 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
   /usr/include/gnu/stubs-64.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/cpu_defines.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/pstl/pstl_config.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ostream \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ios \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/iosfwd \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stringfwd.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/memoryfwd.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/postypes.h \
@@ -179,9 +179,16 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/ctype_inline.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/locale_facets.tcc \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/basic_ios.tcc \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ostream \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/ostream.tcc \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/istream \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/istream.tcc \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/codecvt.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/basic_file.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/c++io.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/fstream.tcc \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/iostream \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/sstream \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/sstream.tcc \
   /usr/local/include/lemon/list_graph.h \
   /usr/local/include/lemon/core.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/vector \
@@ -221,8 +228,6 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
   /usr/local/include/lemon/bits/traits.h \
   /usr/local/include/lemon/assert.h \
   /usr/local/include/lemon/error.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/sstream \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/sstream.tcc \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/memory \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_raw_storage_iter.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/ranges_uninitialized.h \
@@ -250,8 +255,8 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/list.tcc \
   /usr/local/include/lemon/bits/lock.h \
   /usr/local/include/lemon/bits/vector_map.h \
-  /usr/local/include/lemon/static_graph.h \
   /usr/local/include/lemon/smart_graph.h \
+  /usr/local/include/lemon/static_graph.h \
   /usr/local/include/lemon/dijkstra.h \
   /usr/local/include/lemon/bin_heap.h \
   /usr/local/include/lemon/bits/path_dump.h \
@@ -261,12 +266,31 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_map.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_multimap.h \
   /usr/local/include/lemon/path.h \
-  /usr/local/include/lemon/concepts/path.h
+  /usr/local/include/lemon/concepts/path.h \
+  ../include/chrono.hpp \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/chrono \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ratio \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ctime \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/parse_numbers.h
 
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/parse_numbers.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ctime:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ratio:
+
+../include/chrono.hpp:
 
 /usr/local/include/lemon/concepts/path.h:
 
 /usr/local/include/lemon/path.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_tree.h:
+
+/usr/local/include/lemon/maps.h:
+
+/usr/local/include/lemon/bits/path_dump.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ext/alloc_traits.h:
 
@@ -275,8 +299,6 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/range_access.h:
 
 /usr/include/bits/endianness.h:
-
-/usr/local/include/lemon/maps.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ext/new_allocator.h:
 
@@ -304,6 +326,10 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 
 /usr/include/bits/errno.h:
 
+/usr/local/include/lemon/bin_heap.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_construct.h:
+
 /usr/include/bits/types/struct_timespec.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stringfwd.h:
@@ -313,8 +339,6 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/shared_ptr_atomic.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ext/atomicity.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/iosfwd:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/enable_special_members.h:
 
@@ -372,8 +396,6 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/predefined_ops.h:
 
-/usr/include/bits/types/mbstate_t.h:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/tuple:
 
 /usr/include/bits/libc-header-start.h:
@@ -400,79 +422,11 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 
 /usr/include/bits/waitflags.h:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/alloc_traits.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/initializer_list:
-
-/usr/include/bits/types/locale_t.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/ostream_insert.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/invoke.h:
-
-/usr/include/bits/floatn.h:
-
-/usr/include/bits/types/struct_tm.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/uniform_int_dist.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/limits:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/unique_ptr.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/postypes.h:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/iostream:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/algorithmfwd.h:
-
-/usr/include/wchar.h:
-
-../src/lemon_benchmark.cpp:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/debug/assertions.h:
-
-/usr/include/bits/stdio.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_iterator_base_funcs.h:
-
-/usr/include/bits/types/__sigset_t.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/basic_ios.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/cpu_defines.h:
-
-/usr/local/include/lemon/config.h:
-
-/usr/include/bits/struct_mutex.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/char_traits.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/charconv.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/memoryfwd.h:
-
-/usr/include/gnu/stubs.h:
-
-/usr/include/bits/pthreadtypes-arch.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_pair.h:
-
-/usr/include/sys/cdefs.h:
-
-/usr/include/stdc-predef.h:
-
-/usr/include/locale.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/ctype_base.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/pstl/pstl_config.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/clocale:
-
-/usr/include/errno.h:
-
-/usr/include/bits/long-double.h:
+/usr/include/bits/types/mbstate_t.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/hash_bytes.h:
 
@@ -490,9 +444,93 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 
 /usr/include/bits/types/FILE.h:
 
-/usr/include/bits/types/time_t.h:
+/usr/include/bits/types/__sigset_t.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/basic_ios.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/cpu_defines.h:
+
+/usr/local/include/lemon/config.h:
+
+/usr/include/bits/struct_mutex.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/basic_file.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/char_traits.h:
+
+/usr/include/bits/pthreadtypes-arch.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/stdc-predef.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/locale_classes.tcc:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/error_constants.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/pstl/glue_algorithm_defs.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/alloc_traits.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/initializer_list:
+
+/usr/include/bits/types/locale_t.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/ostream_insert.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/invoke.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/fstream:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/functexcept.h:
+
+/usr/include/bits/floatn.h:
+
+/usr/include/bits/types/struct_tm.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/uniform_int_dist.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/limits:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/concepts:
+
+/usr/include/bits/types/time_t.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/charconv.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/memoryfwd.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_pair.h:
+
+/usr/include/locale.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/backward/auto_ptr.h:
+
+/usr/local/include/lemon/bits/traits.h:
+
+/usr/include/bits/types/wint_t.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/ctype_base.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/pstl/pstl_config.h:
+
+/usr/include/wchar.h:
+
+../src/lemon_benchmark.cpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/debug/assertions.h:
+
+/usr/include/bits/stdio.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_iterator_base_funcs.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/clocale:
+
+/usr/include/errno.h:
+
+/usr/include/bits/long-double.h:
 
 /usr/include/bits/types/__mbstate_t.h:
 
@@ -503,18 +541,6 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 /usr/include/bits/cpu-set.h:
 
 /usr/include/bits/typesizes.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/locale_classes.tcc:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/error_constants.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/pstl/glue_algorithm_defs.h:
-
-/usr/include/bits/types/wint_t.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/backward/auto_ptr.h:
-
-/usr/local/include/lemon/bits/traits.h:
 
 /usr/include/wctype.h:
 
@@ -554,23 +580,23 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 
 /usr/local/include/lemon/bits/map_extender.h:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/functexcept.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/list:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ostream:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/cpp_type_traits.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_iterator_base_types.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/concept_check.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/debug/debug.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/allocator.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/new:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/debug/debug.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/istream:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/move.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/cpp_type_traits.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/chrono:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_iterator_base_types.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/concept_check.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/string_view.tcc:
 
@@ -654,8 +680,6 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/stdexcept:
 
-/usr/local/include/lemon/bits/path_dump.h:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/locale_facets.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/os_defines.h:
@@ -664,15 +688,33 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/streambuf_iterator.h:
 
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/list:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ostream:
+
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/stddef.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/ostream.tcc:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/move.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/istream:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/istream.tcc:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/iosfwd:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/codecvt.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/x86_64-pc-linux-gnu/bits/c++io.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/iostream:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/algorithmfwd.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/sstream:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/optional:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/map:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/sstream.tcc:
 
 /usr/local/include/lemon/list_graph.h:
 
@@ -697,6 +739,8 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/utility:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/ext/numeric_traits.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/fstream.tcc:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/shared_ptr_base.h:
 
@@ -727,10 +771,6 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 /usr/include/bits/select.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/hashtable_policy.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/optional:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/sstream:
 
 /usr/local/include/lemon/assert.h:
 
@@ -775,13 +815,3 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark
 /usr/local/include/lemon/bits/vector_map.h:
 
 /usr/local/include/lemon/smart_graph.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_construct.h:
-
-/usr/local/include/lemon/bin_heap.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/sstream.tcc:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/map:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_tree.h:
