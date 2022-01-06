@@ -145,7 +145,7 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/ostream.tcc \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/istream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/istream.tcc \
- /usr/include/lemon/list_graph.h /usr/include/lemon/core.h \
+ /usr/local/include/lemon/list_graph.h /usr/local/include/lemon/core.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/vector \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_uninitialized.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_vector.h \
@@ -178,9 +178,10 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/unordered_map.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/erase_if.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/pstl/execution_defs.h \
- /usr/include/lemon/config.h /usr/include/lemon/bits/enable_if.h \
- /usr/include/lemon/bits/traits.h /usr/include/lemon/assert.h \
- /usr/include/lemon/error.h \
+ /usr/local/include/lemon/config.h \
+ /usr/local/include/lemon/bits/enable_if.h \
+ /usr/local/include/lemon/bits/traits.h /usr/local/include/lemon/assert.h \
+ /usr/local/include/lemon/error.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/sstream \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/sstream.tcc \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/memory \
@@ -196,23 +197,27 @@ CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/atomic_lockfree_defines.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/backward/auto_ptr.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/pstl/glue_memory_defs.h \
- /usr/include/lemon/bits/graph_extender.h \
- /usr/include/lemon/bits/map_extender.h \
+ /usr/local/include/lemon/bits/graph_extender.h \
+ /usr/local/include/lemon/bits/map_extender.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/iterator \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stream_iterator.h \
- /usr/include/lemon/concept_check.h /usr/include/lemon/concepts/maps.h \
- /usr/include/lemon/bits/default_map.h \
- /usr/include/lemon/bits/array_map.h \
- /usr/include/lemon/bits/alteration_notifier.h \
+ /usr/local/include/lemon/concept_check.h \
+ /usr/local/include/lemon/concepts/maps.h \
+ /usr/local/include/lemon/bits/default_map.h \
+ /usr/local/include/lemon/bits/array_map.h \
+ /usr/local/include/lemon/bits/alteration_notifier.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/list \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_list.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/list.tcc \
- /usr/include/lemon/bits/lock.h /usr/include/lemon/bits/vector_map.h \
- /usr/include/lemon/static_graph.h /usr/include/lemon/smart_graph.h \
- /usr/include/lemon/dijkstra.h /usr/include/lemon/bin_heap.h \
- /usr/include/lemon/bits/path_dump.h /usr/include/lemon/maps.h \
+ /usr/local/include/lemon/bits/lock.h \
+ /usr/local/include/lemon/bits/vector_map.h \
+ /usr/local/include/lemon/static_graph.h \
+ /usr/local/include/lemon/smart_graph.h \
+ /usr/local/include/lemon/dijkstra.h /usr/local/include/lemon/bin_heap.h \
+ /usr/local/include/lemon/bits/path_dump.h \
+ /usr/local/include/lemon/maps.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/map \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_tree.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_map.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/10.3.0/include/c++/bits/stl_multimap.h \
- /usr/include/lemon/path.h /usr/include/lemon/concepts/path.h
+ /usr/local/include/lemon/path.h /usr/local/include/lemon/concepts/path.h

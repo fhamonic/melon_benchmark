@@ -1,43 +1,71 @@
+#include <fstream>
 #include <iostream>
+#include <sstream>
+
+#include "chrono.hpp"
 
 #include "melon.hpp"
 
-namespace fhamonic::melon;
+using namespace fhamonic::melon;
 
-int main() {
-    std::ifstream gr_file("data/rome99.gr");
+auto parse_gr(std::string file_name) {
+    StaticDigraphBuilder<double> builder(0);
 
-    StaticDigraphBuilder<double> builder;
-
+    std::ifstream gr_file(file_name);
     std::string line;
-    while (getline(dimacs, line))
-    {
+    while(getline(gr_file, line)) {
         std::istringstream iss(line);
         char ch;
-        if (iss >> ch)
-        {
-            size_t from, to;
-            std::string format;
-
+        if(iss >> ch) {
             switch(ch) {
-                case 'c': break;
-                case 'p': 
-                    if (vertices||edges) return false;
-                    if (iss >> format >> vertices >> edges) {
-                        if ("edge" != format) return false;
+                case 'c':
+                    break;
+                case 'p': {
+                    std::string format;
+                    std::size_t nb_nodes, nb_arcs;
+                    if(iss >> format >> nb_nodes >> nb_arcs) {
+                        builder = StaticDigraphBuilder<double>(nb_nodes);
                     }
                     break;
-                case 'e': 
-                    if (edges-- && (iss >> from >> to) && (add_edge(from-1, to-1, g).second))
-                        break;
-                default: 
-                    return false;
+                }
+                case 'a': {
+                    StaticDigraph::Node from, to;
+                    double length;
+                    if(iss >> from >> to >> length) {
+                        builder.addArc(from, to, length);
+                    }
+                    break;
+                }
+                default:
+                    assert(false);
             }
         }
     }
 
-    return !(edges || !dimacs.eof());
+    return builder.build();
+}
 
+int main() {
+    std::vector<std::string> gr_files(
+        {"data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr"});
 
-    return 0;
+    for(const auto gr_file : gr_files) {
+        auto [graph, lenght_map] = parse_gr(gr_file);
+
+        std::cout << gr_file << " : " << graph.nb_nodes() << " nodes , " << graph.nb_arcs() << " arcs" << std::endl;
+
+        for(StaticDigraph::Node u : graph.nodes()) {
+            Chrono chrono;
+
+            Dijkstra dijkstra(graph, lenght_map);
+            dijkstra.init(u);
+            while(!dijkstra.emptyQueue()) {
+                (void) dijkstra.processNextNode();
+            }
+
+            std::cout << "Dijkstra from " << u << " takes " << chrono.timeMs() << " ms" << std::endl;
+        }
+    }
+
+    return EXIT_SUCCESS;
 }
