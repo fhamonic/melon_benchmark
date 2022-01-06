@@ -61,7 +61,7 @@ int main() {
             Chrono chrono;
 
             Dijkstra dijkstra(graph, lenght_map);
-            dijkstra.init(u);
+            dijkstra.addSource(u);
             while(!dijkstra.emptyQueue()) {
                 (void)dijkstra.processNextNode();
             }
