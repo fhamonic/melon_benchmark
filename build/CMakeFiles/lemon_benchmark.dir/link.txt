@@ -1,0 +1,1 @@
+/usr/bin/g++-10 -O3 -DNDEBUG CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o -o bin/lemon_benchmark  /usr/lib/libemon.a 
