@@ -25,7 +25,7 @@ void parse_gr(std::string file_name, ListDigraph & graph,
                     break;
                 case 'p': {
                     std::string format;
-                    std::size_t nb_nodes, nb_arcs;
+                    int nb_nodes, nb_arcs;
                     if(iss >> format >> nb_nodes >> nb_arcs) {
                         for(int i = 0; i < nb_nodes; ++i) {
                             graph.addNode();
@@ -54,14 +54,19 @@ void parse_gr(std::string file_name, ListDigraph & graph,
 int main() {
     std::vector<std::string> gr_files(
         {"data/rome99.gr",
-         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr"});
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.NY.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.BAY.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.BAY.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.COL.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.COL.gr"});
 
     for(const auto gr_file : gr_files) {
         // using Graph = ListDigraph;
         // ListDigraph graph;
         // ListDigraph::ArcMap<double> length_map(graph);
         // parse_gr(gr_file, graph, length_map);
-        
+
         using Graph = StaticDigraph;
         ListDigraph list_graph;
         ListDigraph::ArcMap<double> list_length_map(list_graph);
@@ -72,28 +77,41 @@ int main() {
         ListDigraph::ArcMap<StaticDigraph::Arc> arc_ref_map(list_graph);
         graph.build(list_graph, node_ref_map, arc_ref_map);
         for(ListDigraph::ArcIt a(list_graph); a != INVALID; ++a)
-            length_map[arc_ref_map[a]] = list_length_map[a];  
-
-
-
+            length_map[arc_ref_map[a]] = list_length_map[a];
 
         std::cout << gr_file << " : " << countNodes(graph) << " nodes , "
                   << countArcs(graph) << " arcs" << std::endl;
 
-        for(Graph::NodeIt u(graph); u != INVALID; ++u) {
+        Chrono gr_chrono;
+        double avg_time = 0;
+        int iterations = 0;
+        const int n = countNodes(graph);
+        for(int i = 0; i < n; ++i) {
+            Graph::Node s = graph.nodeFromId(i);
             Chrono chrono;
 
-            Dijkstra<Graph, Graph::ArcMap<double>> dijkstra(
-                graph, length_map);
+            double sum = 0;
+            Dijkstra<Graph, Graph::ArcMap<double>> dijkstra(graph, length_map);
             dijkstra.init();
-            dijkstra.addSource(u);
+            dijkstra.addSource(s);
             while(!dijkstra.emptyQueue()) {
-                (void)dijkstra.processNextNode();
+                auto u = dijkstra.processNextNode();
+                sum += dijkstra.dist(u);
             }
 
-            std::cout << "Dijkstra from " << graph.id(u) << " takes "
-                      << (chrono.timeUs() / 1000.0) << " ms" << std::endl;
+            double time_ms = (chrono.timeUs() / 1000.0);
+            // std::cout << "Dijkstra from " << graph.id(s) << " takes " <<
+            // time_ms
+            //           << " ms, sum dists = " << sum << std::endl;
+
+            avg_time += time_ms;
+            ++iterations;
+            if(gr_chrono.timeS() >= 30)
+                break;
         }
+        avg_time /= iterations;
+
+        std::cout << "avg time Dijkstra : " << avg_time << " ms" << std::endl;
     }
 
     return 0;

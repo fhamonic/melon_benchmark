@@ -36,7 +36,7 @@ auto parse_gr(std::string file_name) {
                     }
                     break;
                 }
-                default: 
+                default:
                     std::cerr << "Error in reading " << file_name << std::endl;
                     std::abort();
             }
@@ -49,7 +49,12 @@ auto parse_gr(std::string file_name) {
 int main() {
     std::vector<std::string> gr_files(
         {"data/rome99.gr",
-         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr"});
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.NY.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.BAY.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.BAY.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.COL.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.COL.gr"});
 
     for(const auto gr_file : gr_files) {
         auto [graph, lenght_map] = parse_gr(gr_file);
@@ -57,18 +62,32 @@ int main() {
         std::cout << gr_file << " : " << graph.nb_nodes() << " nodes , "
                   << graph.nb_arcs() << " arcs" << std::endl;
 
-        for(StaticDigraph::Node u : graph.nodes()) {
+        Chrono gr_chrono;
+        double avg_time = 0;
+        int iterations = 0;
+        for(StaticDigraph::Node s : graph.nodes()) {
             Chrono chrono;
 
+            double sum = 0;
             Dijkstra dijkstra(graph, lenght_map);
-            dijkstra.addSource(u);
+            dijkstra.addSource(s);
             while(!dijkstra.emptyQueue()) {
-                (void)dijkstra.processNextNode();
+                auto [u, dist] = dijkstra.processNextNode();
+                sum += dist;
             }
 
-            std::cout << "Dijkstra from " << u << " takes "
-                      << (chrono.timeUs() / 1000.0) << " ms" << std::endl;
+            double time_ms = (chrono.timeUs() / 1000.0);
+            // std::cout << "Dijkstra from " << s << " takes " << time_ms
+            //           << " ms, sum dists = " << sum << std::endl;
+
+            avg_time += time_ms;
+            ++iterations;
+            if(gr_chrono.timeS() >= 30)
+                break;
         }
+        avg_time /= iterations;
+
+        std::cout << "avg time Dijkstra : " << avg_time << " ms" << std::endl;
     }
 
     return EXIT_SUCCESS;
