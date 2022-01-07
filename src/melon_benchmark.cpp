@@ -69,14 +69,7 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            /*
             Dijkstra dijkstra(graph, length_map);
-            /*/
-            Dijkstra<StaticDigraph, StaticDigraph::ArcMap<double>,
-                     DijkstraShortestPathSemiring<double>,
-                     ItBinaryHeap<StaticDigraph::Node, double>>
-                dijkstra(graph, length_map);
-            //*/
             dijkstra.addSource(s);
             while(!dijkstra.emptyQueue()) {
                 auto [u, dist] = dijkstra.processNextNode();
