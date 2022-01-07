@@ -69,7 +69,7 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            //*
+            /*
             Dijkstra dijkstra(graph, length_map);
             /*/
             Dijkstra<StaticDigraph, StaticDigraph::ArcMap<double>,
