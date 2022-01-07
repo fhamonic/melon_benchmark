@@ -85,9 +85,7 @@ int main() {
         Chrono gr_chrono;
         double avg_time = 0;
         int iterations = 0;
-        const int n = countNodes(graph);
-        for(int i = 0; i < n; ++i) {
-            Graph::Node s = graph.nodeFromId(i);
+        for(Graph::NodeIt s(graph); s != INVALID; ++s) {
             Chrono chrono;
 
             double sum = 0;
@@ -100,9 +98,9 @@ int main() {
             }
 
             double time_ms = (chrono.timeUs() / 1000.0);
-            // std::cout << "Dijkstra from " << graph.id(s) << " takes " <<
-            // time_ms
-            //           << " ms, sum dists = " << sum << std::endl;
+            std::cout << "Dijkstra from " << graph.id(s) << " takes " <<
+            time_ms
+                      << " ms, sum dists = " << sum << std::endl;
 
             avg_time += time_ms;
             ++iterations;

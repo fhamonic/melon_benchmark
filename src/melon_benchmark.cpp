@@ -57,7 +57,7 @@ int main() {
          "data/9th_DIMACS_USA_roads/time/USA-road-t.COL.gr"});
 
     for(const auto gr_file : gr_files) {
-        auto [graph, lenght_map] = parse_gr(gr_file);
+        auto [graph, length_map] = parse_gr(gr_file);
 
         std::cout << gr_file << " : " << graph.nb_nodes() << " nodes , "
                   << graph.nb_arcs() << " arcs" << std::endl;
@@ -69,7 +69,14 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            Dijkstra dijkstra(graph, lenght_map);
+            //*
+            Dijkstra dijkstra(graph, length_map);
+            /*/
+            Dijkstra<StaticDigraph, StaticDigraph::ArcMap<double>,
+                     DijkstraShortestPathSemiring<double>,
+                     ItBinaryHeap<StaticDigraph::Node, double>>
+                dijkstra(graph, length_map);
+            //*/
             dijkstra.addSource(s);
             while(!dijkstra.emptyQueue()) {
                 auto [u, dist] = dijkstra.processNextNode();
@@ -77,13 +84,12 @@ int main() {
             }
 
             double time_ms = (chrono.timeUs() / 1000.0);
-            // std::cout << "Dijkstra from " << s << " takes " << time_ms
-            //           << " ms, sum dists = " << sum << std::endl;
+            std::cout << "Dijkstra from " << s << " takes " << time_ms
+                      << " ms, sum dists = " << sum << std::endl;
 
             avg_time += time_ms;
             ++iterations;
-            if(gr_chrono.timeS() >= 30)
-                break;
+            if(gr_chrono.timeS() >= 30) break;
         }
         avg_time /= iterations;
 
