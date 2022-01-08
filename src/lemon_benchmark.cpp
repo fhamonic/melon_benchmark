@@ -98,9 +98,9 @@ int main() {
             }
 
             double time_ms = (chrono.timeUs() / 1000.0);
-            std::cout << "Dijkstra from " << graph.id(s) << " takes " <<
-            time_ms
-                      << " ms, sum dists = " << sum << std::endl;
+            // std::cout << "Dijkstra from " << graph.id(s) << " takes " <<
+            // time_ms
+            //           << " ms, sum dists = " << sum << std::endl;
 
             avg_time += time_ms;
             ++iterations;

@@ -4,7 +4,11 @@
 
 #include "chrono.hpp"
 
+
+// #include "melon_rend-indexed.hpp"
+// #include "melon_1-index.hpp"
 #include "melon.hpp"
+
 
 using namespace fhamonic::melon;
 
@@ -49,12 +53,13 @@ auto parse_gr(std::string file_name) {
 int main() {
     std::vector<std::string> gr_files(
         {"data/rome99.gr",
-         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr",
-         "data/9th_DIMACS_USA_roads/time/USA-road-t.NY.gr",
-         "data/9th_DIMACS_USA_roads/distance/USA-road-d.BAY.gr",
-         "data/9th_DIMACS_USA_roads/time/USA-road-t.BAY.gr",
-         "data/9th_DIMACS_USA_roads/distance/USA-road-d.COL.gr",
-         "data/9th_DIMACS_USA_roads/time/USA-road-t.COL.gr"});
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr"
+        //  "data/9th_DIMACS_USA_roads/time/USA-road-t.NY.gr",
+        //  "data/9th_DIMACS_USA_roads/distance/USA-road-d.BAY.gr",
+        //  "data/9th_DIMACS_USA_roads/time/USA-road-t.BAY.gr",
+        //  "data/9th_DIMACS_USA_roads/distance/USA-road-d.COL.gr",
+        //  "data/9th_DIMACS_USA_roads/time/USA-road-t.COL.gr"
+         });
 
     for(const auto gr_file : gr_files) {
         auto [graph, length_map] = parse_gr(gr_file);
@@ -70,6 +75,7 @@ int main() {
 
             double sum = 0;
             Dijkstra dijkstra(graph, length_map);
+            dijkstra.reset();
             dijkstra.addSource(s);
             while(!dijkstra.emptyQueue()) {
                 auto [u, dist] = dijkstra.processNextNode();
@@ -77,8 +83,8 @@ int main() {
             }
 
             double time_ms = (chrono.timeUs() / 1000.0);
-            std::cout << "Dijkstra from " << s << " takes " << time_ms
-                      << " ms, sum dists = " << sum << std::endl;
+            // std::cout << "Dijkstra from " << s << " takes " << time_ms
+            //           << " ms, sum dists = " << sum << std::endl;
 
             avg_time += time_ms;
             ++iterations;

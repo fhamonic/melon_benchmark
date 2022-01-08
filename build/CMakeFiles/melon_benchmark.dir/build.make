@@ -73,15 +73,15 @@ CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o: CMakeFiles/melon_bench
 CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o: ../src/melon_benchmark.cpp
 CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o: CMakeFiles/melon_benchmark.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o"
-	/usr/bin/g++-10 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o -MF CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o.d -o CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o -c /home/plaiseek/Projects/melon_benchmark/src/melon_benchmark.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o -MF CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o.d -o CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o -c /home/plaiseek/Projects/melon_benchmark/src/melon_benchmark.cpp
 
 CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.i"
-	/usr/bin/g++-10 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/plaiseek/Projects/melon_benchmark/src/melon_benchmark.cpp > CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/plaiseek/Projects/melon_benchmark/src/melon_benchmark.cpp > CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.i
 
 CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.s"
-	/usr/bin/g++-10 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/plaiseek/Projects/melon_benchmark/src/melon_benchmark.cpp -o CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/plaiseek/Projects/melon_benchmark/src/melon_benchmark.cpp -o CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.s
 
 # Object files for target melon_benchmark
 melon_benchmark_OBJECTS = \

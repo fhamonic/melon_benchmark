@@ -11,6 +11,7 @@ project(
 
 # ################### Options ####################
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CONAN_DISABLE_CHECK_COMPILER ON)
 
 option(WARNINGS "" OFF)
 option(HARDCORE_WARNINGS "" OFF)

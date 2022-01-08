@@ -25,12 +25,12 @@ DEALINGS IN THE SOFTWARE.*/
 /**
  * @file all.hpp
  * @author François Hamonic (francois.hamonic@gmail.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2022-01-02
- * 
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 #ifndef FHAMONIC_MELON_HPP
 #define FHAMONIC_MELON_HPP
@@ -86,7 +86,8 @@ public:
         assert(is_valid_node(u));
         return std::views::iota(
             out_arc_begin[u],
-            (u + 1 < nb_nodes() ? out_arc_begin[u + 1] : nb_arcs()));
+            (u + 1 < nb_nodes() ? out_arc_begin[u + 1]
+                                : static_cast<Arc>(nb_arcs())));
     }
     Node source(Arc a) const {  // O(\log |V|)
         assert(is_valid_arc(a));
@@ -233,6 +234,7 @@ public:
     using Pair = std::pair<Node, Prio>;
 
 private:
+    using Iterator = std::vector<Pair>::reverse_iterator;
     using Difference = int;
 
 public:
@@ -263,17 +265,13 @@ public:
 private:
     void heap_move(Difference index, Pair && p) noexcept {
         indices_map[p.first] = index;
-        heap_array[static_cast<std::size_t>(index - 1)] = std::move(p);
+        heap_array[index - 1] = std::move(p);
     }
 
     void heap_push(Difference holeIndex, Pair && p) noexcept {
         Difference parent = holeIndex / 2;
-        while(holeIndex > 1 &&
-              cmp(p.second,
-                  heap_array[static_cast<std::size_t>(parent - 1)].second)) {
-            heap_move(
-                holeIndex,
-                std::move(heap_array[static_cast<std::size_t>(parent - 1)]));
+        while(holeIndex > 1 && cmp(p.second, heap_array[parent - 1].second)) {
+            heap_move(holeIndex, std::move(heap_array[parent - 1]));
             holeIndex = parent;
             parent = holeIndex / 2;
         }
@@ -285,24 +283,16 @@ private:
         Difference child = 2 * holeIndex;
         while(child < len) {
             child +=
-                cmp(heap_array[static_cast<std::size_t>(child)].second,
-                    heap_array[static_cast<std::size_t>(child - 1)].second);
-            if(!cmp(heap_array[static_cast<std::size_t>(child - 1)].second,
-                    p.second)) {
+                cmp(heap_array[child].second, heap_array[child - 1].second);
+            if(!cmp(heap_array[child - 1].second, p.second)) {
                 return heap_move(holeIndex, std::move(p));
             }
-            heap_move(
-                holeIndex,
-                std::move(heap_array[static_cast<std::size_t>(child - 1)]));
+            heap_move(holeIndex, std::move(heap_array[child - 1]));
             holeIndex = child;
             child = 2 * holeIndex;
         }
-        if(child < len &&
-           cmp(heap_array[static_cast<std::size_t>(child - 1)].second,
-               p.second)) {
-            heap_move(
-                holeIndex,
-                std::move(heap_array[static_cast<std::size_t>(child - 1)]));
+        if(child < len && cmp(heap_array[child - 1].second, p.second)) {
+            heap_move(holeIndex, std::move(heap_array[child - 1]));
             holeIndex = child;
         }
         heap_move(holeIndex, std::move(p));
@@ -316,12 +306,12 @@ public:
     void push(const Node i, const Prio p) noexcept { push(Pair(i, p)); }
     bool contains(const Node u) const noexcept { return indices_map[u] > 0; }
     Prio prio(const Node u) const noexcept {
-        return heap_array[static_cast<std::size_t>(indices_map[u] - 1)].second;
+        return heap_array[indices_map[u] - 1].second;
     }
     Pair top() const noexcept { return heap_array.front(); }
     Pair pop() noexcept {
         assert(!heap_array.empty());
-        const Difference n = Difference(heap_array.size());
+        const Difference n = heap_array.size();
         Pair p = heap_array.front();
         indices_map[p.first] = POST_HEAP;
         if(n > 1) adjust_heap(Difference(1), n, std::move(heap_array.back()));
@@ -366,14 +356,16 @@ struct DijkstraMostProbablePathSemiring {
 template <typename T>
 struct DijkstraMaxFlowPathSemiring {
     static constexpr T zero = std::numeric_limits<T>::max();
-    static constexpr auto plus = [](const T & a, const T & b){ return std::min(a, b); };
+    static constexpr auto plus = [](const T & a, const T & b) {
+        return std::min(a, b);
+    };
     static constexpr std::greater<T> less{};
 };
 
 template <typename T>
 struct DijkstraSpanningTreeSemiring {
     static constexpr T zero = static_cast<T>(0);
-    static constexpr auto plus = [](const T & a, const T & b){ return b; };
+    static constexpr auto plus = [](const T & a, const T & b) { return b; };
     static constexpr std::less<T> less{};
 };
 
@@ -409,15 +401,15 @@ public:
     Dijkstra(const GR & g, const LM & l)
         : graph(g), length_map(l), heap(g.nb_nodes()), pred_map(g.nb_nodes()) {}
 
-    void addSource(Node s, Value dist = DijkstraSemiringTraits::zero) noexcept {
+    void addSource(Node s, Value dist = DijkstraSemiringTraits::zero) {
         assert(!heap.contains(s));
         heap.push(s, dist);
         pred_map[s] = s;
     }
-    bool emptyQueue() const noexcept { return heap.empty(); }
-    void reset() noexcept { heap.clear(); }
+    bool emptyQueue() const { return heap.empty(); }
+    void reset() { heap.clear(); }
 
-    std::pair<Node, Value> processNextNode() noexcept {
+    std::pair<Node, Value> processNextNode() {
         const auto p = heap.pop();
         for(Arc a : graph.out_arcs(p.first)) {
             Node w = graph.target(a);
@@ -445,4 +437,4 @@ public:
 
 #endif  // MELON_DIJKSTRA_HPP
 
-#endif //FHAMONIC_MELON_HPP
+#endif  // FHAMONIC_MELON_HPP
