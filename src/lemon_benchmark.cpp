@@ -61,7 +61,7 @@ int main() {
          "data/9th_DIMACS_USA_roads/distance/USA-road-d.COL.gr",
          "data/9th_DIMACS_USA_roads/time/USA-road-t.COL.gr"});
 
-    for(const auto gr_file : gr_files) {
+    for(const auto & gr_file : gr_files) {
         // using Graph = ListDigraph;
         // ListDigraph graph;
         // ListDigraph::ArcMap<double> length_map(graph);
