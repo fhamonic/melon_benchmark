@@ -25,12 +25,12 @@ DEALINGS IN THE SOFTWARE.*/
 /**
  * @file all.hpp
  * @author François Hamonic (francois.hamonic@gmail.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2022-01-02
- * 
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 #ifndef FHAMONIC_MELON_HPP
 #define FHAMONIC_MELON_HPP
@@ -366,14 +366,16 @@ struct DijkstraMostProbablePathSemiring {
 template <typename T>
 struct DijkstraMaxFlowPathSemiring {
     static constexpr T zero = std::numeric_limits<T>::max();
-    static constexpr auto plus = [](const T & a, const T & b){ return std::min(a, b); };
+    static constexpr auto plus = [](const T & a, const T & b) {
+        return std::min(a, b);
+    };
     static constexpr std::greater<T> less{};
 };
 
 template <typename T>
 struct DijkstraSpanningTreeSemiring {
     static constexpr T zero = static_cast<T>(0);
-    static constexpr auto plus = [](const T & a, const T & b){ return b; };
+    static constexpr auto plus = [](const T & a, const T & b) { return b; };
     static constexpr std::less<T> less{};
 };
 
@@ -422,7 +424,7 @@ public:
         for(Arc a : graph.out_arcs(p.first)) {
             Node w = graph.target(a);
             const auto s = heap.state(w);
-            if(s == Heap::IN_HEAP) {
+            if(s == Heap::IN_HEAP) [[likely]] {
                 Value new_dist =
                     DijkstraSemiringTraits::plus(p.second, length_map[a]);
                 if(DijkstraSemiringTraits::less(new_dist, heap.prio(w))) {
@@ -432,7 +434,8 @@ public:
                 continue;
             }
             if(s == Heap::PRE_HEAP) {
-                heap.push(w, DijkstraSemiringTraits::plus(p.second, length_map[a]));
+                heap.push(
+                    w, DijkstraSemiringTraits::plus(p.second, length_map[a]));
                 pred_map[w] = p.first;
             }
         }
@@ -445,4 +448,4 @@ public:
 
 #endif  // MELON_DIJKSTRA_HPP
 
-#endif //FHAMONIC_MELON_HPP
+#endif  // FHAMONIC_MELON_HPP
