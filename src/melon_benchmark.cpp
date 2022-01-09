@@ -75,7 +75,7 @@ int main() {
             dijkstra.reset();
             dijkstra.addSource(s);
             while(!dijkstra.emptyQueue()) {
-                auto & [u, dist] = dijkstra.processNextNode();
+                auto [u, dist] = dijkstra.processNextNode();
                 sum += dist;
             }
 

@@ -254,7 +254,7 @@ public:
     BinaryHeap(const BinaryHeap & bin) = default;
     BinaryHeap(BinaryHeap && bin) = default;
 
-    int size() const noexcept { return heap_array.size() - 1; }
+    Index size() const noexcept { return heap_array.size() - 1; }
     bool empty() const noexcept { return size() == 0; }
     void clear() noexcept {
         heap_array.resize(1);
@@ -321,16 +321,16 @@ public:
         assert(!empty());
         return heap_array[1];
     }
-    const Pair & pop() noexcept {
+    Pair pop() noexcept {
         assert(!empty());
+        const Pair p = std::move(heap_array[1]);
+        indices_map[p.first] = POST_HEAP;
         const Index n = Index(size());
-        heap_array.front() = std::move(heap_array[1]);
-        indices_map[heap_array.front().first] = POST_HEAP;
         if(n > 1)
             adjust_heap(Index(sizeof(Pair)), n * sizeof(Pair),
                         std::move(heap_array.back()));
         heap_array.pop_back();
-        return heap_array.front();
+        return p;
     }
     void decrease(const Node & u, const Prio & p) noexcept {
         heap_push(indices_map[u], Pair(u, p));
@@ -423,8 +423,8 @@ public:
     bool emptyQueue() const noexcept { return heap.empty(); }
     void reset() noexcept { heap.clear(); }
 
-    const std::pair<Node, Value> & processNextNode() noexcept {
-        const auto & p = heap.pop();
+    std::pair<Node, Value> processNextNode() noexcept {
+        const auto p = heap.pop();
         for(Arc a : graph.out_arcs(p.first)) {
             Node w = graph.target(a);
             const auto s = heap.state(w);
