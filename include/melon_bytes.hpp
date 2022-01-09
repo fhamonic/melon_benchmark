@@ -234,10 +234,10 @@ public:
     using Pair = std::pair<Node, Prio>;
 
 private:
-    using Difference = std::size_t;
+    using Difference = std::vector<Pair>::size_type;
 
 public:
-    enum State {
+    enum State : Difference {
         PRE_HEAP = Difference(0),
         POST_HEAP = Difference(1),
         IN_HEAP = Difference(sizeof(Pair))

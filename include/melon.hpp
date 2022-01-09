@@ -234,49 +234,50 @@ public:
     using Pair = std::pair<Node, Prio>;
 
 private:
-    using Difference = std::size_t;
+    using Index = std::vector<Pair>::size_type;
 
 public:
-    enum State {
-        PRE_HEAP = Difference(0),
-        POST_HEAP = Difference(1),
-        IN_HEAP = Difference(sizeof(Pair))
+    enum State : Index {
+        PRE_HEAP = Index(0),
+        POST_HEAP = Index(1),
+        IN_HEAP = Index(sizeof(Pair))
     };
 
     std::vector<Pair> heap_array;
-    std::byte * heap_ptr;
-    std::vector<Difference> indices_map;
+    std::vector<Index> indices_map;
     Compare cmp;
 
 public:
     BinaryHeap(const std::size_t nb_nodes)
-        : heap_array(), indices_map(nb_nodes, State::PRE_HEAP), cmp() {}
+        : heap_array(1), indices_map(nb_nodes, State::PRE_HEAP), cmp() {}
 
     BinaryHeap(const BinaryHeap & bin) = default;
     BinaryHeap(BinaryHeap && bin) = default;
 
-    int size() const noexcept { return heap_array.size(); }
-    bool empty() const noexcept { return heap_array.empty(); }
+    int size() const noexcept { return heap_array.size() - 1; }
+    bool empty() const noexcept { return size() == 0; }
     void clear() noexcept {
-        heap_array.clear();
+        heap_array.resize(1);
         std::ranges::fill(indices_map, State::PRE_HEAP);
     }
 
 private:
-    constexpr Pair & pair_ref(Difference i) {
-        return *(reinterpret_cast<Pair *>(heap_ptr + i));
+    constexpr Pair & pair_ref(Index i) {
+        return *(reinterpret_cast<Pair *>(
+            reinterpret_cast<std::byte *>(heap_array.data()) + i));
     }
-    constexpr const Pair & pair_ref(Difference i) const {
-        return *(reinterpret_cast<Pair *>(heap_ptr + i));
+    constexpr const Pair & pair_ref(Index i) const {
+        return *(reinterpret_cast<const Pair *>(
+            reinterpret_cast<const std::byte *>(heap_array.data()) + i));
     }
 
-    void heap_move(Difference index, Pair && p) noexcept {
+    void heap_move(Index index, Pair && p) noexcept {
         indices_map[p.first] = index;
         pair_ref(index) = std::move(p);
     }
 
-    void heap_push(Difference holeIndex, Pair && p) noexcept {
-        Difference parent = holeIndex / (2 * sizeof(Pair)) * sizeof(Pair);
+    void heap_push(Index holeIndex, Pair && p) noexcept {
+        Index parent = holeIndex / (2 * sizeof(Pair)) * sizeof(Pair);
         while(holeIndex > sizeof(Pair) &&
               cmp(p.second, pair_ref(parent).second)) {
             heap_move(holeIndex, std::move(pair_ref(parent)));
@@ -286,9 +287,9 @@ private:
         heap_move(holeIndex, std::move(p));
     }
 
-    void adjust_heap(Difference holeIndex, const Difference len,
+    void adjust_heap(Index holeIndex, const Index len,
                      Pair && p) noexcept {
-        Difference child = 2 * holeIndex;
+        Index child = 2 * holeIndex;
         while(child < len) {
             child += sizeof(Pair) * cmp(pair_ref(child + sizeof(Pair)).second,
                                         pair_ref(child).second);
@@ -309,31 +310,33 @@ private:
 public:
     void push(Pair && p) noexcept {
         heap_array.emplace_back();
-        heap_ptr = reinterpret_cast<std::byte *>(heap_array.data() - 1);
-        heap_push(Difference(heap_array.size() * sizeof(Pair)), std::move(p));
+        heap_push(Index(size() * sizeof(Pair)), std::move(p));
     }
     void push(const Node i, const Prio p) noexcept { push(Pair(i, p)); }
     bool contains(const Node u) const noexcept { return indices_map[u] > 0; }
     Prio prio(const Node u) const noexcept {
         return pair_ref(indices_map[u]).second;
     }
-    Pair top() const noexcept { return heap_array.front(); }
-    Pair pop() noexcept {
-        assert(!heap_array.empty());
-        const Difference n = Difference(heap_array.size());
-        Pair p = heap_array.front();
-        indices_map[p.first] = POST_HEAP;
+    Pair top() const noexcept { 
+        assert(!empty());
+        return heap_array[1];
+    }
+    const Pair & pop() noexcept {
+        assert(!empty());
+        const Index n = Index(size());
+        heap_array.front() = std::move(heap_array[1]);
+        indices_map[heap_array.front().first] = POST_HEAP;
         if(n > 1)
-            adjust_heap(Difference(sizeof(Pair)), n * sizeof(Pair),
+            adjust_heap(Index(sizeof(Pair)), n * sizeof(Pair),
                         std::move(heap_array.back()));
         heap_array.pop_back();
-        return p;
+        return heap_array.front();
     }
     void decrease(const Node & u, const Prio & p) noexcept {
         heap_push(indices_map[u], Pair(u, p));
     }
     State state(const Node & u) const noexcept {
-        return State(std::min(indices_map[u], Difference(sizeof(Pair))));
+        return State(std::min(indices_map[u], Index(sizeof(Pair))));
     }
 };  // class BinHeap
 
@@ -420,12 +423,12 @@ public:
     bool emptyQueue() const noexcept { return heap.empty(); }
     void reset() noexcept { heap.clear(); }
 
-    std::pair<Node, Value> processNextNode() noexcept {
-        const auto p = heap.pop();
+    const std::pair<Node, Value> & processNextNode() noexcept {
+        const auto & p = heap.pop();
         for(Arc a : graph.out_arcs(p.first)) {
             Node w = graph.target(a);
             const auto s = heap.state(w);
-            if(s == Heap::IN_HEAP) [[likely]] {
+            if(s == Heap::IN_HEAP) {
                 Value new_dist =
                     DijkstraSemiringTraits::plus(p.second, length_map[a]);
                 if(DijkstraSemiringTraits::less(new_dist, heap.prio(w))) {
