@@ -1,1 +1,1 @@
-/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o -o bin/melon_benchmark 
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o -o bin/melon_benchmark 

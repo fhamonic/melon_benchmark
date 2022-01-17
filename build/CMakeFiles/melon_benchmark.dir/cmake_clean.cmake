@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o"
-  "CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o.d"
+  "CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o"
+  "CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o.d"
   "bin/melon_benchmark"
   "bin/melon_benchmark.pdb"
 )

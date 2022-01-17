@@ -63,6 +63,9 @@ CMAKE_BINARY_DIR = /home/plaiseek/Projects/melon_benchmark/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/lemon_correctness.dir/all
+all: CMakeFiles/bgl_correctness.dir/all
+all: CMakeFiles/melon_correctness.dir/all
 all: CMakeFiles/lemon_benchmark.dir/all
 all: CMakeFiles/bgl_benchmark.dir/all
 all: CMakeFiles/melon_benchmark.dir/all
@@ -73,10 +76,91 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/lemon_correctness.dir/clean
+clean: CMakeFiles/bgl_correctness.dir/clean
+clean: CMakeFiles/melon_correctness.dir/clean
 clean: CMakeFiles/lemon_benchmark.dir/clean
 clean: CMakeFiles/bgl_benchmark.dir/clean
 clean: CMakeFiles/melon_benchmark.dir/clean
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/lemon_correctness.dir
+
+# All Build rule for target.
+CMakeFiles/lemon_correctness.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_correctness.dir/build.make CMakeFiles/lemon_correctness.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_correctness.dir/build.make CMakeFiles/lemon_correctness.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=7,8 "Built target lemon_correctness"
+.PHONY : CMakeFiles/lemon_correctness.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/lemon_correctness.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/lemon_correctness.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 0
+.PHONY : CMakeFiles/lemon_correctness.dir/rule
+
+# Convenience name for target.
+lemon_correctness: CMakeFiles/lemon_correctness.dir/rule
+.PHONY : lemon_correctness
+
+# clean rule for target.
+CMakeFiles/lemon_correctness.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_correctness.dir/build.make CMakeFiles/lemon_correctness.dir/clean
+.PHONY : CMakeFiles/lemon_correctness.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/bgl_correctness.dir
+
+# All Build rule for target.
+CMakeFiles/bgl_correctness.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_correctness.dir/build.make CMakeFiles/bgl_correctness.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_correctness.dir/build.make CMakeFiles/bgl_correctness.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=3,4 "Built target bgl_correctness"
+.PHONY : CMakeFiles/bgl_correctness.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/bgl_correctness.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/bgl_correctness.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 0
+.PHONY : CMakeFiles/bgl_correctness.dir/rule
+
+# Convenience name for target.
+bgl_correctness: CMakeFiles/bgl_correctness.dir/rule
+.PHONY : bgl_correctness
+
+# clean rule for target.
+CMakeFiles/bgl_correctness.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_correctness.dir/build.make CMakeFiles/bgl_correctness.dir/clean
+.PHONY : CMakeFiles/bgl_correctness.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/melon_correctness.dir
+
+# All Build rule for target.
+CMakeFiles/melon_correctness.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_correctness.dir/build.make CMakeFiles/melon_correctness.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_correctness.dir/build.make CMakeFiles/melon_correctness.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=11,12 "Built target melon_correctness"
+.PHONY : CMakeFiles/melon_correctness.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/melon_correctness.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/melon_correctness.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 0
+.PHONY : CMakeFiles/melon_correctness.dir/rule
+
+# Convenience name for target.
+melon_correctness: CMakeFiles/melon_correctness.dir/rule
+.PHONY : melon_correctness
+
+# clean rule for target.
+CMakeFiles/melon_correctness.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_correctness.dir/build.make CMakeFiles/melon_correctness.dir/clean
+.PHONY : CMakeFiles/melon_correctness.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/lemon_benchmark.dir
@@ -85,7 +169,7 @@ clean: CMakeFiles/melon_benchmark.dir/clean
 CMakeFiles/lemon_benchmark.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=3,4 "Built target lemon_benchmark"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=5,6 "Built target lemon_benchmark"
 .PHONY : CMakeFiles/lemon_benchmark.dir/all
 
 # Build rule for subdir invocation for target.
@@ -137,7 +221,7 @@ CMakeFiles/bgl_benchmark.dir/clean:
 CMakeFiles/melon_benchmark.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=5,6 "Built target melon_benchmark"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=9,10 "Built target melon_benchmark"
 .PHONY : CMakeFiles/melon_benchmark.dir/all
 
 # Build rule for subdir invocation for target.

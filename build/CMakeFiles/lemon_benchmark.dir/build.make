@@ -69,30 +69,30 @@ include CMakeFiles/lemon_benchmark.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/lemon_benchmark.dir/flags.make
 
-CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: CMakeFiles/lemon_benchmark.dir/flags.make
-CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: ../src/lemon_benchmark.cpp
-CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o: CMakeFiles/lemon_benchmark.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o -MF CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o.d -o CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o -c /home/plaiseek/Projects/melon_benchmark/src/lemon_benchmark.cpp
+CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o: CMakeFiles/lemon_benchmark.dir/flags.make
+CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o: ../src/benchmark_lemon.cpp
+CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o: CMakeFiles/lemon_benchmark.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o -MF CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o.d -o CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o -c /home/plaiseek/Projects/melon_benchmark/src/benchmark_lemon.cpp
 
-CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/plaiseek/Projects/melon_benchmark/src/lemon_benchmark.cpp > CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.i
+CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/plaiseek/Projects/melon_benchmark/src/benchmark_lemon.cpp > CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.i
 
-CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/plaiseek/Projects/melon_benchmark/src/lemon_benchmark.cpp -o CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.s
+CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/plaiseek/Projects/melon_benchmark/src/benchmark_lemon.cpp -o CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.s
 
 # Object files for target lemon_benchmark
 lemon_benchmark_OBJECTS = \
-"CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o"
+"CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o"
 
 # External object files for target lemon_benchmark
 lemon_benchmark_EXTERNAL_OBJECTS =
 
-bin/lemon_benchmark: CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o
+bin/lemon_benchmark: CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o
 bin/lemon_benchmark: CMakeFiles/lemon_benchmark.dir/build.make
-bin/lemon_benchmark: /usr/local/lib/libemon.a
+bin/lemon_benchmark: /usr/lib/libemon.so
 bin/lemon_benchmark: CMakeFiles/lemon_benchmark.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable bin/lemon_benchmark"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lemon_benchmark.dir/link.txt --verbose=$(VERBOSE)

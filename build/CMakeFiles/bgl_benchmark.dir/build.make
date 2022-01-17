@@ -69,28 +69,28 @@ include CMakeFiles/bgl_benchmark.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/bgl_benchmark.dir/flags.make
 
-CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o: CMakeFiles/bgl_benchmark.dir/flags.make
-CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o: ../src/bgl_benchmark.cpp
-CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o: CMakeFiles/bgl_benchmark.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o -MF CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o.d -o CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o -c /home/plaiseek/Projects/melon_benchmark/src/bgl_benchmark.cpp
+CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o: CMakeFiles/bgl_benchmark.dir/flags.make
+CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o: ../src/benchmark_bgl.cpp
+CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o: CMakeFiles/bgl_benchmark.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o -MF CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o.d -o CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o -c /home/plaiseek/Projects/melon_benchmark/src/benchmark_bgl.cpp
 
-CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/plaiseek/Projects/melon_benchmark/src/bgl_benchmark.cpp > CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.i
+CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/plaiseek/Projects/melon_benchmark/src/benchmark_bgl.cpp > CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.i
 
-CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/plaiseek/Projects/melon_benchmark/src/bgl_benchmark.cpp -o CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.s
+CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/plaiseek/Projects/melon_benchmark/src/benchmark_bgl.cpp -o CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.s
 
 # Object files for target bgl_benchmark
 bgl_benchmark_OBJECTS = \
-"CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o"
+"CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o"
 
 # External object files for target bgl_benchmark
 bgl_benchmark_EXTERNAL_OBJECTS =
 
-bin/bgl_benchmark: CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o
+bin/bgl_benchmark: CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o
 bin/bgl_benchmark: CMakeFiles/bgl_benchmark.dir/build.make
 bin/bgl_benchmark: /home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/lib/libboost_contract.a
 bin/bgl_benchmark: /home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/lib/libboost_coroutine.a

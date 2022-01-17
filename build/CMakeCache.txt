@@ -250,6 +250,9 @@ COMPILE_FOR_NATIVE:BOOL=ON
 
 COMPILE_WITH_LTO:BOOL=ON
 
+//Test CXX_COMPILER_HAS_MARCH=NATIVE
+CXX_COMPILER_HAS_MARCH:UNINITIALIZED=NATIVE:INTERNAL=1
+
 HARDCORE_WARNINGS:BOOL=OFF
 
 //The directory containing a CMake configuration file for LEMON.
@@ -257,6 +260,12 @@ LEMON_DIR:PATH=/usr/local/share/lemon/cmake
 
 //LEMON include directory
 LEMON_INCLUDE_DIR:PATH=/usr/local/include
+
+//Lemon graph library include path
+LEMON_INCLUDE_DIRS:PATH=/usr/include
+
+//Path to compiled Lemon graph library
+LEMON_LIBRARIES:FILEPATH=/usr/lib/libemon.so
 
 //LEMON library
 LEMON_LIBRARY:FILEPATH=/usr/local/lib/libemon.a

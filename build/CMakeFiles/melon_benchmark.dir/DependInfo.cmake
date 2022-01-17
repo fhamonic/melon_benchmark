@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/plaiseek/Projects/melon_benchmark/src/melon_benchmark.cpp" "CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o" "gcc" "CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o.d"
+  "/home/plaiseek/Projects/melon_benchmark/src/benchmark_melon.cpp" "CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o" "gcc" "CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o.d"
   )
 
 # Targets to which this target links.

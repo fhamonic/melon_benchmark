@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o"
-  "CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o.d"
+  "CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o"
+  "CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o.d"
   "bin/bgl_benchmark"
   "bin/bgl_benchmark.pdb"
 )

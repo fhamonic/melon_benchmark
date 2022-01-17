@@ -79,12 +79,14 @@ int main() {
         for(ListDigraph::ArcIt a(list_graph); a != INVALID; ++a)
             length_map[arc_ref_map[a]] = list_length_map[a];
 
-        std::cout << gr_file << " : " << countNodes(graph) << " nodes , "
+        const int nb_nodes = countNodes(graph);
+        std::cout << gr_file << " : " << nb_nodes << " nodes , "
                   << countArcs(graph) << " arcs" << std::endl;
 
         Chrono gr_chrono;
         double avg_time = 0;
         int iterations = 0;
+        const int nb_iterations = 30000.0 * 10000.0 / nb_nodes;
         for(Graph::NodeIt s(graph); s != INVALID; ++s) {
             Chrono chrono;
 
@@ -104,8 +106,7 @@ int main() {
 
             avg_time += time_ms;
             ++iterations;
-            if(gr_chrono.timeS() >= 30)
-                break;
+            if(iterations >= nb_iterations) break;
         }
         avg_time /= iterations;
 

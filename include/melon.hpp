@@ -425,6 +425,7 @@ public:
 
     std::pair<Node, Value> processNextNode() noexcept {
         const auto p = heap.pop();
+        // const auto & [u, dist] = p;
         for(Arc a : graph.out_arcs(p.first)) {
             Node w = graph.target(a);
             const auto s = heap.state(w);
@@ -438,12 +439,15 @@ public:
                 continue;
             }
             if(s == Heap::PRE_HEAP) {
-                heap.push(
-                    w, DijkstraSemiringTraits::plus(p.second, length_map[a]));
+                heap.push(w, DijkstraSemiringTraits::plus(p.second, length_map[a]));
                 pred_map[w] = p.first;
             }
         }
         return p;
+    }
+
+    bool visited(Node u) const noexcept {
+        return heap.state(u) == Heap::POST_HEAP;
     }
 };
 

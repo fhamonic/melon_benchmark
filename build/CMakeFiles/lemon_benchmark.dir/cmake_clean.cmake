@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o"
-  "CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o.d"
+  "CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o"
+  "CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o.d"
   "bin/lemon_benchmark"
   "bin/lemon_benchmark.pdb"
 )

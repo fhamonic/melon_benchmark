@@ -69,28 +69,28 @@ include CMakeFiles/melon_benchmark.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/melon_benchmark.dir/flags.make
 
-CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o: CMakeFiles/melon_benchmark.dir/flags.make
-CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o: ../src/melon_benchmark.cpp
-CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o: CMakeFiles/melon_benchmark.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o -MF CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o.d -o CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o -c /home/plaiseek/Projects/melon_benchmark/src/melon_benchmark.cpp
+CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o: CMakeFiles/melon_benchmark.dir/flags.make
+CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o: ../src/benchmark_melon.cpp
+CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o: CMakeFiles/melon_benchmark.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o -MF CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o.d -o CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o -c /home/plaiseek/Projects/melon_benchmark/src/benchmark_melon.cpp
 
-CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/plaiseek/Projects/melon_benchmark/src/melon_benchmark.cpp > CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.i
+CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/plaiseek/Projects/melon_benchmark/src/benchmark_melon.cpp > CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.i
 
-CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/plaiseek/Projects/melon_benchmark/src/melon_benchmark.cpp -o CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.s
+CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/plaiseek/Projects/melon_benchmark/src/benchmark_melon.cpp -o CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.s
 
 # Object files for target melon_benchmark
 melon_benchmark_OBJECTS = \
-"CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o"
+"CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o"
 
 # External object files for target melon_benchmark
 melon_benchmark_EXTERNAL_OBJECTS =
 
-bin/melon_benchmark: CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o
+bin/melon_benchmark: CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o
 bin/melon_benchmark: CMakeFiles/melon_benchmark.dir/build.make
 bin/melon_benchmark: CMakeFiles/melon_benchmark.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable bin/melon_benchmark"

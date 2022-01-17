@@ -117,6 +117,45 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named lemon_correctness
+
+# Build rule for target.
+lemon_correctness: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lemon_correctness
+.PHONY : lemon_correctness
+
+# fast build rule for target.
+lemon_correctness/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_correctness.dir/build.make CMakeFiles/lemon_correctness.dir/build
+.PHONY : lemon_correctness/fast
+
+#=============================================================================
+# Target rules for targets named bgl_correctness
+
+# Build rule for target.
+bgl_correctness: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bgl_correctness
+.PHONY : bgl_correctness
+
+# fast build rule for target.
+bgl_correctness/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_correctness.dir/build.make CMakeFiles/bgl_correctness.dir/build
+.PHONY : bgl_correctness/fast
+
+#=============================================================================
+# Target rules for targets named melon_correctness
+
+# Build rule for target.
+melon_correctness: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 melon_correctness
+.PHONY : melon_correctness
+
+# fast build rule for target.
+melon_correctness/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_correctness.dir/build.make CMakeFiles/melon_correctness.dir/build
+.PHONY : melon_correctness/fast
+
+#=============================================================================
 # Target rules for targets named lemon_benchmark
 
 # Build rule for target.
@@ -155,77 +194,149 @@ melon_benchmark/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/build
 .PHONY : melon_benchmark/fast
 
-src/bgl_benchmark.o: src/bgl_benchmark.cpp.o
-.PHONY : src/bgl_benchmark.o
+src/benchmark_bgl.o: src/benchmark_bgl.cpp.o
+.PHONY : src/benchmark_bgl.o
 
 # target to build an object file
-src/bgl_benchmark.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_benchmark.dir/build.make CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.o
-.PHONY : src/bgl_benchmark.cpp.o
+src/benchmark_bgl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_benchmark.dir/build.make CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o
+.PHONY : src/benchmark_bgl.cpp.o
 
-src/bgl_benchmark.i: src/bgl_benchmark.cpp.i
-.PHONY : src/bgl_benchmark.i
+src/benchmark_bgl.i: src/benchmark_bgl.cpp.i
+.PHONY : src/benchmark_bgl.i
 
 # target to preprocess a source file
-src/bgl_benchmark.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_benchmark.dir/build.make CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.i
-.PHONY : src/bgl_benchmark.cpp.i
+src/benchmark_bgl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_benchmark.dir/build.make CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.i
+.PHONY : src/benchmark_bgl.cpp.i
 
-src/bgl_benchmark.s: src/bgl_benchmark.cpp.s
-.PHONY : src/bgl_benchmark.s
+src/benchmark_bgl.s: src/benchmark_bgl.cpp.s
+.PHONY : src/benchmark_bgl.s
 
 # target to generate assembly for a file
-src/bgl_benchmark.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_benchmark.dir/build.make CMakeFiles/bgl_benchmark.dir/src/bgl_benchmark.cpp.s
-.PHONY : src/bgl_benchmark.cpp.s
+src/benchmark_bgl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_benchmark.dir/build.make CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.s
+.PHONY : src/benchmark_bgl.cpp.s
 
-src/lemon_benchmark.o: src/lemon_benchmark.cpp.o
-.PHONY : src/lemon_benchmark.o
+src/benchmark_lemon.o: src/benchmark_lemon.cpp.o
+.PHONY : src/benchmark_lemon.o
 
 # target to build an object file
-src/lemon_benchmark.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.o
-.PHONY : src/lemon_benchmark.cpp.o
+src/benchmark_lemon.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o
+.PHONY : src/benchmark_lemon.cpp.o
 
-src/lemon_benchmark.i: src/lemon_benchmark.cpp.i
-.PHONY : src/lemon_benchmark.i
+src/benchmark_lemon.i: src/benchmark_lemon.cpp.i
+.PHONY : src/benchmark_lemon.i
 
 # target to preprocess a source file
-src/lemon_benchmark.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.i
-.PHONY : src/lemon_benchmark.cpp.i
+src/benchmark_lemon.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.i
+.PHONY : src/benchmark_lemon.cpp.i
 
-src/lemon_benchmark.s: src/lemon_benchmark.cpp.s
-.PHONY : src/lemon_benchmark.s
+src/benchmark_lemon.s: src/benchmark_lemon.cpp.s
+.PHONY : src/benchmark_lemon.s
 
 # target to generate assembly for a file
-src/lemon_benchmark.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/src/lemon_benchmark.cpp.s
-.PHONY : src/lemon_benchmark.cpp.s
+src/benchmark_lemon.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.s
+.PHONY : src/benchmark_lemon.cpp.s
 
-src/melon_benchmark.o: src/melon_benchmark.cpp.o
-.PHONY : src/melon_benchmark.o
+src/benchmark_melon.o: src/benchmark_melon.cpp.o
+.PHONY : src/benchmark_melon.o
 
 # target to build an object file
-src/melon_benchmark.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.o
-.PHONY : src/melon_benchmark.cpp.o
+src/benchmark_melon.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o
+.PHONY : src/benchmark_melon.cpp.o
 
-src/melon_benchmark.i: src/melon_benchmark.cpp.i
-.PHONY : src/melon_benchmark.i
+src/benchmark_melon.i: src/benchmark_melon.cpp.i
+.PHONY : src/benchmark_melon.i
 
 # target to preprocess a source file
-src/melon_benchmark.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.i
-.PHONY : src/melon_benchmark.cpp.i
+src/benchmark_melon.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.i
+.PHONY : src/benchmark_melon.cpp.i
 
-src/melon_benchmark.s: src/melon_benchmark.cpp.s
-.PHONY : src/melon_benchmark.s
+src/benchmark_melon.s: src/benchmark_melon.cpp.s
+.PHONY : src/benchmark_melon.s
 
 # target to generate assembly for a file
-src/melon_benchmark.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/src/melon_benchmark.cpp.s
-.PHONY : src/melon_benchmark.cpp.s
+src/benchmark_melon.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.s
+.PHONY : src/benchmark_melon.cpp.s
+
+src/correctness_bgl.o: src/correctness_bgl.cpp.o
+.PHONY : src/correctness_bgl.o
+
+# target to build an object file
+src/correctness_bgl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_correctness.dir/build.make CMakeFiles/bgl_correctness.dir/src/correctness_bgl.cpp.o
+.PHONY : src/correctness_bgl.cpp.o
+
+src/correctness_bgl.i: src/correctness_bgl.cpp.i
+.PHONY : src/correctness_bgl.i
+
+# target to preprocess a source file
+src/correctness_bgl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_correctness.dir/build.make CMakeFiles/bgl_correctness.dir/src/correctness_bgl.cpp.i
+.PHONY : src/correctness_bgl.cpp.i
+
+src/correctness_bgl.s: src/correctness_bgl.cpp.s
+.PHONY : src/correctness_bgl.s
+
+# target to generate assembly for a file
+src/correctness_bgl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_correctness.dir/build.make CMakeFiles/bgl_correctness.dir/src/correctness_bgl.cpp.s
+.PHONY : src/correctness_bgl.cpp.s
+
+src/correctness_lemon.o: src/correctness_lemon.cpp.o
+.PHONY : src/correctness_lemon.o
+
+# target to build an object file
+src/correctness_lemon.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_correctness.dir/build.make CMakeFiles/lemon_correctness.dir/src/correctness_lemon.cpp.o
+.PHONY : src/correctness_lemon.cpp.o
+
+src/correctness_lemon.i: src/correctness_lemon.cpp.i
+.PHONY : src/correctness_lemon.i
+
+# target to preprocess a source file
+src/correctness_lemon.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_correctness.dir/build.make CMakeFiles/lemon_correctness.dir/src/correctness_lemon.cpp.i
+.PHONY : src/correctness_lemon.cpp.i
+
+src/correctness_lemon.s: src/correctness_lemon.cpp.s
+.PHONY : src/correctness_lemon.s
+
+# target to generate assembly for a file
+src/correctness_lemon.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_correctness.dir/build.make CMakeFiles/lemon_correctness.dir/src/correctness_lemon.cpp.s
+.PHONY : src/correctness_lemon.cpp.s
+
+src/correctness_melon.o: src/correctness_melon.cpp.o
+.PHONY : src/correctness_melon.o
+
+# target to build an object file
+src/correctness_melon.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_correctness.dir/build.make CMakeFiles/melon_correctness.dir/src/correctness_melon.cpp.o
+.PHONY : src/correctness_melon.cpp.o
+
+src/correctness_melon.i: src/correctness_melon.cpp.i
+.PHONY : src/correctness_melon.i
+
+# target to preprocess a source file
+src/correctness_melon.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_correctness.dir/build.make CMakeFiles/melon_correctness.dir/src/correctness_melon.cpp.i
+.PHONY : src/correctness_melon.cpp.i
+
+src/correctness_melon.s: src/correctness_melon.cpp.s
+.PHONY : src/correctness_melon.s
+
+# target to generate assembly for a file
+src/correctness_melon.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_correctness.dir/build.make CMakeFiles/melon_correctness.dir/src/correctness_melon.cpp.s
+.PHONY : src/correctness_melon.cpp.s
 
 # Help Target
 help:
@@ -236,17 +347,29 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... bgl_benchmark"
+	@echo "... bgl_correctness"
 	@echo "... lemon_benchmark"
+	@echo "... lemon_correctness"
 	@echo "... melon_benchmark"
-	@echo "... src/bgl_benchmark.o"
-	@echo "... src/bgl_benchmark.i"
-	@echo "... src/bgl_benchmark.s"
-	@echo "... src/lemon_benchmark.o"
-	@echo "... src/lemon_benchmark.i"
-	@echo "... src/lemon_benchmark.s"
-	@echo "... src/melon_benchmark.o"
-	@echo "... src/melon_benchmark.i"
-	@echo "... src/melon_benchmark.s"
+	@echo "... melon_correctness"
+	@echo "... src/benchmark_bgl.o"
+	@echo "... src/benchmark_bgl.i"
+	@echo "... src/benchmark_bgl.s"
+	@echo "... src/benchmark_lemon.o"
+	@echo "... src/benchmark_lemon.i"
+	@echo "... src/benchmark_lemon.s"
+	@echo "... src/benchmark_melon.o"
+	@echo "... src/benchmark_melon.i"
+	@echo "... src/benchmark_melon.s"
+	@echo "... src/correctness_bgl.o"
+	@echo "... src/correctness_bgl.i"
+	@echo "... src/correctness_bgl.s"
+	@echo "... src/correctness_lemon.o"
+	@echo "... src/correctness_lemon.i"
+	@echo "... src/correctness_lemon.s"
+	@echo "... src/correctness_melon.o"
+	@echo "... src/correctness_melon.i"
+	@echo "... src/correctness_melon.s"
 .PHONY : help
 
 
