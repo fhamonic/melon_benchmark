@@ -4,8 +4,6 @@
 
 #include "chrono.hpp"
 
-// #include "melon_rend-indexed.hpp"
-// #include "melon_1-index.hpp"
 #include "melon.hpp"
 
 using namespace fhamonic::melon;
