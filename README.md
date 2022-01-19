@@ -21,5 +21,5 @@ The build process requires CMake 3.12 (https://cmake.org/) or more and the Conan
     
 ## Result
 
-[Dijkstra Benchmark](results/results.pdf "Dijkstra benchmark figure")
+[[results/results.pdf]]
     
