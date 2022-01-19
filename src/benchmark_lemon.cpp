@@ -59,7 +59,13 @@ int main() {
          "data/9th_DIMACS_USA_roads/distance/USA-road-d.BAY.gr",
          "data/9th_DIMACS_USA_roads/time/USA-road-t.BAY.gr",
          "data/9th_DIMACS_USA_roads/distance/USA-road-d.COL.gr",
-         "data/9th_DIMACS_USA_roads/time/USA-road-t.COL.gr"});
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.COL.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.FLA.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.FLA.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NW.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.NW.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NE.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.NE.gr"});
 
     for(const auto & gr_file : gr_files) {
         // using Graph = ListDigraph;

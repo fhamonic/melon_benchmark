@@ -1,1 +1,1 @@
-/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o -o bin/lemon_benchmark  /usr/local/lib/libemon.a 
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o -o bin/lemon_benchmark  /usr/lib/libemon.so 

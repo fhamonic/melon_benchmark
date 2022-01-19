@@ -253,13 +253,13 @@ COMPILE_WITH_LTO:BOOL=ON
 HARDCORE_WARNINGS:BOOL=OFF
 
 //Path to Lemon graph library
-LEMON_DIR:PATH=/usr/local
+LEMON_DIR:PATH=/usr
 
 //Lemon graph library include path
-LEMON_INCLUDE_DIRS:PATH=/usr/local/include
+LEMON_INCLUDE_DIRS:PATH=/usr/include
 
 //Path to compiled Lemon graph library
-LEMON_LIBRARIES:FILEPATH=/usr/local/lib/libemon.a
+LEMON_LIBRARIES:FILEPATH=/usr/lib/libemon.so
 
 WARNINGS:BOOL=ON
 
