@@ -8,9 +8,9 @@ Benchmark of different implementations of Dijkstra algorithms.
 [![Generic badge](https://img.shields.io/badge/license-Boost%20Software%20License-blue)](https://www.boost.org/users/license.html)
 
 ## Dependencies
-LEMON (https://lemon.cs.elte.hu/trac/lemon)
-Boost (https://www.boost.org/doc/libs/release/libs/graph/) (resolved by Conan)
-Range-v3 (https://ericniebler.github.io/range-v3/) (resolved by Conan)
+- LEMON (https://lemon.cs.elte.hu/trac/lemon)
+- Boost (https://www.boost.org/doc/libs/release/libs/graph/) (resolved by Conan)
+- Range-v3 (https://ericniebler.github.io/range-v3/) (resolved by Conan)
 
 ### Build process
 The build process requires CMake 3.12 (https://cmake.org/) or more and the Conan C++ package manager (https://conan.io/).
