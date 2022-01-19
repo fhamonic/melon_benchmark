@@ -204,16 +204,8 @@ public:
 
 #endif  // MELON_STATIC_DIGRAPH_BUILDER_HPP
 
-#ifndef MELON_DIJKSTRA_HPP
-#define MELON_DIJKSTRA_HPP
-
-#include <algorithm>
-#include <queue>
-#include <ranges>
-#include <vector>
-
-#ifndef MELON_BINARY_HEAP_HPP
-#define MELON_BINARY_HEAP_HPP
+#ifndef MELON_FAST_BINARY_HEAP_HPP
+#define MELON_FAST_BINARY_HEAP_HPP
 
 #include <algorithm>
 #include <cassert>
@@ -225,115 +217,337 @@ namespace fhamonic {
 namespace melon {
 
 template <typename ND, typename PR, typename CMP = std::less<PR>>
-class BinaryHeap {
+class FastBinaryHeap {
 public:
     using Node = ND;
     using Prio = PR;
     using Compare = CMP;
     using Pair = std::pair<Node, Prio>;
 
-    enum State { IN_HEAP = 0, PRE_HEAP = -1, POST_HEAP = -2 };
-
 private:
+    using Index = std::vector<Pair>::size_type;
+
+public:
+    enum State : Index {
+        PRE_HEAP = Index(0),
+        POST_HEAP = Index(1),
+        IN_HEAP = Index(sizeof(Pair))
+    };
+
     std::vector<Pair> heap_array;
-    std::vector<int> indices_map;
+    std::vector<Index> indices_map;
     Compare cmp;
 
 public:
-    BinaryHeap(const std::size_t nb_nodes)
-        : heap_array(), indices_map(nb_nodes, State::PRE_HEAP), cmp() {}
+    FastBinaryHeap(const std::size_t nb_nodes)
+        : heap_array(1), indices_map(nb_nodes, State::PRE_HEAP), cmp() {}
 
-    BinaryHeap(const BinaryHeap & bin) = default;
-    BinaryHeap(BinaryHeap && bin) = default;
+    FastBinaryHeap(const FastBinaryHeap & bin) = default;
+    FastBinaryHeap(FastBinaryHeap && bin) = default;
 
-    int size() const { return heap_array.size(); }
-    bool empty() const { return heap_array.empty(); }
-    void clear() {
-        heap_array.clear();
+    Index size() const noexcept { return heap_array.size() - 1; }
+    bool empty() const noexcept { return size() == 0; }
+    void clear() noexcept {
+        heap_array.resize(1);
         std::ranges::fill(indices_map, State::PRE_HEAP);
     }
 
 private:
-    static int parent(const unsigned int i) { return (i - 1) / 2; }
-    static int secondChild(const unsigned int i) { return (i + 1) * 2; }
-
-    bool less(const Pair & p1, const Pair & p2) const {
-        return cmp(p1.second, p2.second);
+    constexpr Pair & pair_ref(Index i) {
+        return *(reinterpret_cast<Pair *>(
+            reinterpret_cast<std::byte *>(heap_array.data()) + i));
+    }
+    constexpr const Pair & pair_ref(Index i) const {
+        return *(reinterpret_cast<const Pair *>(
+            reinterpret_cast<const std::byte *>(heap_array.data()) + i));
     }
 
-    void move(const Pair & p, const unsigned int i) {
-        heap_array[i] = p;
-        indices_map[p.first] = i;
+    void heap_move(Index index, Pair && p) noexcept {
+        indices_map[p.first] = index;
+        pair_ref(index) = std::move(p);
     }
 
-    int bubbleUp(int hole, const Pair p) {
-        int par = parent(hole);
-        while(hole > 0 && less(p, heap_array[par])) {
-            move(heap_array[par], hole);
-            hole = par;
-            par = parent(hole);
+    void heap_push(Index holeIndex, Pair && p) noexcept {
+        while(holeIndex > sizeof(Pair)) {
+            Index parent = holeIndex / (2 * sizeof(Pair)) * sizeof(Pair);
+            if(!cmp(p.second, pair_ref(parent).second)) break;
+            heap_move(holeIndex, std::move(pair_ref(parent)));
+            holeIndex = parent;
         }
-        move(p, hole);
-        return hole;
+        heap_move(holeIndex, std::move(p));
     }
 
-    int bubbleDown(int hole, Pair p, const int length) {
-        int child = secondChild(hole);
-        while(child < length) {
-            if(less(heap_array[child - 1], heap_array[child])) {
-                --child;
+    void adjust_heap(Index holeIndex, const Index end, Pair && p) noexcept {
+        Index child = 2 * holeIndex;
+        while(child < end) {
+            child += sizeof(Pair) * cmp(pair_ref(child + sizeof(Pair)).second,
+                                        pair_ref(child).second);
+            if(cmp(pair_ref(child).second, p.second)) {
+                heap_move(holeIndex, std::move(pair_ref(child)));
+                holeIndex = child;
+                child = 2 * holeIndex;
+                continue;
             }
-            if(!less(heap_array[child], p)) {
-                move(p, hole);
-                return hole;
-            }
-            move(heap_array[child], hole);
-            hole = child;
-            child = secondChild(hole);
+            goto ok;
         }
-        --child;
-        if(child < length && less(heap_array[child], p)) {
-            move(heap_array[child], hole);
-            hole = child;
+        if(child == end && cmp(pair_ref(child).second, p.second)) {
+            heap_move(holeIndex, std::move(pair_ref(child)));
+            holeIndex = child;
         }
-        move(p, hole);
-        return hole;
+    ok:
+        heap_move(holeIndex, std::move(p));
     }
 
 public:
-    void push(const Pair & p) {
-        const int n = heap_array.size();
-        heap_array.resize(n + 1);
-        bubbleUp(n, p);
+    void push(Pair && p) noexcept {
+        heap_array.emplace_back();
+        heap_push(Index(size() * sizeof(Pair)), std::move(p));
     }
-    void push(const Node i, const Prio p) { push(Pair(i, p)); }
-    bool contains(const Node u) const { return indices_map[u] > 0; }
-    Prio prio(const Node u) const { return heap_array[indices_map[u]].second; }
-    Pair top() const { return heap_array[0]; }
-    Pair pop() {
-        assert(!heap_array.empty());
-        const unsigned int n = heap_array.size() - 1;
-        Pair p = heap_array[0];
+    void push(const Node i, const Prio p) noexcept { push(Pair(i, p)); }
+    bool contains(const Node u) const noexcept { return indices_map[u] > 0; }
+    Prio prio(const Node u) const noexcept {
+        return pair_ref(indices_map[u]).second;
+    }
+    Pair top() const noexcept {
+        assert(!empty());
+        return heap_array[1];
+    }
+    Pair pop() noexcept {
+        assert(!empty());
+        const Index n = heap_array.size() - 1;
+        const Pair p = std::move(heap_array[1]);
         indices_map[p.first] = POST_HEAP;
-        if(n > 0) {
-            bubbleDown(0, heap_array[n], n);
-        }
+        if(n > 1)
+            adjust_heap(Index(sizeof(Pair)), n * sizeof(Pair),
+                        std::move(heap_array.back()));
         heap_array.pop_back();
         return p;
     }
-    void decrease(const Node & u, const Prio & p) {
-        bubbleUp(indices_map[u], Pair(u, p));
+    void decrease(const Node & u, const Prio & p) noexcept {
+        heap_push(indices_map[u], Pair(u, p));
     }
-    State state(const Node & u) const {
-        return State(std::min(indices_map[u], 0));
+    State state(const Node & u) const noexcept {
+        return State(std::min(indices_map[u], Index(sizeof(Pair))));
     }
 };  // class BinHeap
 
 }  // namespace melon
 }  // namespace fhamonic
 
-#endif  // MELON_BINARY_HEAP_HPP
+#endif  // MELON_FAST_BINARY_HEAP_HPP
+#ifndef MELON_DIJKSTRA_HPP
+#define MELON_DIJKSTRA_HPP
 
+#include <algorithm>
+#include <queue>
+#include <ranges>
+#include <vector>
+
+#ifndef MELON_D_ARY_HEAP_HPP
+#define MELON_D_ARY_HEAP_HPP
+
+#include <algorithm>
+#include <cassert>
+#include <functional>
+#include <utility>
+#include <vector>
+
+namespace fhamonic {
+namespace melon {
+
+template <int D, typename ND, typename PR, typename CMP = std::less<PR>>
+class DAryHeap {
+public:
+    using Node = ND;
+    using Prio = PR;
+    using Compare = CMP;
+    using Pair = std::pair<Node, Prio>;
+
+private:
+    using Index = std::vector<Pair>::size_type;
+
+public:
+    enum State : char { PRE_HEAP = 0, IN_HEAP = 1, POST_HEAP = 2 };
+
+    std::vector<Pair> heap_array;
+    std::vector<Index> indices_map;
+    std::vector<State> states_map;
+    Compare cmp;
+
+public:
+    DAryHeap(const std::size_t nb_nodes)
+        : heap_array()
+        , indices_map(nb_nodes)
+        , states_map(nb_nodes, State::PRE_HEAP)
+        , cmp() {}
+
+    DAryHeap(const DAryHeap & bin) = default;
+    DAryHeap(DAryHeap && bin) = default;
+
+    Index size() const noexcept { return heap_array.size(); }
+    bool empty() const noexcept { return heap_array.empty(); }
+    void clear() noexcept {
+        heap_array.resize(0);
+        std::ranges::fill(states_map, State::PRE_HEAP);
+    }
+
+private:
+    static constexpr Index parent_of(Index i) {
+        return (i - sizeof(Pair)) / (sizeof(Pair) * D) * sizeof(Pair);
+    }
+    static constexpr Index first_child_of(Index i) {
+        return i * D + sizeof(Pair);
+    }
+    template <int I = D>
+    constexpr Index minimum_child(const Index first_child) {
+        if constexpr(I == 1)
+            return first_child;
+        else if constexpr(I == 2)
+            return first_child +
+                   sizeof(Pair) *
+                       cmp(pair_ref(first_child + sizeof(Pair)).second,
+                           pair_ref(first_child).second);
+        else {
+            Index first_half_minimum = minimum_child<I / 2>(first_child);
+            Index second_half_minimum =
+                minimum_child<I - I / 2>(first_child + (I / 2) * sizeof(Pair));
+            return cmp(pair_ref(second_half_minimum).second,
+                       pair_ref(first_half_minimum).second)
+                       ? second_half_minimum
+                       : first_half_minimum;
+        }
+    }
+    constexpr Index minimum_remaining_child(const Index first_child,
+                                            const Index nb_children) {
+        if constexpr(D == 2)
+            return first_child;
+        else if constexpr(D == 4) {
+            switch(nb_children) {
+                case 1:
+                    return minimum_child<1>(first_child);
+                case 2:
+                    return minimum_child<2>(first_child);
+                default:
+                    return minimum_child<3>(first_child);
+            }
+        } else {
+            switch(nb_children) {
+                case 1:
+                    return minimum_child<1>(first_child);
+                case 2:
+                    return minimum_child<2>(first_child);
+                default:
+                    const Index half = nb_children / 2;
+                    const Index first_half_minimum =
+                        minimum_remaining_child(first_child, half);
+                    const Index second_half_minimum = minimum_remaining_child(
+                        first_child + half * sizeof(Pair), nb_children - half);
+                    return cmp(pair_ref(second_half_minimum).second,
+                               pair_ref(first_half_minimum).second)
+                               ? second_half_minimum
+                               : first_half_minimum;
+            }
+        }
+    }
+
+    constexpr Pair & pair_ref(Index i) {
+        assert(0 <= (i / sizeof(Pair)) &&
+               (i / sizeof(Pair)) < heap_array.size());
+        return *(reinterpret_cast<Pair *>(
+            reinterpret_cast<std::byte *>(heap_array.data()) + i));
+    }
+    constexpr const Pair & pair_ref(Index i) const {
+        assert(0 <= (i / sizeof(Pair)) &&
+               (i / sizeof(Pair)) < heap_array.size());
+        return *(reinterpret_cast<const Pair *>(
+            reinterpret_cast<const std::byte *>(heap_array.data()) + i));
+    }
+    void heap_move(Index i, Pair && p) noexcept {
+        assert(0 <= (i / sizeof(Pair)) &&
+               (i / sizeof(Pair)) < heap_array.size());
+        indices_map[p.first] = i;
+        pair_ref(i) = std::move(p);
+    }
+
+    void heap_push(Index holeIndex, Pair && p) noexcept {
+        while(holeIndex > 0) {
+            Index parent = parent_of(holeIndex);
+            if(!cmp(p.second, pair_ref(parent).second)) break;
+            heap_move(holeIndex, std::move(pair_ref(parent)));
+            holeIndex = parent;
+        }
+        heap_move(holeIndex, std::move(p));
+    }
+
+    void adjust_heap(Index holeIndex, const Index end, Pair && p) noexcept {
+        Index child_end;
+        if constexpr(D > 2)
+            child_end =
+                end > D * sizeof(Pair) ? end - (D - 1) * sizeof(Pair) : 0;
+        else
+            child_end = end - (D - 1) * sizeof(Pair);
+        Index child = first_child_of(holeIndex);
+        while(child < child_end) {
+            child = minimum_child(child);
+            if(cmp(pair_ref(child).second, p.second)) {
+                heap_move(holeIndex, std::move(pair_ref(child)));
+                holeIndex = child;
+                child = first_child_of(child);
+                continue;
+            }
+            goto ok;
+        }
+        if(child < end) {
+            child =
+                minimum_remaining_child(child, (end - child) / sizeof(Pair));
+            if(cmp(pair_ref(child).second, p.second)) {
+                heap_move(holeIndex, std::move(pair_ref(child)));
+                holeIndex = child;
+            }
+        }
+    ok:
+        heap_move(holeIndex, std::move(p));
+    }
+
+public:
+    void push(Pair && p) noexcept {
+        const Index n = heap_array.size();
+        heap_array.emplace_back();
+        states_map[p.first] = IN_HEAP;
+        heap_push(Index(n * sizeof(Pair)), std::move(p));
+    }
+    void push(const Node i, const Prio p) noexcept { push(Pair(i, p)); }
+    Prio prio(const Node u) const noexcept {
+        return pair_ref(indices_map[u]).second;
+    }
+    Pair top() const noexcept {
+        assert(!heap_array.empty());
+        return heap_array.front();
+    }
+    Pair pop() noexcept {
+        assert(!heap_array.empty());
+        const Pair p = std::move(heap_array.front());
+        states_map[p.first] = POST_HEAP;
+        const Index n = heap_array.size() - 1;
+        if(n > 0)
+            adjust_heap(Index(0), n * sizeof(Pair),
+                        std::move(heap_array.back()));
+        heap_array.pop_back();
+        return p;
+    }
+    void decrease(const Node & u, const Prio & p) noexcept {
+        heap_push(indices_map[u], Pair(u, p));
+    }
+    State state(const Node & u) const noexcept { return states_map[u]; }
+};  // class DAryHeap
+
+template <typename ND, typename PR, typename CMP = std::less<PR>>
+using BinaryHeap = DAryHeap<2, ND, PR, CMP>;
+
+}  // namespace melon
+}  // namespace fhamonic
+
+#endif  // MELON_D_ARY_HEAP_HPP
 #ifndef MELON_DIJKSTRA_SEMIRINGS_HPP
 #define MELON_DIJKSTRA_SEMIRINGS_HPP
 
@@ -402,15 +616,15 @@ public:
     Dijkstra(const GR & g, const LM & l)
         : graph(g), length_map(l), heap(g.nb_nodes()), pred_map(g.nb_nodes()) {}
 
-    void addSource(Node s, Value dist = DijkstraSemiringTraits::zero) {
-        assert(!heap.contains(s));
+    void addSource(Node s, Value dist = DijkstraSemiringTraits::zero) noexcept {
+        assert(heap.state(s) != Heap::IN_HEAP);
         heap.push(s, dist);
         pred_map[s] = s;
     }
-    bool emptyQueue() const { return heap.empty(); }
-    void reset() { heap.clear(); }
+    bool emptyQueue() const noexcept { return heap.empty(); }
+    void reset() noexcept { heap.clear(); }
 
-    std::pair<Node, Value> processNextNode() {
+    std::pair<Node, Value> processNextNode() noexcept {
         const auto p = heap.pop();
         for(Arc a : graph.out_arcs(p.first)) {
             Node w = graph.target(a);
@@ -418,15 +632,16 @@ public:
             if(s == Heap::IN_HEAP) {
                 Value new_dist =
                     DijkstraSemiringTraits::plus(p.second, length_map[a]);
-                if(!DijkstraSemiringTraits::less(new_dist, heap.prio(w)))
-                    continue;
-                heap.decrease(w, new_dist);
-                pred_map[w] = p.first;
+                if(DijkstraSemiringTraits::less(new_dist, heap.prio(w))) {
+                    heap.decrease(w, new_dist);
+                    pred_map[w] = p.first;
+                }
                 continue;
             }
-            if(s == Heap::POST_HEAP) continue;
-            heap.push(w, DijkstraSemiringTraits::plus(p.second, length_map[a]));
-            pred_map[w] = p.first;
+            if(s == Heap::PRE_HEAP) {
+                heap.push(w, DijkstraSemiringTraits::plus(p.second, length_map[a]));
+                pred_map[w] = p.first;
+            }
         }
         return p;
     }
@@ -436,175 +651,5 @@ public:
 }  // namespace fhamonic
 
 #endif  // MELON_DIJKSTRA_HPP
-
-#ifndef MELON_IT_BINARY_HEAP_HPP
-#define MELON_IT_BINARY_HEAP_HPP
-
-#include <algorithm>
-#include <cassert>
-#include <functional>
-#include <utility>
-#include <vector>
-
-namespace fhamonic {
-namespace melon {
-
-template <typename ND, typename PR, typename CMP = std::less<PR>>
-class ItBinaryHeap {
-public:
-    using Node = ND;
-    using Prio = PR;
-    using Compare = CMP;
-    using Pair = std::pair<Node, Prio>;
-
-    enum State { IN_HEAP = 0l, PRE_HEAP = -1l, POST_HEAP = -2l };
-
-private:
-    using Iterator = std::vector<Pair>::iterator;
-    using Difference = std::vector<Pair>::difference_type;
-
-    std::vector<Pair> heap_array;
-    std::vector<Difference> indices_map;
-    Compare cmp;
-
-public:
-    ItBinaryHeap(const std::size_t nb_nodes)
-        : heap_array(), indices_map(nb_nodes, State::PRE_HEAP), cmp() {}
-
-    ItBinaryHeap(const ItBinaryHeap & bin) = default;
-    ItBinaryHeap(ItBinaryHeap && bin) = default;
-
-    int size() const { return heap_array.size(); }
-    bool empty() const { return heap_array.empty(); }
-    void clear() {
-        heap_array.clear();
-        std::ranges::fill(indices_map, State::PRE_HEAP);
-    }
-
-private:
-    static int parent(const unsigned int i) { return (i - 1) / 2; }
-    static int secondChild(const unsigned int i) { return (i + 1) * 2; }
-
-    bool less(const Pair & p1, const Pair & p2) const {
-        return cmp(p1.second, p2.second);
-    }
-
-    void move(const Pair & p, const unsigned int i) {
-        heap_array[i] = p;
-        indices_map[p.first] = i;
-    }
-
-    int bubbleUp(int hole, const Pair p) {
-        int par = parent(hole);
-        while(hole > 0 && less(p, heap_array[par])) {
-            move(heap_array[par], hole);
-            hole = par;
-            par = parent(hole);
-        }
-        move(p, hole);
-        return hole;
-    }
-
-    int bubbleDown(int hole, Pair p, const int length) {
-        int child = secondChild(hole);
-        while(child < length) {
-            if(less(heap_array[child - 1], heap_array[child])) {
-                --child;
-            }
-            if(!less(heap_array[child], p)) {
-                move(p, hole);
-                return hole;
-            }
-            move(heap_array[child], hole);
-            hole = child;
-            child = secondChild(hole);
-        }
-        --child;
-        if(child < length && less(heap_array[child], p)) {
-            move(heap_array[child], hole);
-            hole = child;
-        }
-        move(p, hole);
-        return hole;
-    }
-
-    void __heap_move(Iterator to, Pair && p) {
-        indices_map[p.first] = std::distance(heap_array.begin(), to);
-        *to = std::move(p);
-    }
-
-    void __push_heap(Iterator first, Difference holeIndex, Difference topIndex,
-                     Pair && p) {
-        Difference parent = (holeIndex - 1) / 2;
-        while(holeIndex > topIndex && cmp(p.second, (first + parent)->second)) {
-            __heap_move(first + holeIndex, std::move(*(first + parent)));
-            holeIndex = parent;
-            parent = (holeIndex - 1) / 2;
-        }
-        __heap_move(first + holeIndex, std::move(p));
-    }
-
-    void __adjust_heap(Iterator first, Difference holeIndex, Difference len,
-                       Pair && p) {
-        const Difference topIndex = holeIndex;
-        Difference secondChild = holeIndex;
-        while(secondChild < (len - 1) / 2) {
-            secondChild = 2 * (secondChild + 1);
-            if(cmp((first + (secondChild - 1))->second, (first + secondChild)->second))
-                secondChild--;
-            __heap_move(first + holeIndex, std::move(*(first + secondChild)));
-            holeIndex = secondChild;
-        }
-        if((len & 1) == 0 && secondChild == (len - 2) / 2) {
-            secondChild = 2 * (secondChild + 1);
-            __heap_move(first + holeIndex,
-                        std::move(*(first + (secondChild - 1))));
-            holeIndex = secondChild - 1;
-        }
-        __push_heap(first, holeIndex, topIndex, std::move(p));
-    }
-
-public:
-    void push(Pair && p) {
-        auto n = heap_array.size();
-        heap_array.resize(n + 1);
-        // bubbleUp(n, p);
-        __push_heap(heap_array.begin(), Difference(n), Difference(0),
-                    std::move(p));
-    }
-    void push(const Node i, const Prio p) { push(Pair(i, p)); }
-    bool contains(const Node u) const { return indices_map[u] > 0; }
-    Prio prio(const Node u) const { return heap_array[indices_map[u]].second; }
-    Pair top() const { return heap_array[0]; }
-    Pair pop() {
-        assert(!heap_array.empty());
-        // const unsigned int n = heap_array.size() - 1;
-        // Pair p = heap_array[0];
-        // indices_map[p.first] = POST_HEAP;
-        // if(n > 0) {
-        //     bubbleDown(0, heap_array[n], n);
-        // }
-        // heap_array.pop_back();
-        // return p;
-
-        Pair p = std::move(heap_array.front());
-        indices_map[p.first] = POST_HEAP;
-        __adjust_heap(heap_array.begin(), Difference(0),
-                       Difference(heap_array.size() - 1), std::move(heap_array.back()));
-        heap_array.pop_back();
-        return p;
-    }
-    void decrease(const Node & u, const Prio & p) {
-        bubbleUp(indices_map[u], Pair(u, p));
-    }
-    State state(const Node & u) const {
-        return State(std::min(indices_map[u], 0l));
-    }
-};  // class BinHeap
-
-}  // namespace melon
-}  // namespace fhamonic
-
-#endif  // MELON_IT_BINARY_HEAP_HPP
 
 #endif //FHAMONIC_MELON_HPP

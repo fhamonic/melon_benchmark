@@ -3,6 +3,7 @@
 /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/melon_correctness.dir
 /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/lemon_benchmark.dir
 /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/bgl_benchmark.dir
+/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/bgl_csr_benchmark.dir
 /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/melon_benchmark.dir
 /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/edit_cache.dir
 /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/rebuild_cache.dir

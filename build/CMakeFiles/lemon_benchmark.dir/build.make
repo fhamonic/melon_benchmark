@@ -92,7 +92,7 @@ lemon_benchmark_EXTERNAL_OBJECTS =
 
 bin/lemon_benchmark: CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o
 bin/lemon_benchmark: CMakeFiles/lemon_benchmark.dir/build.make
-bin/lemon_benchmark: /usr/lib/libemon.so
+bin/lemon_benchmark: /usr/local/lib/libemon.a
 bin/lemon_benchmark: CMakeFiles/lemon_benchmark.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable bin/lemon_benchmark"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lemon_benchmark.dir/link.txt --verbose=$(VERBOSE)

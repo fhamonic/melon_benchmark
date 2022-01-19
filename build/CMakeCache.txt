@@ -250,25 +250,16 @@ COMPILE_FOR_NATIVE:BOOL=ON
 
 COMPILE_WITH_LTO:BOOL=ON
 
-//Test CXX_COMPILER_HAS_MARCH=NATIVE
-CXX_COMPILER_HAS_MARCH:UNINITIALIZED=NATIVE:INTERNAL=1
-
 HARDCORE_WARNINGS:BOOL=OFF
 
-//The directory containing a CMake configuration file for LEMON.
-LEMON_DIR:PATH=/usr/local/share/lemon/cmake
-
-//LEMON include directory
-LEMON_INCLUDE_DIR:PATH=/usr/local/include
+//Path to Lemon graph library
+LEMON_DIR:PATH=/usr/local
 
 //Lemon graph library include path
-LEMON_INCLUDE_DIRS:PATH=/usr/include
+LEMON_INCLUDE_DIRS:PATH=/usr/local/include
 
 //Path to compiled Lemon graph library
-LEMON_LIBRARIES:FILEPATH=/usr/lib/libemon.so
-
-//LEMON library
-LEMON_LIBRARY:FILEPATH=/usr/local/lib/libemon.a
+LEMON_LIBRARIES:FILEPATH=/usr/local/lib/libemon.a
 
 WARNINGS:BOOL=ON
 
@@ -455,10 +446,6 @@ CXX_COMPILER_HAS_MARCH=NATIVE:INTERNAL=1
 CXX_COMPILER_HAS_WALL:INTERNAL=1
 //Test CXX_COMPILER_HAS_WEXTRA
 CXX_COMPILER_HAS_WEXTRA:INTERNAL=1
-//ADVANCED property for variable: LEMON_INCLUDE_DIR
-LEMON_INCLUDE_DIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: LEMON_LIBRARY
-LEMON_LIBRARY-ADVANCED:INTERNAL=1
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
 

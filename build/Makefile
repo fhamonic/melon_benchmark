@@ -182,6 +182,19 @@ bgl_benchmark/fast:
 .PHONY : bgl_benchmark/fast
 
 #=============================================================================
+# Target rules for targets named bgl_csr_benchmark
+
+# Build rule for target.
+bgl_csr_benchmark: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bgl_csr_benchmark
+.PHONY : bgl_csr_benchmark
+
+# fast build rule for target.
+bgl_csr_benchmark/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_csr_benchmark.dir/build.make CMakeFiles/bgl_csr_benchmark.dir/build
+.PHONY : bgl_csr_benchmark/fast
+
+#=============================================================================
 # Target rules for targets named melon_benchmark
 
 # Build rule for target.
@@ -217,6 +230,30 @@ src/benchmark_bgl.s: src/benchmark_bgl.cpp.s
 src/benchmark_bgl.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_benchmark.dir/build.make CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.s
 .PHONY : src/benchmark_bgl.cpp.s
+
+src/benchmark_bgl_csr.o: src/benchmark_bgl_csr.cpp.o
+.PHONY : src/benchmark_bgl_csr.o
+
+# target to build an object file
+src/benchmark_bgl_csr.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_csr_benchmark.dir/build.make CMakeFiles/bgl_csr_benchmark.dir/src/benchmark_bgl_csr.cpp.o
+.PHONY : src/benchmark_bgl_csr.cpp.o
+
+src/benchmark_bgl_csr.i: src/benchmark_bgl_csr.cpp.i
+.PHONY : src/benchmark_bgl_csr.i
+
+# target to preprocess a source file
+src/benchmark_bgl_csr.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_csr_benchmark.dir/build.make CMakeFiles/bgl_csr_benchmark.dir/src/benchmark_bgl_csr.cpp.i
+.PHONY : src/benchmark_bgl_csr.cpp.i
+
+src/benchmark_bgl_csr.s: src/benchmark_bgl_csr.cpp.s
+.PHONY : src/benchmark_bgl_csr.s
+
+# target to generate assembly for a file
+src/benchmark_bgl_csr.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_csr_benchmark.dir/build.make CMakeFiles/bgl_csr_benchmark.dir/src/benchmark_bgl_csr.cpp.s
+.PHONY : src/benchmark_bgl_csr.cpp.s
 
 src/benchmark_lemon.o: src/benchmark_lemon.cpp.o
 .PHONY : src/benchmark_lemon.o
@@ -348,6 +385,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... bgl_benchmark"
 	@echo "... bgl_correctness"
+	@echo "... bgl_csr_benchmark"
 	@echo "... lemon_benchmark"
 	@echo "... lemon_correctness"
 	@echo "... melon_benchmark"
@@ -355,6 +393,9 @@ help:
 	@echo "... src/benchmark_bgl.o"
 	@echo "... src/benchmark_bgl.i"
 	@echo "... src/benchmark_bgl.s"
+	@echo "... src/benchmark_bgl_csr.o"
+	@echo "... src/benchmark_bgl_csr.i"
+	@echo "... src/benchmark_bgl_csr.s"
 	@echo "... src/benchmark_lemon.o"
 	@echo "... src/benchmark_lemon.i"
 	@echo "... src/benchmark_lemon.s"
