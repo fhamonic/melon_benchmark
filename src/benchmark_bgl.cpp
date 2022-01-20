@@ -79,7 +79,7 @@ int main() {
          "data/9th_DIMACS_USA_roads/distance/USA-road-d.NE.gr",
          "data/9th_DIMACS_USA_roads/time/USA-road-t.NE.gr"});
 
-    std::cout << "instance, nb_nodes, nb_arcs, time_ms\n";
+    std::cout << "instance,nb_nodes,nb_arcs,time_ms\n";
 
     for(const auto & gr_file : gr_files) {
         graph_t graph;
