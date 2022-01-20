@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -8,7 +9,7 @@
 
 using namespace fhamonic::melon;
 
-auto parse_gr(std::string file_name) {
+auto parse_gr(const std::filesystem::path & file_name) {
     StaticDigraphBuilder<double> builder(0);
 
     std::ifstream gr_file(file_name);
@@ -47,7 +48,7 @@ auto parse_gr(std::string file_name) {
 }
 
 int main() {
-    std::vector<std::string> gr_files(
+    std::vector<std::filesystem::path> gr_files(
         {"data/rome99.gr",
          "data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr",
          "data/9th_DIMACS_USA_roads/time/USA-road-t.NY.gr",
@@ -62,16 +63,15 @@ int main() {
          "data/9th_DIMACS_USA_roads/distance/USA-road-d.NE.gr",
          "data/9th_DIMACS_USA_roads/time/USA-road-t.NE.gr"});
 
+    std::cout << "instance, nb_nodes, nb_arcs, time_ms\n";
+
     for(const auto & gr_file : gr_files) {
         auto [graph, length_map] = parse_gr(gr_file);
-
-        const int nb_nodes = graph.nb_nodes();
-        std::cout << gr_file << " : " << nb_nodes << " nodes , "
-                  << graph.nb_arcs() << " arcs" << std::endl;
 
         Chrono gr_chrono;
         double avg_time = 0;
         int iterations = 0;
+        const int nb_nodes = graph.nb_nodes();
         const int nb_iterations = 30000.0 * 10000.0 / nb_nodes;
         for(StaticDigraph::Node s : graph.nodes()) {
             Chrono chrono;
@@ -86,17 +86,14 @@ int main() {
             }
 
             double time_ms = (chrono.timeUs() / 1000.0);
-            // std::cout << "Dijkstra from " << s << " takes " << time_ms
-            //           << " ms, sum dists = " << sum << std::endl;
-
             avg_time += time_ms;
             ++iterations;
             if(iterations >= nb_iterations) break;
         }
         avg_time /= iterations;
 
-        std::cout << "avg time Dijkstra : " << avg_time << " ms" << std::endl;
+        std::cout << gr_file.stem() << ',' << nb_nodes << ',' << graph.nb_arcs()
+                  << ',' << avg_time << std::endl;
     }
-
-    return EXIT_SUCCESS;
+    return 0;
 }

@@ -594,7 +594,7 @@ namespace melon {
 
 template <typename GR, typename LM,
           typename SR = DijkstraShortestPathSemiring<typename LM::value_type>,
-          typename HP = BinaryHeap<typename GR::Node, typename LM::value_type,
+          typename HP = FastBinaryHeap<typename GR::Node, typename LM::value_type,
                                    decltype(SR::less)>>
 class Dijkstra {
 public:

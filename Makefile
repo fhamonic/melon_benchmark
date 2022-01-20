@@ -20,4 +20,8 @@ clean:
 	@rm -rf $(BUILD_DIR)
 
 benchmark:
-	(./build/bin/bgl_csr_benchmark > bgl_csr.log) && (./build/bin/bgl_benchmark > bgl.log) && (./build/bin/lemon_benchmark > lemon.log) && (./build/bin/melon_benchmark > melon.log)
+	mkdir -p results
+	./build/bin/bgl_csr_benchmark > results/bgl_csr.log
+	./build/bin/bgl_benchmark > results/bgl.log
+	./build/bin/lemon_benchmark > results/lemon.log
+	./build/bin/melon_benchmark > results/melon.log

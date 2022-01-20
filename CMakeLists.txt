@@ -34,90 +34,57 @@ conan_basic_setup(TARGETS)
 
 find_package(LEMON REQUIRED)
 
+# ############ COMPILATION OPTIONS MACRO #############
+function(set_common_options _target)
+target_include_directories(${_target} PUBLIC include)
+target_compile_options_if_exists(${_target} PRIVATE ${WARNINGS}
+                                 ${WARNINGS_LIST})
+target_compile_options_if_exists(${_target} PRIVATE ${COMPILE_FOR_NATIVE}
+                                 -march=native)
+target_compile_options_if_exists(${_target} PRIVATE ${COMPILE_WITH_LTO}
+                                 -flto)
+endfunction()
 
 # ################ CORRECTNESS TEST ##################
 
 # ################## LEMON target ####################
 add_executable(lemon_correctness src/correctness_lemon.cpp)
 set_target_properties(lemon_correctness PROPERTIES CXX_STANDARD 17)
-target_include_directories(lemon_correctness PUBLIC include)
 target_include_directories(lemon_correctness PUBLIC ${LEMON_INCLUDE_DIRS})
 target_link_libraries(lemon_correctness ${LEMON_LIBRARIES})
-target_compile_options_if_exists(lemon_correctness PRIVATE ${WARNINGS}
-                                 ${WARNINGS_LIST})
-target_compile_options_if_exists(lemon_correctness PRIVATE ${COMPILE_FOR_NATIVE}
-                                 -march=native)
-target_compile_options_if_exists(lemon_correctness PRIVATE ${COMPILE_WITH_LTO}
-                                 -flto)
+set_common_options(lemon_correctness)
 # ################## BOOST target ####################              
 add_executable(bgl_correctness src/correctness_bgl.cpp)
 set_target_properties(bgl_correctness PROPERTIES CXX_STANDARD 20)
-target_include_directories(bgl_correctness PUBLIC include)
 target_link_libraries(bgl_correctness CONAN_PKG::boost)
-target_compile_options_if_exists(bgl_correctness PRIVATE ${WARNINGS}
-                                ${WARNINGS_LIST})
-target_compile_options_if_exists(bgl_correctness PRIVATE ${COMPILE_FOR_NATIVE}
-                                -march=native)
-target_compile_options_if_exists(bgl_correctness PRIVATE ${COMPILE_WITH_LTO}
-                                -flto)                                 
+set_common_options(bgl_correctness)
 # ################## MELON target ####################
 add_executable(melon_correctness src/correctness_melon.cpp)
 set_target_properties(melon_correctness PROPERTIES CXX_STANDARD 20)
-target_include_directories(melon_correctness PUBLIC include)
 target_link_libraries(melon_correctness CONAN_PKG::range-v3)
-target_compile_options_if_exists(melon_correctness PRIVATE ${WARNINGS}
-                                 ${WARNINGS_LIST})
-target_compile_options_if_exists(melon_correctness PRIVATE ${COMPILE_FOR_NATIVE}
-                                 -march=native)
-target_compile_options_if_exists(melon_correctness PRIVATE ${COMPILE_WITH_LTO}
-                                 -flto)
-
+set_common_options(melon_correctness)
 
 # ################### BENCHMARKS #####################
 
 # ################## LEMON target ####################
 add_executable(lemon_benchmark src/benchmark_lemon.cpp)
 set_target_properties(lemon_benchmark PROPERTIES CXX_STANDARD 17)
-target_include_directories(lemon_benchmark PUBLIC include)
 target_include_directories(lemon_benchmark PUBLIC ${LEMON_INCLUDE_DIRS})
 target_link_libraries(lemon_benchmark ${LEMON_LIBRARIES})
-target_compile_options_if_exists(lemon_benchmark PRIVATE ${WARNINGS}
-                                 ${WARNINGS_LIST})
-target_compile_options_if_exists(lemon_benchmark PRIVATE ${COMPILE_FOR_NATIVE}
-                                 -march=native)
-target_compile_options_if_exists(lemon_benchmark PRIVATE ${COMPILE_WITH_LTO}
-                                 -flto)
+set_common_options(lemon_benchmark)
 # ################## BOOST target ####################                            
 add_executable(bgl_benchmark src/benchmark_bgl.cpp)
 set_target_properties(bgl_benchmark PROPERTIES CXX_STANDARD 20)
-target_include_directories(bgl_benchmark PUBLIC include)
 target_link_libraries(bgl_benchmark CONAN_PKG::boost)
-target_compile_options_if_exists(bgl_benchmark PRIVATE ${WARNINGS}
-                                 ${WARNINGS_LIST})
-target_compile_options_if_exists(bgl_benchmark PRIVATE ${COMPILE_FOR_NATIVE}
-                                 -march=native)
-target_compile_options_if_exists(bgl_benchmark PRIVATE ${COMPILE_WITH_LTO}
-                                 -flto)    
+set_common_options(bgl_benchmark)
 
 add_executable(bgl_csr_benchmark src/benchmark_bgl_csr.cpp)
 set_target_properties(bgl_csr_benchmark PROPERTIES CXX_STANDARD 20)
-target_include_directories(bgl_csr_benchmark PUBLIC include)
 target_link_libraries(bgl_csr_benchmark CONAN_PKG::boost)
-target_compile_options_if_exists(bgl_csr_benchmark PRIVATE ${WARNINGS}
-                                ${WARNINGS_LIST})
-target_compile_options_if_exists(bgl_csr_benchmark PRIVATE ${COMPILE_FOR_NATIVE}
-                                -march=native)
-target_compile_options_if_exists(bgl_csr_benchmark PRIVATE ${COMPILE_WITH_LTO}
-                                -flto)                                
+set_common_options(bgl_csr_benchmark)                              
                                                                                               
 # ################## MELON target ####################
 add_executable(melon_benchmark src/benchmark_melon.cpp)
 set_target_properties(melon_benchmark PROPERTIES CXX_STANDARD 20)
-target_include_directories(melon_benchmark PUBLIC include)
 target_link_libraries(melon_benchmark CONAN_PKG::range-v3)
-target_compile_options_if_exists(melon_benchmark PRIVATE ${WARNINGS}
-                                 ${WARNINGS_LIST})
-target_compile_options_if_exists(melon_benchmark PRIVATE ${COMPILE_FOR_NATIVE}
-                                 -march=native)
-target_compile_options_if_exists(melon_benchmark PRIVATE ${COMPILE_WITH_LTO}
-                                 -flto)
+set_common_options(melon_benchmark)

@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -17,7 +18,7 @@ typedef graph_traits<graph_t>::vertex_descriptor vertex_descriptor;
 typedef graph_traits<graph_t>::edge_descriptor edge_descriptor;
 typedef std::pair<int, int> Edge;
 
-void parse_gr(std::string file_name, graph_t & graph,
+void parse_gr(const std::filesystem::path & file_name, graph_t & graph,
               property_map<graph_t, edge_weight_t>::type & length_map) {
     int nb_nodes;
     std::vector<std::tuple<int, int, double>> arcs;
@@ -63,7 +64,7 @@ void parse_gr(std::string file_name, graph_t & graph,
 }
 
 int main() {
-    std::vector<std::string> gr_files(
+    std::vector<std::filesystem::path> gr_files(
         {"data/rome99.gr",
          "data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr",
          "data/9th_DIMACS_USA_roads/time/USA-road-t.NY.gr",
@@ -78,18 +79,17 @@ int main() {
          "data/9th_DIMACS_USA_roads/distance/USA-road-d.NE.gr",
          "data/9th_DIMACS_USA_roads/time/USA-road-t.NE.gr"});
 
+    std::cout << "instance, nb_nodes, nb_arcs, time_ms\n";
+
     for(const auto & gr_file : gr_files) {
         graph_t graph;
         property_map<graph_t, edge_weight_t>::type length_map;
         parse_gr(gr_file, graph, length_map);
 
-        const int nb_nodes = num_vertices(graph);
-        std::cout << gr_file << " : " << nb_nodes << " nodes , "
-                  << num_edges(graph) << " arcs" << std::endl;
-
         Chrono gr_chrono;
         double avg_time = 0;
         int iterations = 0;
+        const int nb_nodes = num_vertices(graph);
         const int nb_iterations = 30000.0 * 10000.0 / nb_nodes;
         graph_traits<graph_t>::vertex_iterator si, send;
         for(tie(si, send) = vertices(graph); si != send; ++si) {
@@ -108,16 +108,14 @@ int main() {
             }
 
             double time_ms = (chrono.timeUs() / 1000.0);
-            // std::cout << "Dijkstra from " << s << " takes " << time_ms
-            //           << " ms, sum dists = " << sum << std::endl;
-
             avg_time += time_ms;
             ++iterations;
             if(iterations >= nb_iterations) break;
         }
         avg_time /= iterations;
 
-        std::cout << "avg time Dijkstra : " << avg_time << " ms" << std::endl;
+        std::cout << gr_file.stem() << ',' << nb_nodes << ','
+                  << num_edges(graph) << ',' << avg_time << std::endl;
     }
     return 0;
 }
