@@ -9,12 +9,12 @@ def readCSV(file_name, delimiter=','):
 
 
 
-instances = [row['instance'] for row in readCSV('results/{}'.format("melon.csv"))]
+instances = [row['instance'] for row in readCSV('results/dijkstra/melon_static_graph.csv')]
 libs = ["BGL_adjacency_list_vecS", "BGL_compressed_sparse_row_graph", "LEMON_StaticDigraph", "MELON_StaticDigraph"]
-data = [[int(float(row['time_ms'])) for row in readCSV('results/{}'.format("bgl.csv"))],
-        [int(float(row['time_ms'])) for row in readCSV('results/{}'.format("bgl_csr.csv"))],
-        [int(float(row['time_ms'])) for row in readCSV('results/{}'.format("lemon.csv"))],
-        [int(float(row['time_ms'])) for row in readCSV('results/{}'.format("melon.csv"))]]
+data = [[int(float(row['time_ms'])) for row in readCSV('results/dijkstra/bgl.csv')],
+        [int(float(row['time_ms'])) for row in readCSV('results/dijkstra/bgl_csr.csv')],
+        [int(float(row['time_ms'])) for row in readCSV('results/dijkstra/lemon_static_graph.csv')],
+        [int(float(row['time_ms'])) for row in readCSV('results/dijkstra/melon_static_graph.csv')]]
 x = np.arange(len(instances))
 
 width = 0.225  # width of the bars
@@ -51,6 +51,4 @@ for rect_plot in rect_plots:
 
 fig.tight_layout()
 
-
-
-plt.show()
+plt.savefig('results/dijkstra/plot.png')

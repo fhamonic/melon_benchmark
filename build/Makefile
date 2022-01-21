@@ -117,263 +117,263 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named lemon_correctness
+# Target rules for targets named dijkstra_tests_lemon
 
 # Build rule for target.
-lemon_correctness: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lemon_correctness
-.PHONY : lemon_correctness
+dijkstra_tests_lemon: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dijkstra_tests_lemon
+.PHONY : dijkstra_tests_lemon
 
 # fast build rule for target.
-lemon_correctness/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_correctness.dir/build.make CMakeFiles/lemon_correctness.dir/build
-.PHONY : lemon_correctness/fast
+dijkstra_tests_lemon/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_lemon.dir/build.make CMakeFiles/dijkstra_tests_lemon.dir/build
+.PHONY : dijkstra_tests_lemon/fast
 
 #=============================================================================
-# Target rules for targets named bgl_correctness
+# Target rules for targets named dijkstra_tests_bgl
 
 # Build rule for target.
-bgl_correctness: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bgl_correctness
-.PHONY : bgl_correctness
+dijkstra_tests_bgl: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dijkstra_tests_bgl
+.PHONY : dijkstra_tests_bgl
 
 # fast build rule for target.
-bgl_correctness/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_correctness.dir/build.make CMakeFiles/bgl_correctness.dir/build
-.PHONY : bgl_correctness/fast
+dijkstra_tests_bgl/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_bgl.dir/build.make CMakeFiles/dijkstra_tests_bgl.dir/build
+.PHONY : dijkstra_tests_bgl/fast
 
 #=============================================================================
-# Target rules for targets named melon_correctness
+# Target rules for targets named dijkstra_tests_melon
 
 # Build rule for target.
-melon_correctness: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 melon_correctness
-.PHONY : melon_correctness
+dijkstra_tests_melon: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dijkstra_tests_melon
+.PHONY : dijkstra_tests_melon
 
 # fast build rule for target.
-melon_correctness/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_correctness.dir/build.make CMakeFiles/melon_correctness.dir/build
-.PHONY : melon_correctness/fast
+dijkstra_tests_melon/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_melon.dir/build.make CMakeFiles/dijkstra_tests_melon.dir/build
+.PHONY : dijkstra_tests_melon/fast
 
 #=============================================================================
-# Target rules for targets named lemon_benchmark
+# Target rules for targets named dijkstra_benchmark_lemon_static_graph
 
 # Build rule for target.
-lemon_benchmark: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lemon_benchmark
-.PHONY : lemon_benchmark
+dijkstra_benchmark_lemon_static_graph: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dijkstra_benchmark_lemon_static_graph
+.PHONY : dijkstra_benchmark_lemon_static_graph
 
 # fast build rule for target.
-lemon_benchmark/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/build
-.PHONY : lemon_benchmark/fast
+dijkstra_benchmark_lemon_static_graph/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_lemon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_lemon_static_graph.dir/build
+.PHONY : dijkstra_benchmark_lemon_static_graph/fast
 
 #=============================================================================
-# Target rules for targets named bgl_benchmark
+# Target rules for targets named dijkstra_benchmark_bgl_adjacency_list_vecS
 
 # Build rule for target.
-bgl_benchmark: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bgl_benchmark
-.PHONY : bgl_benchmark
+dijkstra_benchmark_bgl_adjacency_list_vecS: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dijkstra_benchmark_bgl_adjacency_list_vecS
+.PHONY : dijkstra_benchmark_bgl_adjacency_list_vecS
 
 # fast build rule for target.
-bgl_benchmark/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_benchmark.dir/build.make CMakeFiles/bgl_benchmark.dir/build
-.PHONY : bgl_benchmark/fast
+dijkstra_benchmark_bgl_adjacency_list_vecS/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/dijkstra_benchmark_bgl_adjacency_list_vecS.dir/build
+.PHONY : dijkstra_benchmark_bgl_adjacency_list_vecS/fast
 
 #=============================================================================
-# Target rules for targets named bgl_csr_benchmark
+# Target rules for targets named dijkstra_benchmark_bgl_compressed_sparse_row
 
 # Build rule for target.
-bgl_csr_benchmark: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bgl_csr_benchmark
-.PHONY : bgl_csr_benchmark
+dijkstra_benchmark_bgl_compressed_sparse_row: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dijkstra_benchmark_bgl_compressed_sparse_row
+.PHONY : dijkstra_benchmark_bgl_compressed_sparse_row
 
 # fast build rule for target.
-bgl_csr_benchmark/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_csr_benchmark.dir/build.make CMakeFiles/bgl_csr_benchmark.dir/build
-.PHONY : bgl_csr_benchmark/fast
+dijkstra_benchmark_bgl_compressed_sparse_row/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_bgl_compressed_sparse_row.dir/build.make CMakeFiles/dijkstra_benchmark_bgl_compressed_sparse_row.dir/build
+.PHONY : dijkstra_benchmark_bgl_compressed_sparse_row/fast
 
 #=============================================================================
-# Target rules for targets named melon_benchmark
+# Target rules for targets named dijkstra_benchmark_melon_static_graph
 
 # Build rule for target.
-melon_benchmark: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 melon_benchmark
-.PHONY : melon_benchmark
+dijkstra_benchmark_melon_static_graph: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dijkstra_benchmark_melon_static_graph
+.PHONY : dijkstra_benchmark_melon_static_graph
 
 # fast build rule for target.
-melon_benchmark/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/build
-.PHONY : melon_benchmark/fast
+dijkstra_benchmark_melon_static_graph/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_melon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_melon_static_graph.dir/build
+.PHONY : dijkstra_benchmark_melon_static_graph/fast
 
-src/benchmark_bgl.o: src/benchmark_bgl.cpp.o
-.PHONY : src/benchmark_bgl.o
-
-# target to build an object file
-src/benchmark_bgl.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_benchmark.dir/build.make CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.o
-.PHONY : src/benchmark_bgl.cpp.o
-
-src/benchmark_bgl.i: src/benchmark_bgl.cpp.i
-.PHONY : src/benchmark_bgl.i
-
-# target to preprocess a source file
-src/benchmark_bgl.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_benchmark.dir/build.make CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.i
-.PHONY : src/benchmark_bgl.cpp.i
-
-src/benchmark_bgl.s: src/benchmark_bgl.cpp.s
-.PHONY : src/benchmark_bgl.s
-
-# target to generate assembly for a file
-src/benchmark_bgl.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_benchmark.dir/build.make CMakeFiles/bgl_benchmark.dir/src/benchmark_bgl.cpp.s
-.PHONY : src/benchmark_bgl.cpp.s
-
-src/benchmark_bgl_csr.o: src/benchmark_bgl_csr.cpp.o
-.PHONY : src/benchmark_bgl_csr.o
+src/dijkstra/benchmark/bgl_adjacency_list_vecS.o: src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.o
+.PHONY : src/dijkstra/benchmark/bgl_adjacency_list_vecS.o
 
 # target to build an object file
-src/benchmark_bgl_csr.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_csr_benchmark.dir/build.make CMakeFiles/bgl_csr_benchmark.dir/src/benchmark_bgl_csr.cpp.o
-.PHONY : src/benchmark_bgl_csr.cpp.o
+src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/dijkstra_benchmark_bgl_adjacency_list_vecS.dir/src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.o
+.PHONY : src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.o
 
-src/benchmark_bgl_csr.i: src/benchmark_bgl_csr.cpp.i
-.PHONY : src/benchmark_bgl_csr.i
+src/dijkstra/benchmark/bgl_adjacency_list_vecS.i: src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.i
+.PHONY : src/dijkstra/benchmark/bgl_adjacency_list_vecS.i
 
 # target to preprocess a source file
-src/benchmark_bgl_csr.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_csr_benchmark.dir/build.make CMakeFiles/bgl_csr_benchmark.dir/src/benchmark_bgl_csr.cpp.i
-.PHONY : src/benchmark_bgl_csr.cpp.i
+src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/dijkstra_benchmark_bgl_adjacency_list_vecS.dir/src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.i
+.PHONY : src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.i
 
-src/benchmark_bgl_csr.s: src/benchmark_bgl_csr.cpp.s
-.PHONY : src/benchmark_bgl_csr.s
+src/dijkstra/benchmark/bgl_adjacency_list_vecS.s: src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.s
+.PHONY : src/dijkstra/benchmark/bgl_adjacency_list_vecS.s
 
 # target to generate assembly for a file
-src/benchmark_bgl_csr.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_csr_benchmark.dir/build.make CMakeFiles/bgl_csr_benchmark.dir/src/benchmark_bgl_csr.cpp.s
-.PHONY : src/benchmark_bgl_csr.cpp.s
+src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/dijkstra_benchmark_bgl_adjacency_list_vecS.dir/src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.s
+.PHONY : src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp.s
 
-src/benchmark_lemon.o: src/benchmark_lemon.cpp.o
-.PHONY : src/benchmark_lemon.o
+src/dijkstra/benchmark/bgl_compressed_sparse_row.o: src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.o
+.PHONY : src/dijkstra/benchmark/bgl_compressed_sparse_row.o
 
 # target to build an object file
-src/benchmark_lemon.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.o
-.PHONY : src/benchmark_lemon.cpp.o
+src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_bgl_compressed_sparse_row.dir/build.make CMakeFiles/dijkstra_benchmark_bgl_compressed_sparse_row.dir/src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.o
+.PHONY : src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.o
 
-src/benchmark_lemon.i: src/benchmark_lemon.cpp.i
-.PHONY : src/benchmark_lemon.i
+src/dijkstra/benchmark/bgl_compressed_sparse_row.i: src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.i
+.PHONY : src/dijkstra/benchmark/bgl_compressed_sparse_row.i
 
 # target to preprocess a source file
-src/benchmark_lemon.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.i
-.PHONY : src/benchmark_lemon.cpp.i
+src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_bgl_compressed_sparse_row.dir/build.make CMakeFiles/dijkstra_benchmark_bgl_compressed_sparse_row.dir/src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.i
+.PHONY : src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.i
 
-src/benchmark_lemon.s: src/benchmark_lemon.cpp.s
-.PHONY : src/benchmark_lemon.s
+src/dijkstra/benchmark/bgl_compressed_sparse_row.s: src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.s
+.PHONY : src/dijkstra/benchmark/bgl_compressed_sparse_row.s
 
 # target to generate assembly for a file
-src/benchmark_lemon.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_benchmark.dir/build.make CMakeFiles/lemon_benchmark.dir/src/benchmark_lemon.cpp.s
-.PHONY : src/benchmark_lemon.cpp.s
+src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_bgl_compressed_sparse_row.dir/build.make CMakeFiles/dijkstra_benchmark_bgl_compressed_sparse_row.dir/src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.s
+.PHONY : src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp.s
 
-src/benchmark_melon.o: src/benchmark_melon.cpp.o
-.PHONY : src/benchmark_melon.o
+src/dijkstra/benchmark/lemon_static_graph.o: src/dijkstra/benchmark/lemon_static_graph.cpp.o
+.PHONY : src/dijkstra/benchmark/lemon_static_graph.o
 
 # target to build an object file
-src/benchmark_melon.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.o
-.PHONY : src/benchmark_melon.cpp.o
+src/dijkstra/benchmark/lemon_static_graph.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_lemon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_lemon_static_graph.dir/src/dijkstra/benchmark/lemon_static_graph.cpp.o
+.PHONY : src/dijkstra/benchmark/lemon_static_graph.cpp.o
 
-src/benchmark_melon.i: src/benchmark_melon.cpp.i
-.PHONY : src/benchmark_melon.i
+src/dijkstra/benchmark/lemon_static_graph.i: src/dijkstra/benchmark/lemon_static_graph.cpp.i
+.PHONY : src/dijkstra/benchmark/lemon_static_graph.i
 
 # target to preprocess a source file
-src/benchmark_melon.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.i
-.PHONY : src/benchmark_melon.cpp.i
+src/dijkstra/benchmark/lemon_static_graph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_lemon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_lemon_static_graph.dir/src/dijkstra/benchmark/lemon_static_graph.cpp.i
+.PHONY : src/dijkstra/benchmark/lemon_static_graph.cpp.i
 
-src/benchmark_melon.s: src/benchmark_melon.cpp.s
-.PHONY : src/benchmark_melon.s
+src/dijkstra/benchmark/lemon_static_graph.s: src/dijkstra/benchmark/lemon_static_graph.cpp.s
+.PHONY : src/dijkstra/benchmark/lemon_static_graph.s
 
 # target to generate assembly for a file
-src/benchmark_melon.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_benchmark.dir/build.make CMakeFiles/melon_benchmark.dir/src/benchmark_melon.cpp.s
-.PHONY : src/benchmark_melon.cpp.s
+src/dijkstra/benchmark/lemon_static_graph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_lemon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_lemon_static_graph.dir/src/dijkstra/benchmark/lemon_static_graph.cpp.s
+.PHONY : src/dijkstra/benchmark/lemon_static_graph.cpp.s
 
-src/correctness_bgl.o: src/correctness_bgl.cpp.o
-.PHONY : src/correctness_bgl.o
+src/dijkstra/benchmark/melon_static_graph.o: src/dijkstra/benchmark/melon_static_graph.cpp.o
+.PHONY : src/dijkstra/benchmark/melon_static_graph.o
 
 # target to build an object file
-src/correctness_bgl.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_correctness.dir/build.make CMakeFiles/bgl_correctness.dir/src/correctness_bgl.cpp.o
-.PHONY : src/correctness_bgl.cpp.o
+src/dijkstra/benchmark/melon_static_graph.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_melon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_melon_static_graph.dir/src/dijkstra/benchmark/melon_static_graph.cpp.o
+.PHONY : src/dijkstra/benchmark/melon_static_graph.cpp.o
 
-src/correctness_bgl.i: src/correctness_bgl.cpp.i
-.PHONY : src/correctness_bgl.i
+src/dijkstra/benchmark/melon_static_graph.i: src/dijkstra/benchmark/melon_static_graph.cpp.i
+.PHONY : src/dijkstra/benchmark/melon_static_graph.i
 
 # target to preprocess a source file
-src/correctness_bgl.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_correctness.dir/build.make CMakeFiles/bgl_correctness.dir/src/correctness_bgl.cpp.i
-.PHONY : src/correctness_bgl.cpp.i
+src/dijkstra/benchmark/melon_static_graph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_melon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_melon_static_graph.dir/src/dijkstra/benchmark/melon_static_graph.cpp.i
+.PHONY : src/dijkstra/benchmark/melon_static_graph.cpp.i
 
-src/correctness_bgl.s: src/correctness_bgl.cpp.s
-.PHONY : src/correctness_bgl.s
+src/dijkstra/benchmark/melon_static_graph.s: src/dijkstra/benchmark/melon_static_graph.cpp.s
+.PHONY : src/dijkstra/benchmark/melon_static_graph.s
 
 # target to generate assembly for a file
-src/correctness_bgl.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bgl_correctness.dir/build.make CMakeFiles/bgl_correctness.dir/src/correctness_bgl.cpp.s
-.PHONY : src/correctness_bgl.cpp.s
+src/dijkstra/benchmark/melon_static_graph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_melon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_melon_static_graph.dir/src/dijkstra/benchmark/melon_static_graph.cpp.s
+.PHONY : src/dijkstra/benchmark/melon_static_graph.cpp.s
 
-src/correctness_lemon.o: src/correctness_lemon.cpp.o
-.PHONY : src/correctness_lemon.o
+src/dijkstra/tests/bgl.o: src/dijkstra/tests/bgl.cpp.o
+.PHONY : src/dijkstra/tests/bgl.o
 
 # target to build an object file
-src/correctness_lemon.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_correctness.dir/build.make CMakeFiles/lemon_correctness.dir/src/correctness_lemon.cpp.o
-.PHONY : src/correctness_lemon.cpp.o
+src/dijkstra/tests/bgl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_bgl.dir/build.make CMakeFiles/dijkstra_tests_bgl.dir/src/dijkstra/tests/bgl.cpp.o
+.PHONY : src/dijkstra/tests/bgl.cpp.o
 
-src/correctness_lemon.i: src/correctness_lemon.cpp.i
-.PHONY : src/correctness_lemon.i
+src/dijkstra/tests/bgl.i: src/dijkstra/tests/bgl.cpp.i
+.PHONY : src/dijkstra/tests/bgl.i
 
 # target to preprocess a source file
-src/correctness_lemon.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_correctness.dir/build.make CMakeFiles/lemon_correctness.dir/src/correctness_lemon.cpp.i
-.PHONY : src/correctness_lemon.cpp.i
+src/dijkstra/tests/bgl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_bgl.dir/build.make CMakeFiles/dijkstra_tests_bgl.dir/src/dijkstra/tests/bgl.cpp.i
+.PHONY : src/dijkstra/tests/bgl.cpp.i
 
-src/correctness_lemon.s: src/correctness_lemon.cpp.s
-.PHONY : src/correctness_lemon.s
+src/dijkstra/tests/bgl.s: src/dijkstra/tests/bgl.cpp.s
+.PHONY : src/dijkstra/tests/bgl.s
 
 # target to generate assembly for a file
-src/correctness_lemon.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lemon_correctness.dir/build.make CMakeFiles/lemon_correctness.dir/src/correctness_lemon.cpp.s
-.PHONY : src/correctness_lemon.cpp.s
+src/dijkstra/tests/bgl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_bgl.dir/build.make CMakeFiles/dijkstra_tests_bgl.dir/src/dijkstra/tests/bgl.cpp.s
+.PHONY : src/dijkstra/tests/bgl.cpp.s
 
-src/correctness_melon.o: src/correctness_melon.cpp.o
-.PHONY : src/correctness_melon.o
+src/dijkstra/tests/lemon.o: src/dijkstra/tests/lemon.cpp.o
+.PHONY : src/dijkstra/tests/lemon.o
 
 # target to build an object file
-src/correctness_melon.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_correctness.dir/build.make CMakeFiles/melon_correctness.dir/src/correctness_melon.cpp.o
-.PHONY : src/correctness_melon.cpp.o
+src/dijkstra/tests/lemon.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_lemon.dir/build.make CMakeFiles/dijkstra_tests_lemon.dir/src/dijkstra/tests/lemon.cpp.o
+.PHONY : src/dijkstra/tests/lemon.cpp.o
 
-src/correctness_melon.i: src/correctness_melon.cpp.i
-.PHONY : src/correctness_melon.i
+src/dijkstra/tests/lemon.i: src/dijkstra/tests/lemon.cpp.i
+.PHONY : src/dijkstra/tests/lemon.i
 
 # target to preprocess a source file
-src/correctness_melon.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_correctness.dir/build.make CMakeFiles/melon_correctness.dir/src/correctness_melon.cpp.i
-.PHONY : src/correctness_melon.cpp.i
+src/dijkstra/tests/lemon.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_lemon.dir/build.make CMakeFiles/dijkstra_tests_lemon.dir/src/dijkstra/tests/lemon.cpp.i
+.PHONY : src/dijkstra/tests/lemon.cpp.i
 
-src/correctness_melon.s: src/correctness_melon.cpp.s
-.PHONY : src/correctness_melon.s
+src/dijkstra/tests/lemon.s: src/dijkstra/tests/lemon.cpp.s
+.PHONY : src/dijkstra/tests/lemon.s
 
 # target to generate assembly for a file
-src/correctness_melon.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/melon_correctness.dir/build.make CMakeFiles/melon_correctness.dir/src/correctness_melon.cpp.s
-.PHONY : src/correctness_melon.cpp.s
+src/dijkstra/tests/lemon.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_lemon.dir/build.make CMakeFiles/dijkstra_tests_lemon.dir/src/dijkstra/tests/lemon.cpp.s
+.PHONY : src/dijkstra/tests/lemon.cpp.s
+
+src/dijkstra/tests/melon.o: src/dijkstra/tests/melon.cpp.o
+.PHONY : src/dijkstra/tests/melon.o
+
+# target to build an object file
+src/dijkstra/tests/melon.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_melon.dir/build.make CMakeFiles/dijkstra_tests_melon.dir/src/dijkstra/tests/melon.cpp.o
+.PHONY : src/dijkstra/tests/melon.cpp.o
+
+src/dijkstra/tests/melon.i: src/dijkstra/tests/melon.cpp.i
+.PHONY : src/dijkstra/tests/melon.i
+
+# target to preprocess a source file
+src/dijkstra/tests/melon.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_melon.dir/build.make CMakeFiles/dijkstra_tests_melon.dir/src/dijkstra/tests/melon.cpp.i
+.PHONY : src/dijkstra/tests/melon.cpp.i
+
+src/dijkstra/tests/melon.s: src/dijkstra/tests/melon.cpp.s
+.PHONY : src/dijkstra/tests/melon.s
+
+# target to generate assembly for a file
+src/dijkstra/tests/melon.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_melon.dir/build.make CMakeFiles/dijkstra_tests_melon.dir/src/dijkstra/tests/melon.cpp.s
+.PHONY : src/dijkstra/tests/melon.cpp.s
 
 # Help Target
 help:
@@ -383,34 +383,34 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... bgl_benchmark"
-	@echo "... bgl_correctness"
-	@echo "... bgl_csr_benchmark"
-	@echo "... lemon_benchmark"
-	@echo "... lemon_correctness"
-	@echo "... melon_benchmark"
-	@echo "... melon_correctness"
-	@echo "... src/benchmark_bgl.o"
-	@echo "... src/benchmark_bgl.i"
-	@echo "... src/benchmark_bgl.s"
-	@echo "... src/benchmark_bgl_csr.o"
-	@echo "... src/benchmark_bgl_csr.i"
-	@echo "... src/benchmark_bgl_csr.s"
-	@echo "... src/benchmark_lemon.o"
-	@echo "... src/benchmark_lemon.i"
-	@echo "... src/benchmark_lemon.s"
-	@echo "... src/benchmark_melon.o"
-	@echo "... src/benchmark_melon.i"
-	@echo "... src/benchmark_melon.s"
-	@echo "... src/correctness_bgl.o"
-	@echo "... src/correctness_bgl.i"
-	@echo "... src/correctness_bgl.s"
-	@echo "... src/correctness_lemon.o"
-	@echo "... src/correctness_lemon.i"
-	@echo "... src/correctness_lemon.s"
-	@echo "... src/correctness_melon.o"
-	@echo "... src/correctness_melon.i"
-	@echo "... src/correctness_melon.s"
+	@echo "... dijkstra_benchmark_bgl_adjacency_list_vecS"
+	@echo "... dijkstra_benchmark_bgl_compressed_sparse_row"
+	@echo "... dijkstra_benchmark_lemon_static_graph"
+	@echo "... dijkstra_benchmark_melon_static_graph"
+	@echo "... dijkstra_tests_bgl"
+	@echo "... dijkstra_tests_lemon"
+	@echo "... dijkstra_tests_melon"
+	@echo "... src/dijkstra/benchmark/bgl_adjacency_list_vecS.o"
+	@echo "... src/dijkstra/benchmark/bgl_adjacency_list_vecS.i"
+	@echo "... src/dijkstra/benchmark/bgl_adjacency_list_vecS.s"
+	@echo "... src/dijkstra/benchmark/bgl_compressed_sparse_row.o"
+	@echo "... src/dijkstra/benchmark/bgl_compressed_sparse_row.i"
+	@echo "... src/dijkstra/benchmark/bgl_compressed_sparse_row.s"
+	@echo "... src/dijkstra/benchmark/lemon_static_graph.o"
+	@echo "... src/dijkstra/benchmark/lemon_static_graph.i"
+	@echo "... src/dijkstra/benchmark/lemon_static_graph.s"
+	@echo "... src/dijkstra/benchmark/melon_static_graph.o"
+	@echo "... src/dijkstra/benchmark/melon_static_graph.i"
+	@echo "... src/dijkstra/benchmark/melon_static_graph.s"
+	@echo "... src/dijkstra/tests/bgl.o"
+	@echo "... src/dijkstra/tests/bgl.i"
+	@echo "... src/dijkstra/tests/bgl.s"
+	@echo "... src/dijkstra/tests/lemon.o"
+	@echo "... src/dijkstra/tests/lemon.i"
+	@echo "... src/dijkstra/tests/lemon.s"
+	@echo "... src/dijkstra/tests/melon.o"
+	@echo "... src/dijkstra/tests/melon.i"
+	@echo "... src/dijkstra/tests/melon.s"
 .PHONY : help
 
 

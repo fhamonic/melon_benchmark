@@ -19,9 +19,11 @@ $(BUILD_DIR):
 clean:
 	@rm -rf $(BUILD_DIR)
 
-benchmark:
+benchmark-dijkstra:
 	mkdir -p results
-	./build/bin/bgl_csr_benchmark > results/bgl_csr.csv
-	./build/bin/bgl_benchmark > results/bgl.csv
-	./build/bin/lemon_benchmark > results/lemon.csv
-	./build/bin/melon_benchmark > results/melon.csv
+	mkdir -p results/dijkstra
+	./build/bin/dijkstra_benchmark_bgl_adjacency_list_vecS > results/dijkstra/bgl.csv
+	./build/bin/dijkstra_benchmark_bgl_compressed_sparse_row > results/dijkstra/bgl_csr.csv
+	./build/bin/dijkstra_benchmark_lemon_static_graph > results/dijkstra/lemon_static_graph.csv
+	./build/bin/dijkstra_benchmark_melon_static_graph > results/dijkstra/melon_static_graph.csv
+	python results/dijkstra/plot.py

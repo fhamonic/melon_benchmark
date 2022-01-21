@@ -106,11 +106,11 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/lemon_correctness.dir/DependInfo.cmake"
-  "CMakeFiles/bgl_correctness.dir/DependInfo.cmake"
-  "CMakeFiles/melon_correctness.dir/DependInfo.cmake"
-  "CMakeFiles/lemon_benchmark.dir/DependInfo.cmake"
-  "CMakeFiles/bgl_benchmark.dir/DependInfo.cmake"
-  "CMakeFiles/bgl_csr_benchmark.dir/DependInfo.cmake"
-  "CMakeFiles/melon_benchmark.dir/DependInfo.cmake"
+  "CMakeFiles/dijkstra_tests_lemon.dir/DependInfo.cmake"
+  "CMakeFiles/dijkstra_tests_bgl.dir/DependInfo.cmake"
+  "CMakeFiles/dijkstra_tests_melon.dir/DependInfo.cmake"
+  "CMakeFiles/dijkstra_benchmark_lemon_static_graph.dir/DependInfo.cmake"
+  "CMakeFiles/dijkstra_benchmark_bgl_adjacency_list_vecS.dir/DependInfo.cmake"
+  "CMakeFiles/dijkstra_benchmark_bgl_compressed_sparse_row.dir/DependInfo.cmake"
+  "CMakeFiles/dijkstra_benchmark_melon_static_graph.dir/DependInfo.cmake"
   )

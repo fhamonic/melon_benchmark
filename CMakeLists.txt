@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 project(
-    melon_benchmark
+    dijkstra_benchmark_melon
     VERSION 1.0
     DESCRIPTION
         "Benchamrking different Dijkstras."
@@ -45,46 +45,46 @@ target_compile_options_if_exists(${_target} PRIVATE ${COMPILE_WITH_LTO}
                                  -flto)
 endfunction()
 
+function(set_boost_options _target)
+set_target_properties(${_target} PROPERTIES CXX_STANDARD 20)
+target_link_libraries(${_target} CONAN_PKG::boost)
+set_common_options(${_target})
+endfunction()
+
+function(set_lemon_options _target)
+set_target_properties(${_target} PROPERTIES CXX_STANDARD 17)
+target_include_directories(${_target} PUBLIC ${LEMON_INCLUDE_DIRS})
+target_link_libraries(${_target} ${LEMON_LIBRARIES})
+set_common_options(${_target})
+endfunction()
+
+function(set_melon_options _target)
+set_target_properties(${_target} PROPERTIES CXX_STANDARD 20)
+target_link_libraries(${_target} CONAN_PKG::range-v3)
+set_common_options(${_target})
+endfunction()
+
 # ################ CORRECTNESS TEST ##################
 
-# ################## LEMON target ####################
-add_executable(lemon_correctness src/correctness_lemon.cpp)
-set_target_properties(lemon_correctness PROPERTIES CXX_STANDARD 17)
-target_include_directories(lemon_correctness PUBLIC ${LEMON_INCLUDE_DIRS})
-target_link_libraries(lemon_correctness ${LEMON_LIBRARIES})
-set_common_options(lemon_correctness)
-# ################## BOOST target ####################              
-add_executable(bgl_correctness src/correctness_bgl.cpp)
-set_target_properties(bgl_correctness PROPERTIES CXX_STANDARD 20)
-target_link_libraries(bgl_correctness CONAN_PKG::boost)
-set_common_options(bgl_correctness)
-# ################## MELON target ####################
-add_executable(melon_correctness src/correctness_melon.cpp)
-set_target_properties(melon_correctness PROPERTIES CXX_STANDARD 20)
-target_link_libraries(melon_correctness CONAN_PKG::range-v3)
-set_common_options(melon_correctness)
+add_executable(dijkstra_tests_lemon src/dijkstra/tests/lemon.cpp)
+set_lemon_options(dijkstra_tests_lemon)
+           
+add_executable(dijkstra_tests_bgl src/dijkstra/tests/bgl.cpp)
+set_boost_options(dijkstra_tests_bgl)
+
+add_executable(dijkstra_tests_melon src/dijkstra/tests/melon.cpp)
+set_melon_options(dijkstra_tests_melon)
 
 # ################### BENCHMARKS #####################
 
-# ################## LEMON target ####################
-add_executable(lemon_benchmark src/benchmark_lemon.cpp)
-set_target_properties(lemon_benchmark PROPERTIES CXX_STANDARD 17)
-target_include_directories(lemon_benchmark PUBLIC ${LEMON_INCLUDE_DIRS})
-target_link_libraries(lemon_benchmark ${LEMON_LIBRARIES})
-set_common_options(lemon_benchmark)
-# ################## BOOST target ####################                            
-add_executable(bgl_benchmark src/benchmark_bgl.cpp)
-set_target_properties(bgl_benchmark PROPERTIES CXX_STANDARD 20)
-target_link_libraries(bgl_benchmark CONAN_PKG::boost)
-set_common_options(bgl_benchmark)
+add_executable(dijkstra_benchmark_lemon_static_graph src/dijkstra/benchmark/lemon_static_graph.cpp)
+set_lemon_options(dijkstra_benchmark_lemon_static_graph)
+                          
+add_executable(dijkstra_benchmark_bgl_adjacency_list_vecS src/dijkstra/benchmark/bgl_adjacency_list_vecS.cpp)
+set_boost_options(dijkstra_benchmark_bgl_adjacency_list_vecS)
 
-add_executable(bgl_csr_benchmark src/benchmark_bgl_csr.cpp)
-set_target_properties(bgl_csr_benchmark PROPERTIES CXX_STANDARD 20)
-target_link_libraries(bgl_csr_benchmark CONAN_PKG::boost)
-set_common_options(bgl_csr_benchmark)                              
-                                                                                              
-# ################## MELON target ####################
-add_executable(melon_benchmark src/benchmark_melon.cpp)
-set_target_properties(melon_benchmark PROPERTIES CXX_STANDARD 20)
-target_link_libraries(melon_benchmark CONAN_PKG::range-v3)
-set_common_options(melon_benchmark)
+add_executable(dijkstra_benchmark_bgl_compressed_sparse_row src/dijkstra/benchmark/bgl_compressed_sparse_row.cpp)
+set_boost_options(dijkstra_benchmark_bgl_compressed_sparse_row)                              
+                                                         
+add_executable(dijkstra_benchmark_melon_static_graph src/dijkstra/benchmark/melon_static_graph.cpp)
+set_melon_options(dijkstra_benchmark_melon_static_graph)
