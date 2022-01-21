@@ -6,6 +6,7 @@
 #include "chrono.hpp"
 
 #include "melon.hpp"
+#include "warm_up.hpp"
 
 using namespace fhamonic::melon;
 
@@ -49,8 +50,7 @@ auto parse_gr(const std::filesystem::path & file_name) {
 
 int main() {
     std::vector<std::filesystem::path> gr_files(
-        {"data/rome99.gr",
-         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr",
+        {"data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr",
          "data/9th_DIMACS_USA_roads/time/USA-road-t.NY.gr",
          "data/9th_DIMACS_USA_roads/distance/USA-road-d.BAY.gr",
          "data/9th_DIMACS_USA_roads/time/USA-road-t.BAY.gr",
@@ -64,6 +64,8 @@ int main() {
          "data/9th_DIMACS_USA_roads/time/USA-road-t.NE.gr"});
 
     std::cout << "instance,nb_nodes,nb_arcs,time_ms\n";
+
+    (void)warm_up();
 
     for(const auto & gr_file : gr_files) {
         auto [graph, length_map] = parse_gr(gr_file);
