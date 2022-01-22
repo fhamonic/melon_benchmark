@@ -19,6 +19,13 @@ $(BUILD_DIR):
 clean:
 	@rm -rf $(BUILD_DIR)
 
+tests-dijkstra:
+	mkdir -p results/dijkstra/tests/
+	./build/bin/dijkstra_tests_bgl > results/dijkstra/tests/bgl.log
+	./build/bin/dijkstra_tests_lemon > results/dijkstra/tests/lemon.log
+	./build/bin/dijkstra_tests_melon > results/dijkstra/tests/melon.log
+
+
 benchmark-dijkstra-dimacs:
 	./build/bin/dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS > results/dijkstra/dimacs/bgl_adjacency_list_vecS.csv
 	./build/bin/dijkstra_benchmark_dimacs_bgl_compressed_sparse_row > results/dijkstra/dimacs/bgl_compressed_sparse_row.csv
