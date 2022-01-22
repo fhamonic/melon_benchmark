@@ -167,7 +167,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=Benchamrking different Dijkstras.
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=dijkstra_benchmark_melon
+CMAKE_PROJECT_NAME:STATIC=dijkstra_benchmark_dimacs_melon
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION:STATIC=1.0
@@ -250,30 +250,27 @@ COMPILE_FOR_NATIVE:BOOL=ON
 
 COMPILE_WITH_LTO:BOOL=ON
 
-//Test CXX_COMPILER_HAS_MARCH=NATIVE
-CXX_COMPILER_HAS_MARCH:UNINITIALIZED=NATIVE:INTERNAL=1
-
 HARDCORE_WARNINGS:BOOL=OFF
 
 //Path to Lemon graph library
-LEMON_DIR:PATH=/usr
+LEMON_DIR:PATH=/usr/local
 
 //Lemon graph library include path
-LEMON_INCLUDE_DIRS:PATH=/usr/include
+LEMON_INCLUDE_DIRS:PATH=/usr/local/include
 
 //Path to compiled Lemon graph library
-LEMON_LIBRARIES:FILEPATH=/usr/lib/libemon.so
+LEMON_LIBRARIES:FILEPATH=/usr/local/lib/libemon.a
 
 WARNINGS:BOOL=ON
 
 //Value Computed by CMake
-dijkstra_benchmark_melon_BINARY_DIR:STATIC=/home/plaiseek/Projects/melon_benchmark/build
+dijkstra_benchmark_dimacs_melon_BINARY_DIR:STATIC=/home/plaiseek/Projects/melon_benchmark/build
 
 //Value Computed by CMake
-dijkstra_benchmark_melon_IS_TOP_LEVEL:STATIC=ON
+dijkstra_benchmark_dimacs_melon_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
-dijkstra_benchmark_melon_SOURCE_DIR:STATIC=/home/plaiseek/Projects/melon_benchmark
+dijkstra_benchmark_dimacs_melon_SOURCE_DIR:STATIC=/home/plaiseek/Projects/melon_benchmark
 
 
 ########################

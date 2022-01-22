@@ -19,11 +19,16 @@ $(BUILD_DIR):
 clean:
 	@rm -rf $(BUILD_DIR)
 
-benchmark-dijkstra:
-	mkdir -p results
-	mkdir -p results/dijkstra
-	./build/bin/dijkstra_benchmark_bgl_adjacency_list_vecS > results/dijkstra/bgl.csv
-	./build/bin/dijkstra_benchmark_bgl_compressed_sparse_row > results/dijkstra/bgl_csr.csv
-	./build/bin/dijkstra_benchmark_lemon_static_graph > results/dijkstra/lemon_static_graph.csv
-	./build/bin/dijkstra_benchmark_melon_static_graph > results/dijkstra/melon_static_graph.csv
-	python results/dijkstra/plot.py
+benchmark-dijkstra-dimacs:
+	./build/bin/dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS > results/dijkstra/dimacs/bgl_adjacency_list_vecS.csv
+	./build/bin/dijkstra_benchmark_dimacs_bgl_compressed_sparse_row > results/dijkstra/dimacs/bgl_compressed_sparse_row.csv
+	./build/bin/dijkstra_benchmark_dimacs_lemon_static_graph > results/dijkstra/dimacs/lemon_static_graph.csv
+	./build/bin/dijkstra_benchmark_dimacs_melon_static_graph > results/dijkstra/dimacs/melon_static_graph.csv
+	python results/dijkstra/dimacs/plot.py
+
+benchmark-dijkstra-snap:
+	./build/bin/dijkstra_benchmark_snap_bgl_adjacency_list_vecS > results/dijkstra/snap/bgl_adjacency_list_vecS.csv
+	./build/bin/dijkstra_benchmark_snap_bgl_compressed_sparse_row > results/dijkstra/snap/bgl_compressed_sparse_row.csv
+	./build/bin/dijkstra_benchmark_snap_lemon_static_graph > results/dijkstra/snap/lemon_static_graph.csv
+	./build/bin/dijkstra_benchmark_snap_melon_static_graph > results/dijkstra/snap/melon_static_graph.csv
+	python results/dijkstra/snap/plot.py
