@@ -86,7 +86,7 @@ int main() {
                 auto [u, dist] = dijkstra.processNextNode();
                 sum += dist;
             }
-
+            
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;
             ++iterations;
