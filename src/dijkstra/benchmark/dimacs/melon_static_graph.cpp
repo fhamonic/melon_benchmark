@@ -79,14 +79,14 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            Dijkstra dijkstra(graph, length_map);
+            Dijkstra<StaticDigraph, StaticDigraph::ArcMap<double>, DijkstraBehavior::TRACK_NONE> dijkstra(graph, length_map);
             dijkstra.reset();
             dijkstra.addSource(s);
             while(!dijkstra.emptyQueue()) {
                 auto [u, dist] = dijkstra.processNextNode();
                 sum += dist;
             }
-            
+
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;
             ++iterations;

@@ -25,12 +25,12 @@ DEALINGS IN THE SOFTWARE.*/
 /**
  * @file all.hpp
  * @author François Hamonic (francois.hamonic@gmail.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2022-01-02
- * 
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 #ifndef FHAMONIC_MELON_HPP
 #define FHAMONIC_MELON_HPP
@@ -401,7 +401,7 @@ private:
     static constexpr Index first_child_of(Index i) {
         return i * D + sizeof(Pair);
     }
-    template <int I = D>
+    template <Index I = D>
     constexpr Index minimum_child(const Index first_child) {
         if constexpr(I == 1)
             return first_child;
@@ -410,7 +410,36 @@ private:
                    sizeof(Pair) *
                        cmp(pair_ref(first_child + sizeof(Pair)).second,
                            pair_ref(first_child).second);
-        else {
+        else if constexpr(I == 4) {
+            // Index first_half_minimum = first_child +
+            //        sizeof(Pair) *
+            //            cmp(pair_ref(first_child + sizeof(Pair)).second,
+            //                pair_ref(first_child).second);
+            // const Index half_child = first_child + (I / 2) * sizeof(Pair);
+            // Index second_half_minimum = half_child +
+            //     sizeof(Pair) *
+            //            cmp(pair_ref(half_child + sizeof(Pair)).second,
+            //                pair_ref(half_child).second);
+            // return cmp(pair_ref(second_half_minimum).second,
+            //            pair_ref(first_half_minimum).second)
+            //            ? second_half_minimum
+            //            : first_half_minimum;
+
+            // TODO test SIMD
+
+            const Index offset = first_child / sizeof(Pair);
+            Index minindex = offset;
+            Prio minvalue = pair_ref(first_child).second;
+            for(Index i = 1; i < I; ++i) {
+                if(cmp(heap_array[offset + i].second, minvalue)) {
+                    minvalue = heap_array[offset + i].second;
+                    minindex = (offset + i);
+                }
+            }
+
+            return minindex * sizeof(Pair);
+
+        } else {
             Index first_half_minimum = minimum_child<I / 2>(first_child);
             Index second_half_minimum =
                 minimum_child<I - I / 2>(first_child + (I / 2) * sizeof(Pair));
@@ -577,14 +606,16 @@ struct DijkstraMostProbablePathSemiring {
 template <typename T>
 struct DijkstraMaxFlowPathSemiring {
     static constexpr T zero = std::numeric_limits<T>::max();
-    static constexpr auto plus = [](const T & a, const T & b){ return std::min(a, b); };
+    static constexpr auto plus = [](const T & a, const T & b) {
+        return std::min(a, b);
+    };
     static constexpr std::greater<T> less{};
 };
 
 template <typename T>
 struct DijkstraSpanningTreeSemiring {
     static constexpr T zero = static_cast<T>(0);
-    static constexpr auto plus = [](const T & a, const T & b){ return b; };
+    static constexpr auto plus = [](const T & a, const T & b) { return b; };
     static constexpr std::less<T> less{};
 };
 
@@ -603,12 +634,12 @@ enum DijkstraBehavior : unsigned char {
     TRACK_DISTANCES = 0b00000100
 };
 
-template <
-    typename GR, typename LM,
-    std::underlying_type_t<DijkstraBehavior> BH =
-        (DijkstraBehavior::TRACK_PRED_NODES | DijkstraBehavior::TRACK_DISTANCES),
-    typename SR = DijkstraShortestPathSemiring<typename LM::value_type>,
-    typename HP = FastBinaryHeap<typename GR::Node, typename LM::value_type,
+template <typename GR, typename LM,
+          std::underlying_type_t<DijkstraBehavior> BH =
+              (DijkstraBehavior::TRACK_PRED_NODES |
+               DijkstraBehavior::TRACK_DISTANCES),
+          typename SR = DijkstraShortestPathSemiring<typename LM::value_type>,
+          typename HP = DAryHeap<4, typename GR::Node, typename LM::value_type,
                                  decltype(SR::less)>>
 class Dijkstra {
 public:
@@ -696,21 +727,16 @@ public:
         }
     }
 
-    template <typename Dummy = void>
-    Node pred_node(const Node u) const noexcept {
-        static_assert(track_predecessor_nodes, "Dijkstra behavior must specify to track predecessor nodes.");
+    Node pred_node(const Node u) const noexcept
+        requires(track_predecessor_nodes) {
         assert(heap.state(u) != Heap::PRE_HEAP);
         return pred_nodes_map[u];
     }
-    template <typename Dummy = void>
-    Arc pred_arc(const Node u) const noexcept {
-        static_assert(track_predecessor_nodes, "Dijkstra behavior must specify to track predecessor arcs.");
+    Arc pred_arc(const Node u) const noexcept requires(track_predecessor_arcs) {
         assert(heap.state(u) != Heap::PRE_HEAP);
         return pred_arcs_map[u];
     }
-    template <typename Dummy = void>
-    Value dist(const Node u) const noexcept {
-        static_assert(track_distances, "Dijkstra behavior must specify to track distances.");
+    Value dist(const Node u) const noexcept requires(track_distances) {
         assert(heap.state(u) == Heap::POST_HEAP);
         return dist_map[u];
     }
@@ -721,4 +747,4 @@ public:
 
 #endif  // MELON_DIJKSTRA_HPP
 
-#endif //FHAMONIC_MELON_HPP
+#endif  // FHAMONIC_MELON_HPP
