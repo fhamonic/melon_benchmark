@@ -1,6 +1,7 @@
 [requires]
 range-v3/0.11.0
 boost/1.76.0
+jfalcou-eve/v2021.10.0
 
 [generators]
 cmake

@@ -24,6 +24,8 @@ tests-dijkstra:
 	./build/bin/dijkstra_tests_bgl > results/dijkstra/tests/bgl.log
 	./build/bin/dijkstra_tests_lemon > results/dijkstra/tests/lemon.log
 	./build/bin/dijkstra_tests_melon > results/dijkstra/tests/melon.log
+	cmp results/dijkstra/tests/bgl.log results/dijkstra/tests/lemon.log 
+	cmp results/dijkstra/tests/lemon.log results/dijkstra/tests/melon.log 
 
 
 benchmark-dijkstra-dimacs:

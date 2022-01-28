@@ -112,6 +112,44 @@ set(CONAN_LIBS_BOOST ${CONAN_PKG_LIBS_BOOST} ${CONAN_SYSTEM_LIBS_BOOST} ${CONAN_
 
 
 #################
+###  JFALCOU-EVE
+#################
+set(CONAN_JFALCOU-EVE_ROOT "/home/plaiseek/.conan/data/jfalcou-eve/v2021.10.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9")
+set(CONAN_INCLUDE_DIRS_JFALCOU-EVE "/home/plaiseek/.conan/data/jfalcou-eve/v2021.10.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include")
+set(CONAN_LIB_DIRS_JFALCOU-EVE )
+set(CONAN_BIN_DIRS_JFALCOU-EVE )
+set(CONAN_RES_DIRS_JFALCOU-EVE )
+set(CONAN_SRC_DIRS_JFALCOU-EVE )
+set(CONAN_BUILD_DIRS_JFALCOU-EVE "/home/plaiseek/.conan/data/jfalcou-eve/v2021.10.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/")
+set(CONAN_FRAMEWORK_DIRS_JFALCOU-EVE )
+set(CONAN_LIBS_JFALCOU-EVE )
+set(CONAN_PKG_LIBS_JFALCOU-EVE )
+set(CONAN_SYSTEM_LIBS_JFALCOU-EVE )
+set(CONAN_FRAMEWORKS_JFALCOU-EVE )
+set(CONAN_FRAMEWORKS_FOUND_JFALCOU-EVE "")  # Will be filled later
+set(CONAN_DEFINES_JFALCOU-EVE )
+set(CONAN_BUILD_MODULES_PATHS_JFALCOU-EVE )
+# COMPILE_DEFINITIONS are equal to CONAN_DEFINES without -D, for targets
+set(CONAN_COMPILE_DEFINITIONS_JFALCOU-EVE )
+
+set(CONAN_C_FLAGS_JFALCOU-EVE "")
+set(CONAN_CXX_FLAGS_JFALCOU-EVE "")
+set(CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE "")
+set(CONAN_EXE_LINKER_FLAGS_JFALCOU-EVE "")
+
+# For modern cmake targets we use the list variables (separated with ;)
+set(CONAN_C_FLAGS_JFALCOU-EVE_LIST "")
+set(CONAN_CXX_FLAGS_JFALCOU-EVE_LIST "")
+set(CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE_LIST "")
+set(CONAN_EXE_LINKER_FLAGS_JFALCOU-EVE_LIST "")
+
+# Apple Frameworks
+conan_find_apple_frameworks(CONAN_FRAMEWORKS_FOUND_JFALCOU-EVE "${CONAN_FRAMEWORKS_JFALCOU-EVE}" "_JFALCOU-EVE" "")
+# Append to aggregated values variable
+set(CONAN_LIBS_JFALCOU-EVE ${CONAN_PKG_LIBS_JFALCOU-EVE} ${CONAN_SYSTEM_LIBS_JFALCOU-EVE} ${CONAN_FRAMEWORKS_FOUND_JFALCOU-EVE})
+
+
+#################
 ###  ZLIB
 #################
 set(CONAN_ZLIB_ROOT "/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1")
@@ -240,7 +278,7 @@ set(CONAN_SETTINGS_COMPILER_VERSION "10")
 set(CONAN_SETTINGS_OS "Linux")
 set(CONAN_SETTINGS_OS_BUILD "Linux")
 
-set(CONAN_DEPENDENCIES range-v3 boost zlib bzip2 libiconv)
+set(CONAN_DEPENDENCIES range-v3 boost jfalcou-eve zlib bzip2 libiconv)
 # Storing original command line args (CMake helper) flags
 set(CONAN_CMD_CXX_FLAGS ${CONAN_CXX_FLAGS})
 
@@ -250,6 +288,7 @@ set(CONAN_CMD_C_FLAGS ${CONAN_C_FLAGS})
 
 set(CONAN_INCLUDE_DIRS "/home/plaiseek/.conan/data/range-v3/0.11.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include"
 			"/home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/include"
+			"/home/plaiseek/.conan/data/jfalcou-eve/v2021.10.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include"
 			"/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/include"
 			"/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/include"
 			"/home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/include" ${CONAN_INCLUDE_DIRS})
@@ -270,6 +309,7 @@ set(CONAN_DEFINES  ${CONAN_DEFINES})
 set(CONAN_BUILD_MODULES_PATHS  ${CONAN_BUILD_MODULES_PATHS})
 set(CONAN_CMAKE_MODULE_PATH "/home/plaiseek/.conan/data/range-v3/0.11.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/"
 			"/home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/"
+			"/home/plaiseek/.conan/data/jfalcou-eve/v2021.10.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/"
 			"/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/"
 			"/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/"
 			"/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/lib/cmake"
@@ -435,6 +475,76 @@ macro(conan_define_targets)
                                                                   $<$<CONFIG:RelWithDebInfo>:${CONAN_C_FLAGS_BOOST_RELWITHDEBINFO_LIST} ${CONAN_CXX_FLAGS_BOOST_RELWITHDEBINFO_LIST}>
                                                                   $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_BOOST_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_BOOST_MINSIZEREL_LIST}>
                                                                   $<$<CONFIG:Debug>:${CONAN_C_FLAGS_BOOST_DEBUG_LIST}  ${CONAN_CXX_FLAGS_BOOST_DEBUG_LIST}>)
+
+
+    set(_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES "${CONAN_SYSTEM_LIBS_JFALCOU-EVE} ${CONAN_FRAMEWORKS_FOUND_JFALCOU-EVE} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES "${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_JFALCOU-EVE}" "${CONAN_LIB_DIRS_JFALCOU-EVE}"
+                                  CONAN_PACKAGE_TARGETS_JFALCOU-EVE "${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES}"
+                                  "" jfalcou-eve)
+    set(_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_DEBUG "${CONAN_SYSTEM_LIBS_JFALCOU-EVE_DEBUG} ${CONAN_FRAMEWORKS_FOUND_JFALCOU-EVE_DEBUG} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_DEBUG "${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_DEBUG}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_JFALCOU-EVE_DEBUG}" "${CONAN_LIB_DIRS_JFALCOU-EVE_DEBUG}"
+                                  CONAN_PACKAGE_TARGETS_JFALCOU-EVE_DEBUG "${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_DEBUG}"
+                                  "debug" jfalcou-eve)
+    set(_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_RELEASE "${CONAN_SYSTEM_LIBS_JFALCOU-EVE_RELEASE} ${CONAN_FRAMEWORKS_FOUND_JFALCOU-EVE_RELEASE} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_RELEASE "${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_RELEASE}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_JFALCOU-EVE_RELEASE}" "${CONAN_LIB_DIRS_JFALCOU-EVE_RELEASE}"
+                                  CONAN_PACKAGE_TARGETS_JFALCOU-EVE_RELEASE "${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_RELEASE}"
+                                  "release" jfalcou-eve)
+    set(_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_RELWITHDEBINFO "${CONAN_SYSTEM_LIBS_JFALCOU-EVE_RELWITHDEBINFO} ${CONAN_FRAMEWORKS_FOUND_JFALCOU-EVE_RELWITHDEBINFO} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_RELWITHDEBINFO "${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_RELWITHDEBINFO}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_JFALCOU-EVE_RELWITHDEBINFO}" "${CONAN_LIB_DIRS_JFALCOU-EVE_RELWITHDEBINFO}"
+                                  CONAN_PACKAGE_TARGETS_JFALCOU-EVE_RELWITHDEBINFO "${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_RELWITHDEBINFO}"
+                                  "relwithdebinfo" jfalcou-eve)
+    set(_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_MINSIZEREL "${CONAN_SYSTEM_LIBS_JFALCOU-EVE_MINSIZEREL} ${CONAN_FRAMEWORKS_FOUND_JFALCOU-EVE_MINSIZEREL} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_MINSIZEREL "${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_MINSIZEREL}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_JFALCOU-EVE_MINSIZEREL}" "${CONAN_LIB_DIRS_JFALCOU-EVE_MINSIZEREL}"
+                                  CONAN_PACKAGE_TARGETS_JFALCOU-EVE_MINSIZEREL "${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_MINSIZEREL}"
+                                  "minsizerel" jfalcou-eve)
+
+    add_library(CONAN_PKG::jfalcou-eve INTERFACE IMPORTED)
+
+    # Property INTERFACE_LINK_FLAGS do not work, necessary to add to INTERFACE_LINK_LIBRARIES
+    set_property(TARGET CONAN_PKG::jfalcou-eve PROPERTY INTERFACE_LINK_LIBRARIES ${CONAN_PACKAGE_TARGETS_JFALCOU-EVE} ${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_JFALCOU-EVE_LIST}>
+
+                                                                 $<$<CONFIG:Release>:${CONAN_PACKAGE_TARGETS_JFALCOU-EVE_RELEASE} ${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_RELEASE}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE_RELEASE_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE_RELEASE_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_JFALCOU-EVE_RELEASE_LIST}>>
+
+                                                                 $<$<CONFIG:RelWithDebInfo>:${CONAN_PACKAGE_TARGETS_JFALCOU-EVE_RELWITHDEBINFO} ${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_RELWITHDEBINFO}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE_RELWITHDEBINFO_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE_RELWITHDEBINFO_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_JFALCOU-EVE_RELWITHDEBINFO_LIST}>>
+
+                                                                 $<$<CONFIG:MinSizeRel>:${CONAN_PACKAGE_TARGETS_JFALCOU-EVE_MINSIZEREL} ${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_MINSIZEREL}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE_MINSIZEREL_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE_MINSIZEREL_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_JFALCOU-EVE_MINSIZEREL_LIST}>>
+
+                                                                 $<$<CONFIG:Debug>:${CONAN_PACKAGE_TARGETS_JFALCOU-EVE_DEBUG} ${_CONAN_PKG_LIBS_JFALCOU-EVE_DEPENDENCIES_DEBUG}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE_DEBUG_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_JFALCOU-EVE_DEBUG_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_JFALCOU-EVE_DEBUG_LIST}>>)
+    set_property(TARGET CONAN_PKG::jfalcou-eve PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${CONAN_INCLUDE_DIRS_JFALCOU-EVE}
+                                                                      $<$<CONFIG:Release>:${CONAN_INCLUDE_DIRS_JFALCOU-EVE_RELEASE}>
+                                                                      $<$<CONFIG:RelWithDebInfo>:${CONAN_INCLUDE_DIRS_JFALCOU-EVE_RELWITHDEBINFO}>
+                                                                      $<$<CONFIG:MinSizeRel>:${CONAN_INCLUDE_DIRS_JFALCOU-EVE_MINSIZEREL}>
+                                                                      $<$<CONFIG:Debug>:${CONAN_INCLUDE_DIRS_JFALCOU-EVE_DEBUG}>)
+    set_property(TARGET CONAN_PKG::jfalcou-eve PROPERTY INTERFACE_COMPILE_DEFINITIONS ${CONAN_COMPILE_DEFINITIONS_JFALCOU-EVE}
+                                                                      $<$<CONFIG:Release>:${CONAN_COMPILE_DEFINITIONS_JFALCOU-EVE_RELEASE}>
+                                                                      $<$<CONFIG:RelWithDebInfo>:${CONAN_COMPILE_DEFINITIONS_JFALCOU-EVE_RELWITHDEBINFO}>
+                                                                      $<$<CONFIG:MinSizeRel>:${CONAN_COMPILE_DEFINITIONS_JFALCOU-EVE_MINSIZEREL}>
+                                                                      $<$<CONFIG:Debug>:${CONAN_COMPILE_DEFINITIONS_JFALCOU-EVE_DEBUG}>)
+    set_property(TARGET CONAN_PKG::jfalcou-eve PROPERTY INTERFACE_COMPILE_OPTIONS ${CONAN_C_FLAGS_JFALCOU-EVE_LIST} ${CONAN_CXX_FLAGS_JFALCOU-EVE_LIST}
+                                                                  $<$<CONFIG:Release>:${CONAN_C_FLAGS_JFALCOU-EVE_RELEASE_LIST} ${CONAN_CXX_FLAGS_JFALCOU-EVE_RELEASE_LIST}>
+                                                                  $<$<CONFIG:RelWithDebInfo>:${CONAN_C_FLAGS_JFALCOU-EVE_RELWITHDEBINFO_LIST} ${CONAN_CXX_FLAGS_JFALCOU-EVE_RELWITHDEBINFO_LIST}>
+                                                                  $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_JFALCOU-EVE_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_JFALCOU-EVE_MINSIZEREL_LIST}>
+                                                                  $<$<CONFIG:Debug>:${CONAN_C_FLAGS_JFALCOU-EVE_DEBUG_LIST}  ${CONAN_CXX_FLAGS_JFALCOU-EVE_DEBUG_LIST}>)
 
 
     set(_CONAN_PKG_LIBS_ZLIB_DEPENDENCIES "${CONAN_SYSTEM_LIBS_ZLIB} ${CONAN_FRAMEWORKS_FOUND_ZLIB} ")
@@ -646,7 +756,7 @@ macro(conan_define_targets)
                                                                   $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_LIBICONV_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_LIBICONV_MINSIZEREL_LIST}>
                                                                   $<$<CONFIG:Debug>:${CONAN_C_FLAGS_LIBICONV_DEBUG_LIST}  ${CONAN_CXX_FLAGS_LIBICONV_DEBUG_LIST}>)
 
-    set(CONAN_TARGETS CONAN_PKG::range-v3 CONAN_PKG::boost CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libiconv)
+    set(CONAN_TARGETS CONAN_PKG::range-v3 CONAN_PKG::boost CONAN_PKG::jfalcou-eve CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libiconv)
 
 endmacro()
 

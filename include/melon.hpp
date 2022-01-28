@@ -402,7 +402,7 @@ private:
         return i * D + sizeof(Pair);
     }
     template <Index I = D>
-    constexpr Index minimum_child(const Index first_child) {
+    constexpr Index minimum_child(const Index first_child) const {
         if constexpr(I == 1)
             return first_child;
         else if constexpr(I == 2)
@@ -410,38 +410,9 @@ private:
                    sizeof(Pair) *
                        cmp(pair_ref(first_child + sizeof(Pair)).second,
                            pair_ref(first_child).second);
-        else if constexpr(I == 4) {
-            // Index first_half_minimum = first_child +
-            //        sizeof(Pair) *
-            //            cmp(pair_ref(first_child + sizeof(Pair)).second,
-            //                pair_ref(first_child).second);
-            // const Index half_child = first_child + (I / 2) * sizeof(Pair);
-            // Index second_half_minimum = half_child +
-            //     sizeof(Pair) *
-            //            cmp(pair_ref(half_child + sizeof(Pair)).second,
-            //                pair_ref(half_child).second);
-            // return cmp(pair_ref(second_half_minimum).second,
-            //            pair_ref(first_half_minimum).second)
-            //            ? second_half_minimum
-            //            : first_half_minimum;
-
-            // TODO test SIMD
-
-            const Index offset = first_child / sizeof(Pair);
-            Index minindex = offset;
-            Prio minvalue = pair_ref(first_child).second;
-            for(Index i = 1; i < I; ++i) {
-                if(cmp(heap_array[offset + i].second, minvalue)) {
-                    minvalue = heap_array[offset + i].second;
-                    minindex = (offset + i);
-                }
-            }
-
-            return minindex * sizeof(Pair);
-
-        } else {
-            Index first_half_minimum = minimum_child<I / 2>(first_child);
-            Index second_half_minimum =
+        else {
+            const Index first_half_minimum = minimum_child<I / 2>(first_child);
+            const Index second_half_minimum =
                 minimum_child<I - I / 2>(first_child + (I / 2) * sizeof(Pair));
             return cmp(pair_ref(second_half_minimum).second,
                        pair_ref(first_half_minimum).second)
@@ -450,7 +421,7 @@ private:
         }
     }
     constexpr Index minimum_remaining_child(const Index first_child,
-                                            const Index nb_children) {
+                                            const Index nb_children) const {
         if constexpr(D == 2)
             return first_child;
         else if constexpr(D == 4) {

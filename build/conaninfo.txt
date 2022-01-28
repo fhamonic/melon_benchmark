@@ -8,6 +8,7 @@
 
 [requires]
     boost/1.Y.Z
+    jfalcou-eve/v2021.10.0
     range-v3/0.11.0
 
 [options]
@@ -26,6 +27,7 @@
 [full_requires]
     boost/1.76.0:91068d6d6067a809e746602e9538e15eddb14457
     bzip2/1.0.8:91a8b22c2c5a149bc617cfc06cdd21bf23b12567
+    jfalcou-eve/v2021.10.0:5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9
     libiconv/1.16:19729b9559f3ae196cad45cb2b97468ccb75dcd1
     range-v3/0.11.0:5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9
     zlib/1.2.11:19729b9559f3ae196cad45cb2b97468ccb75dcd1
