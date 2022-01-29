@@ -1,11 +1,13 @@
 [includedirs]
 /home/plaiseek/.conan/data/range-v3/0.11.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include
+/home/plaiseek/.conan/data/andreasbuhr-cppcoro/cci.20210113/_/_/package/b173bbda18164d49a449ffadc1c9e817f49e819d/include
 /home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/include
 /home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/include
 /home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/include
 /home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/include
 
 [libdirs]
+/home/plaiseek/.conan/data/andreasbuhr-cppcoro/cci.20210113/_/_/package/b173bbda18164d49a449ffadc1c9e817f49e819d/lib
 /home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/lib
 /home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/lib
 /home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/lib
@@ -20,6 +22,7 @@
 
 [builddirs]
 /home/plaiseek/.conan/data/range-v3/0.11.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/
+/home/plaiseek/.conan/data/andreasbuhr-cppcoro/cci.20210113/_/_/package/b173bbda18164d49a449ffadc1c9e817f49e819d/
 /home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/
 /home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/
 /home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/
@@ -27,6 +30,7 @@
 /home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/
 
 [libs]
+cppcoro
 boost_contract
 boost_coroutine
 boost_fiber_numa
@@ -78,13 +82,13 @@ rt
 pthread
 
 [defines]
-
+CPPCORO_COMPILER_SUPPORTS_SYMMETRIC_TRANSFER=1
 
 [cppflags]
-
+-fcoroutines
 
 [cxxflags]
-
+-fcoroutines
 
 [cflags]
 
@@ -167,6 +171,72 @@ range-v3
 
 [generatorfilenames_range-v3]
 
+
+
+[includedirs_andreasbuhr-cppcoro]
+/home/plaiseek/.conan/data/andreasbuhr-cppcoro/cci.20210113/_/_/package/b173bbda18164d49a449ffadc1c9e817f49e819d/include
+
+[libdirs_andreasbuhr-cppcoro]
+/home/plaiseek/.conan/data/andreasbuhr-cppcoro/cci.20210113/_/_/package/b173bbda18164d49a449ffadc1c9e817f49e819d/lib
+
+[bindirs_andreasbuhr-cppcoro]
+
+
+[resdirs_andreasbuhr-cppcoro]
+
+
+[builddirs_andreasbuhr-cppcoro]
+/home/plaiseek/.conan/data/andreasbuhr-cppcoro/cci.20210113/_/_/package/b173bbda18164d49a449ffadc1c9e817f49e819d/
+
+[libs_andreasbuhr-cppcoro]
+cppcoro
+
+[system_libs_andreasbuhr-cppcoro]
+
+
+[defines_andreasbuhr-cppcoro]
+CPPCORO_COMPILER_SUPPORTS_SYMMETRIC_TRANSFER=1
+
+[cppflags_andreasbuhr-cppcoro]
+-fcoroutines
+
+[cxxflags_andreasbuhr-cppcoro]
+-fcoroutines
+
+[cflags_andreasbuhr-cppcoro]
+
+
+[sharedlinkflags_andreasbuhr-cppcoro]
+
+
+[exelinkflags_andreasbuhr-cppcoro]
+
+
+[sysroot_andreasbuhr-cppcoro]
+
+
+[frameworks_andreasbuhr-cppcoro]
+
+
+[frameworkdirs_andreasbuhr-cppcoro]
+
+
+[rootpath_andreasbuhr-cppcoro]
+/home/plaiseek/.conan/data/andreasbuhr-cppcoro/cci.20210113/_/_/package/b173bbda18164d49a449ffadc1c9e817f49e819d
+
+[name_andreasbuhr-cppcoro]
+andreasbuhr-cppcoro
+
+[version_andreasbuhr-cppcoro]
+cci.20210113
+
+[generatornames_andreasbuhr-cppcoro]
+cmake_find_package=cppcoro
+cmake_find_package_multi=cppcoro
+
+[generatorfilenames_andreasbuhr-cppcoro]
+cmake_find_package=cppcoro
+cmake_find_package_multi=cppcoro
 
 
 [includedirs_boost]
@@ -473,12 +543,14 @@ cmake_find_package_multi=Iconv
 
 
 
+[USER_andreasbuhr-cppcoro]
 [USER_boost]
 [USER_bzip2]
 [USER_libiconv]
 [USER_range-v3]
 [USER_zlib]
 [ENV_range-v3]
+[ENV_andreasbuhr-cppcoro]
 [ENV_boost]
 BOOST_ROOT=/home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457
 [ENV_zlib]

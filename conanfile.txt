@@ -1,5 +1,6 @@
 [requires]
 range-v3/0.11.0
+andreasbuhr-cppcoro/cci.20210113
 boost/1.76.0
 
 [generators]

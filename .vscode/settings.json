@@ -78,6 +78,7 @@
         "variant": "cpp",
         "cassert": "cpp",
         "*.ipp": "cpp",
-        "*.inc": "cpp"
+        "*.inc": "cpp",
+        "coroutine": "cpp"
     }
 }

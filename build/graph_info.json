@@ -1,6 +1,14 @@
 {
  "options": [
   [
+   "andreasbuhr-cppcoro:fPIC",
+   "True"
+  ],
+  [
+   "andreasbuhr-cppcoro:shared",
+   "False"
+  ],
+  [
    "boost:asio_no_deprecated",
    "False"
   ],

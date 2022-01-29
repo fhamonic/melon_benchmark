@@ -92,7 +92,7 @@ int main() {
         Chrono gr_chrono;
         double avg_time = 0;
         int iterations = 0;
-        const int nb_iterations = 30000.0 * 10000.0 / nb_nodes;
+        const int nb_iterations = 30000.0 * 1000.0 / nb_nodes;
         graph_traits<graph_t>::vertex_iterator si, send;
         for(tie(si, send) = vertices(graph); si != send; ++si) {
             std::vector<vertex_descriptor> p(nb_nodes);

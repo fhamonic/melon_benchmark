@@ -25,12 +25,12 @@ DEALINGS IN THE SOFTWARE.*/
 /**
  * @file all.hpp
  * @author François Hamonic (francois.hamonic@gmail.com)
- * @brief
+ * @brief 
  * @version 0.1
  * @date 2022-01-02
- *
+ * 
  * @copyright Copyright (c) 2021
- *
+ * 
  */
 #ifndef FHAMONIC_MELON_HPP
 #define FHAMONIC_MELON_HPP
@@ -203,6 +203,105 @@ public:
 }  // namespace fhamonic
 
 #endif  // MELON_STATIC_DIGRAPH_BUILDER_HPP
+
+
+
+
+
+
+
+
+
+
+#include <coroutine>
+#include <cstddef>
+#include <iterator>
+#include <functional>
+#include <optional>
+
+template <typename _Value>
+class generator {
+    class promise {
+    public:
+        using value_type = _Value;
+
+        promise() = default;
+        std::suspend_always initial_suspend() { return {}; }
+        std::suspend_always final_suspend() noexcept { return {}; }
+        
+        void unhandled_exception() noexcept {}
+        void return_void() noexcept {}
+
+        std::suspend_always yield_value(_Value value) noexcept {
+            this->value = std::move(value);
+            return {};
+        }
+        const value_type get_value() noexcept { return value; }
+
+        inline generator get_return_object();
+
+    private:
+        value_type value{};
+    };
+
+public:
+    using value_type = _Value;
+    using promise_type = promise;
+
+    explicit generator(std::coroutine_handle<promise> handle)
+        : handle(handle) {}
+
+    struct end_iterator {};
+
+    class iterator {
+    public:
+        using iterator_category = std::input_iterator_tag;
+        using difference_type = std::ptrdiff_t;
+        using value_type = _Value;
+
+        iterator() noexcept = default;
+        iterator(std::coroutine_handle<promise> & h) noexcept : handle{h} {}
+
+        value_type operator*() const noexcept {
+            return handle.promise().get_value();
+        }
+
+        iterator & operator++() {
+            handle.resume();
+            return *this;
+        }
+        void operator++(int) { (void)operator++(); }
+
+        friend bool operator==(const iterator & it, end_iterator) noexcept {
+            return it.handle.done();
+        }
+
+    private:
+        std::coroutine_handle<promise> & handle;
+    };
+
+    iterator begin() {
+        handle.resume();
+        return iterator{handle};
+    }
+    end_iterator end() noexcept { return {}; }
+
+private:
+    std::coroutine_handle<promise> handle;
+};
+
+
+template <typename _Value>
+inline generator<_Value> generator<_Value>::promise::get_return_object() {
+    return generator{ std::coroutine_handle<promise>::from_promise(*this) };
+}
+
+
+
+
+
+
+
 
 #ifndef MELON_FAST_BINARY_HEAP_HPP
 #define MELON_FAST_BINARY_HEAP_HPP
@@ -401,7 +500,7 @@ private:
     static constexpr Index first_child_of(Index i) {
         return i * D + sizeof(Pair);
     }
-    template <Index I = D>
+    template <int I = D>
     constexpr Index minimum_child(const Index first_child) {
         if constexpr(I == 1)
             return first_child;
@@ -410,36 +509,7 @@ private:
                    sizeof(Pair) *
                        cmp(pair_ref(first_child + sizeof(Pair)).second,
                            pair_ref(first_child).second);
-        else if constexpr(I == 4) {
-            // Index first_half_minimum = first_child +
-            //        sizeof(Pair) *
-            //            cmp(pair_ref(first_child + sizeof(Pair)).second,
-            //                pair_ref(first_child).second);
-            // const Index half_child = first_child + (I / 2) * sizeof(Pair);
-            // Index second_half_minimum = half_child +
-            //     sizeof(Pair) *
-            //            cmp(pair_ref(half_child + sizeof(Pair)).second,
-            //                pair_ref(half_child).second);
-            // return cmp(pair_ref(second_half_minimum).second,
-            //            pair_ref(first_half_minimum).second)
-            //            ? second_half_minimum
-            //            : first_half_minimum;
-
-            // TODO test SIMD
-
-            const Index offset = first_child / sizeof(Pair);
-            Index minindex = offset;
-            Prio minvalue = pair_ref(first_child).second;
-            for(Index i = 1; i < I; ++i) {
-                if(cmp(heap_array[offset + i].second, minvalue)) {
-                    minvalue = heap_array[offset + i].second;
-                    minindex = (offset + i);
-                }
-            }
-
-            return minindex * sizeof(Pair);
-
-        } else {
+        else {
             Index first_half_minimum = minimum_child<I / 2>(first_child);
             Index second_half_minimum =
                 minimum_child<I - I / 2>(first_child + (I / 2) * sizeof(Pair));
@@ -585,6 +655,7 @@ using BinaryHeap = DAryHeap<2, ND, PR, CMP>;
 #define MELON_DIJKSTRA_SEMIRINGS_HPP
 
 #include <functional>
+#include <cppcoro/generator.hpp>
 
 namespace fhamonic {
 namespace melon {
@@ -606,16 +677,14 @@ struct DijkstraMostProbablePathSemiring {
 template <typename T>
 struct DijkstraMaxFlowPathSemiring {
     static constexpr T zero = std::numeric_limits<T>::max();
-    static constexpr auto plus = [](const T & a, const T & b) {
-        return std::min(a, b);
-    };
+    static constexpr auto plus = [](const T & a, const T & b){ return std::min(a, b); };
     static constexpr std::greater<T> less{};
 };
 
 template <typename T>
 struct DijkstraSpanningTreeSemiring {
     static constexpr T zero = static_cast<T>(0);
-    static constexpr auto plus = [](const T & a, const T & b) { return b; };
+    static constexpr auto plus = [](const T & a, const T & b){ return b; };
     static constexpr std::less<T> less{};
 };
 
@@ -634,12 +703,12 @@ enum DijkstraBehavior : unsigned char {
     TRACK_DISTANCES = 0b00000100
 };
 
-template <typename GR, typename LM,
-          std::underlying_type_t<DijkstraBehavior> BH =
-              (DijkstraBehavior::TRACK_PRED_NODES |
-               DijkstraBehavior::TRACK_DISTANCES),
-          typename SR = DijkstraShortestPathSemiring<typename LM::value_type>,
-          typename HP = DAryHeap<4, typename GR::Node, typename LM::value_type,
+template <
+    typename GR, typename LM,
+    std::underlying_type_t<DijkstraBehavior> BH =
+        (DijkstraBehavior::TRACK_PRED_NODES | DijkstraBehavior::TRACK_DISTANCES),
+    typename SR = DijkstraShortestPathSemiring<typename LM::value_type>,
+    typename HP = FastBinaryHeap<typename GR::Node, typename LM::value_type,
                                  decltype(SR::less)>>
 class Dijkstra {
 public:
@@ -721,12 +790,12 @@ public:
         return p;
     }
 
-    void run() noexcept {
-        while(!emptyQueue) {
-            processNextNode();
+    generator<std::pair<Node, Value>> run() noexcept {
+        while(!emptyQueue()) {
+            co_yield processNextNode();
         }
     }
-
+    
     Node pred_node(const Node u) const noexcept
         requires(track_predecessor_nodes) {
         assert(heap.state(u) != Heap::PRE_HEAP);
@@ -747,4 +816,4 @@ public:
 
 #endif  // MELON_DIJKSTRA_HPP
 
-#endif  // FHAMONIC_MELON_HPP
+#endif //FHAMONIC_MELON_HPP

@@ -38,7 +38,7 @@ int main() {
         double avg_time = 0;
         int iterations = 0;
         const int nb_nodes = graph.nb_nodes();
-        const int nb_iterations = 30000.0 * 10000.0 / nb_nodes;
+        const int nb_iterations = 30000.0 * 1000.0 / nb_nodes;
         for(StaticDigraph::Node s : graph.nodes()) {
             Chrono chrono;
 

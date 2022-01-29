@@ -61,7 +61,7 @@ int main() {
         double avg_time = 0;
         int iterations = 0;
         const int nb_nodes = countNodes(graph);
-        const int nb_iterations = 30000.0 * 10000.0 / nb_nodes;
+        const int nb_iterations = 30000.0 * 1000.0 / nb_nodes;
         for(Graph::NodeIt s(graph); s != INVALID; ++s) {
             Chrono chrono;
 

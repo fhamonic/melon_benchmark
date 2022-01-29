@@ -7,6 +7,7 @@
     os=Linux
 
 [requires]
+    andreasbuhr-cppcoro/cci.20210113
     boost/1.Y.Z
     range-v3/0.11.0
 
@@ -24,6 +25,7 @@
     os_build=Linux
 
 [full_requires]
+    andreasbuhr-cppcoro/cci.20210113:b173bbda18164d49a449ffadc1c9e817f49e819d
     boost/1.76.0:91068d6d6067a809e746602e9538e15eddb14457
     bzip2/1.0.8:91a8b22c2c5a149bc617cfc06cdd21bf23b12567
     libiconv/1.16:19729b9559f3ae196cad45cb2b97468ccb75dcd1
@@ -31,6 +33,8 @@
     zlib/1.2.11:19729b9559f3ae196cad45cb2b97468ccb75dcd1
 
 [full_options]
+    andreasbuhr-cppcoro:fPIC=True
+    andreasbuhr-cppcoro:shared=False
     boost:asio_no_deprecated=False
     boost:bzip2=True
     boost:debug_level=0
