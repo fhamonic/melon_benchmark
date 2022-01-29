@@ -6,7 +6,11 @@
     "requires": [
      "1",
      "2",
+<<<<<<< HEAD
      "3"
+=======
+     "6"
+>>>>>>> fe64afc1923136a27fb3dcb309a8682e18f8410a
     ],
     "path": "../conanfile.txt",
     "context": "host"
@@ -55,6 +59,13 @@
     "ref": "libiconv/1.16",
     "options": "fPIC=True\nshared=False",
     "package_id": "19729b9559f3ae196cad45cb2b97468ccb75dcd1",
+    "prev": "0",
+    "context": "host"
+   },
+   "6": {
+    "ref": "jfalcou-eve/v2021.10.0",
+    "options": "",
+    "package_id": "5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9",
     "prev": "0",
     "context": "host"
    }

@@ -61,7 +61,6 @@ endfunction()
 function(set_melon_options _target)
 set_target_properties(${_target} PROPERTIES CXX_STANDARD 20)
 target_link_libraries(${_target} CONAN_PKG::range-v3)
-target_link_libraries(${_target} CONAN_PKG::andreasbuhr-cppcoro)
 set_common_options(${_target})
 endfunction()
 
