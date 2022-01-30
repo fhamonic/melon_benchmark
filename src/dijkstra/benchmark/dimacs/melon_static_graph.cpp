@@ -79,16 +79,16 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            Dijkstra<StaticDigraph, StaticDigraph::ArcMap<double>, DijkstraBehavior::TRACK_NONE> dijkstra(graph, length_map);
+            Dijkstra<StaticDigraph, StaticDigraph::ArcMap<double>> dijkstra(graph, length_map);
             dijkstra.addSource(s);
-            // while(!dijkstra.emptyQueue()) {
-            //     auto [u, dist] = dijkstra.processNextNode();
-            //     sum += dist;
-            // }
-
-            for(const auto & [u, dist] : node_search_span(dijkstra)) {
+            while(!dijkstra.emptyQueue()) {
+                auto [u, dist] = dijkstra.processNextNode();
                 sum += dist;
             }
+
+            // for(const auto & [u, dist] : node_search_span(dijkstra)) {
+            //     sum += dist;
+            // }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;

@@ -8,6 +8,7 @@
 #include <lemon/static_graph.h>
 
 #include <lemon/dijkstra.h>
+#include <lemon/bfs.h>
 
 #include "chrono.hpp"
 #include "warm_up.hpp"
