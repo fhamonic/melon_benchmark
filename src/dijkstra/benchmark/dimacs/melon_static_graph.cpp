@@ -86,7 +86,7 @@ int main() {
             //     sum += dist;
             // }
 
-            for(const auto & [u, dist] : dijkstra.run()) {
+            for(const auto & [u, dist] : node_search_span(dijkstra)) {
                 sum += dist;
             }
 

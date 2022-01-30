@@ -25,12 +25,12 @@ DEALINGS IN THE SOFTWARE.*/
 /**
  * @file all.hpp
  * @author François Hamonic (francois.hamonic@gmail.com)
- * @brief
+ * @brief 
  * @version 0.1
  * @date 2022-01-02
- *
+ * 
  * @copyright Copyright (c) 2021
- *
+ * 
  */
 #ifndef FHAMONIC_MELON_HPP
 #define FHAMONIC_MELON_HPP
@@ -576,16 +576,14 @@ struct DijkstraMostProbablePathSemiring {
 template <typename T>
 struct DijkstraMaxFlowPathSemiring {
     static constexpr T zero = std::numeric_limits<T>::max();
-    static constexpr auto plus = [](const T & a, const T & b) {
-        return std::min(a, b);
-    };
+    static constexpr auto plus = [](const T & a, const T & b){ return std::min(a, b); };
     static constexpr std::greater<T> less{};
 };
 
 template <typename T>
 struct DijkstraSpanningTreeSemiring {
     static constexpr T zero = static_cast<T>(0);
-    static constexpr auto plus = [](const T & a, const T & b) { return b; };
+    static constexpr auto plus = [](const T & a, const T & b){ return b; };
     static constexpr std::less<T> less{};
 };
 
@@ -593,77 +591,6 @@ struct DijkstraSpanningTreeSemiring {
 }  // namespace fhamonic
 
 #endif  // MELON_DIJKSTRA_SEMIRINGS_HPP
-
-#include <coroutine>
-#include <cstddef>
-#include <functional>
-#include <iterator>
-#include <optional>
-
-template <typename T>
-struct generator {
-    using value_type = T;
-    struct promise_type {
-        using value_type = T;
-        value_type current_value;
-        std::suspend_always yield_value(value_type value) noexcept {
-            this->current_value = value;
-            return {};
-        }
-        std::suspend_always initial_suspend() { return {}; }
-        std::suspend_always final_suspend() noexcept { return {}; }
-        generator get_return_object() noexcept { return generator{this}; };
-        void unhandled_exception() noexcept { std::terminate(); }
-        void return_void() noexcept {}
-    };
-
-    struct end_iterator {};
-
-    class iterator {
-    public:
-        using iterator_category = std::input_iterator_tag;
-        using value_type = T;
-        using difference_type = std::ptrdiff_t;
-        using reference = T const &;
-        using pointer = T *;
-
-        iterator(std::coroutine_handle<promise_type> & h) : handle(h) {}
-        iterator & operator++() noexcept {
-            handle.resume();
-            return *this;
-        }
-        friend bool operator==(const iterator & it, end_iterator) noexcept {
-            return it.handle.done();
-        }
-        reference operator*() const noexcept {
-            return handle.promise().current_value;
-        }
-
-    public:
-        std::coroutine_handle<promise_type> & handle;
-    };
-
-    iterator begin() {
-        handle.resume();
-        return {handle};
-    }
-    end_iterator end() noexcept { return {}; }
-
-    generator(generator const &) = delete;
-    generator(generator && rhs) : handle(std::exchange(rhs.handle, nullptr)) {}
-
-    ~generator() {
-        if(handle) handle.destroy();
-    }
-
-private:
-    explicit generator(promise_type * p)
-        : handle(std::coroutine_handle<promise_type>::from_promise(*p)) {}
-
-    std::coroutine_handle<promise_type> handle;
-};
-
-// #include <type_traits>
 
 namespace fhamonic {
 namespace melon {
@@ -726,12 +653,14 @@ public:
         if constexpr(track_distances) dist_map.resize(g.nb_nodes());
     }
 
-    void reset() noexcept { heap.clear(); }
-    void addSource(Node s, Value dist = DijkstraSemiringTraits::zero) noexcept {
+    Dijkstra & reset() noexcept { heap.clear(); return *this; }
+    Dijkstra & addSource(Node s, Value dist = DijkstraSemiringTraits::zero) noexcept {
         assert(heap.state(s) != Heap::IN_HEAP);
         heap.push(s, dist);
         if constexpr(track_predecessor_nodes) pred_nodes_map[s] = s;
+        return *this;
     }
+
     bool emptyQueue() const noexcept { return heap.empty(); }
 
     std::pair<Node, Value> processNextNode() noexcept {
@@ -762,48 +691,11 @@ public:
         return p;
     }
 
-    template <typename Algo>
-    struct node_search_algorithm_span {
-        struct end_iterator {};
-        class iterator {
-        public:
-            using iterator_category = std::input_iterator_tag;
-            using value_type = decltype(std::declval<Algo>().processNextNode());
-            using reference = value_type const &;
-            using pointer = value_type *;
-
-            iterator(Algo * alg) : algorithm(alg) {}
-            iterator & operator++() noexcept {
-                node = algorithm->processNextNode();
-                return *this;
-            }
-            friend bool operator==(const iterator & it, end_iterator) noexcept {
-                return it.algorithm->emptyQueue();
-            }
-            reference operator*() const noexcept { return node; }
-
-        private:
-            Algo * algorithm;
-        public:
-            value_type node;
-        };
-
-        iterator begin() {
-            iterator it{algorithm};
-            if(!algorithm->emptyQueue()) ++it;
-            return ++it;
+    void run() noexcept {
+        while(!emptyQueue()) {
+            processNextNode();
         }
-        end_iterator end() noexcept { return {}; }
-
-        node_search_algorithm_span(node_search_algorithm_span const &) = delete;
-
-    public:
-        explicit node_search_algorithm_span(Algo * alg) : algorithm(alg) {}
-        Algo * algorithm;
-    };
-
-
-    auto run() noexcept { return node_search_algorithm_span<Dijkstra>{this}; }
+    }
 
     Node pred_node(const Node u) const noexcept
         requires(track_predecessor_nodes) {
@@ -825,4 +717,52 @@ public:
 
 #endif  // MELON_DIJKSTRA_HPP
 
-#endif  // FHAMONIC_MELON_HPP
+namespace fhamonic {
+namespace melon {
+
+// TODO requires members
+template <typename Algo>
+struct node_search_span {
+    struct end_iterator {};
+    class iterator {
+    public:
+        using iterator_category = std::input_iterator_tag;
+        using value_type = decltype(std::declval<Algo>().processNextNode());
+        using reference = value_type const &;
+        using pointer = value_type *;
+
+        iterator(Algo & alg) : algorithm(alg) {}
+        iterator & operator++() noexcept {
+            node = algorithm.processNextNode();
+            return *this;
+        }
+        friend bool operator==(const iterator & it, end_iterator) noexcept {
+            return it.algorithm.emptyQueue();
+        }
+        reference operator*() const noexcept { return node; }
+
+    private:
+        Algo & algorithm;
+
+    public:
+        value_type node;
+    };
+
+    iterator begin() {
+        iterator it{algorithm};
+        if(!algorithm.emptyQueue()) ++it;
+        return ++it;
+    }
+    end_iterator end() noexcept { return {}; }
+
+    node_search_span(node_search_span const &) = delete;
+
+public:
+    explicit node_search_span(Algo & alg) : algorithm(alg) {}
+    Algo & algorithm;
+};
+
+}  // namespace melon
+}  // namespace fhamonic
+
+#endif //FHAMONIC_MELON_HPP
