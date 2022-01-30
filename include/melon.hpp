@@ -25,12 +25,12 @@ DEALINGS IN THE SOFTWARE.*/
 /**
  * @file all.hpp
  * @author François Hamonic (francois.hamonic@gmail.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2022-01-02
- * 
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 #ifndef FHAMONIC_MELON_HPP
 #define FHAMONIC_MELON_HPP
@@ -203,105 +203,6 @@ public:
 }  // namespace fhamonic
 
 #endif  // MELON_STATIC_DIGRAPH_BUILDER_HPP
-
-
-
-
-
-
-
-
-
-
-#include <coroutine>
-#include <cstddef>
-#include <iterator>
-#include <functional>
-#include <optional>
-
-template <typename _Value>
-class generator {
-    class promise {
-    public:
-        using value_type = _Value;
-
-        promise() = default;
-        std::suspend_always initial_suspend() { return {}; }
-        std::suspend_always final_suspend() noexcept { return {}; }
-        
-        void unhandled_exception() noexcept {}
-        void return_void() noexcept {}
-
-        std::suspend_always yield_value(_Value value) noexcept {
-            this->value = std::move(value);
-            return {};
-        }
-        const value_type get_value() noexcept { return value; }
-
-        inline generator get_return_object();
-
-    private:
-        value_type value{};
-    };
-
-public:
-    using value_type = _Value;
-    using promise_type = promise;
-
-    explicit generator(std::coroutine_handle<promise> handle)
-        : handle(handle) {}
-
-    struct end_iterator {};
-
-    class iterator {
-    public:
-        using iterator_category = std::input_iterator_tag;
-        using difference_type = std::ptrdiff_t;
-        using value_type = _Value;
-
-        iterator() noexcept = default;
-        iterator(std::coroutine_handle<promise> & h) noexcept : handle{h} {}
-
-        value_type operator*() const noexcept {
-            return handle.promise().get_value();
-        }
-
-        iterator & operator++() {
-            handle.resume();
-            return *this;
-        }
-        void operator++(int) { (void)operator++(); }
-
-        friend bool operator==(const iterator & it, end_iterator) noexcept {
-            return it.handle.done();
-        }
-
-    private:
-        std::coroutine_handle<promise> & handle;
-    };
-
-    iterator begin() {
-        handle.resume();
-        return iterator{handle};
-    }
-    end_iterator end() noexcept { return {}; }
-
-private:
-    std::coroutine_handle<promise> handle;
-};
-
-
-template <typename _Value>
-inline generator<_Value> generator<_Value>::promise::get_return_object() {
-    return generator{ std::coroutine_handle<promise>::from_promise(*this) };
-}
-
-
-
-
-
-
-
 
 #ifndef MELON_FAST_BINARY_HEAP_HPP
 #define MELON_FAST_BINARY_HEAP_HPP
@@ -500,7 +401,7 @@ private:
     static constexpr Index first_child_of(Index i) {
         return i * D + sizeof(Pair);
     }
-    template <Index I = D>
+    template <int I = D>
     constexpr Index minimum_child(const Index first_child) const {
         if constexpr(I == 1)
             return first_child;
@@ -650,12 +551,10 @@ using BinaryHeap = DAryHeap<2, ND, PR, CMP>;
 }  // namespace fhamonic
 
 #endif  // MELON_D_ARY_HEAP_HPP
-
 #ifndef MELON_DIJKSTRA_SEMIRINGS_HPP
 #define MELON_DIJKSTRA_SEMIRINGS_HPP
 
 #include <functional>
-#include <cppcoro/generator.hpp>
 
 namespace fhamonic {
 namespace melon {
@@ -677,14 +576,16 @@ struct DijkstraMostProbablePathSemiring {
 template <typename T>
 struct DijkstraMaxFlowPathSemiring {
     static constexpr T zero = std::numeric_limits<T>::max();
-    static constexpr auto plus = [](const T & a, const T & b){ return std::min(a, b); };
+    static constexpr auto plus = [](const T & a, const T & b) {
+        return std::min(a, b);
+    };
     static constexpr std::greater<T> less{};
 };
 
 template <typename T>
 struct DijkstraSpanningTreeSemiring {
     static constexpr T zero = static_cast<T>(0);
-    static constexpr auto plus = [](const T & a, const T & b){ return b; };
+    static constexpr auto plus = [](const T & a, const T & b) { return b; };
     static constexpr std::less<T> less{};
 };
 
@@ -692,6 +593,77 @@ struct DijkstraSpanningTreeSemiring {
 }  // namespace fhamonic
 
 #endif  // MELON_DIJKSTRA_SEMIRINGS_HPP
+
+#include <coroutine>
+#include <cstddef>
+#include <functional>
+#include <iterator>
+#include <optional>
+
+template <typename T>
+struct generator {
+    using value_type = T;
+    struct promise_type {
+        using value_type = T;
+        value_type current_value;
+        std::suspend_always yield_value(value_type value) noexcept {
+            this->current_value = value;
+            return {};
+        }
+        std::suspend_always initial_suspend() { return {}; }
+        std::suspend_always final_suspend() noexcept { return {}; }
+        generator get_return_object() noexcept { return generator{this}; };
+        void unhandled_exception() noexcept { std::terminate(); }
+        void return_void() noexcept {}
+    };
+
+    struct end_iterator {};
+
+    class iterator {
+    public:
+        using iterator_category = std::input_iterator_tag;
+        using value_type = T;
+        using difference_type = std::ptrdiff_t;
+        using reference = T const &;
+        using pointer = T *;
+
+        iterator(std::coroutine_handle<promise_type> & h) : handle(h) {}
+        iterator & operator++() noexcept {
+            handle.resume();
+            return *this;
+        }
+        friend bool operator==(const iterator & it, end_iterator) noexcept {
+            return it.handle.done();
+        }
+        reference operator*() const noexcept {
+            return handle.promise().current_value;
+        }
+
+    public:
+        std::coroutine_handle<promise_type> & handle;
+    };
+
+    iterator begin() {
+        handle.resume();
+        return {handle};
+    }
+    end_iterator end() noexcept { return {}; }
+
+    generator(generator const &) = delete;
+    generator(generator && rhs) : handle(std::exchange(rhs.handle, nullptr)) {}
+
+    ~generator() {
+        if(handle) handle.destroy();
+    }
+
+private:
+    explicit generator(promise_type * p)
+        : handle(std::coroutine_handle<promise_type>::from_promise(*p)) {}
+
+    std::coroutine_handle<promise_type> handle;
+};
+
+// #include <type_traits>
 
 namespace fhamonic {
 namespace melon {
@@ -703,13 +675,13 @@ enum DijkstraBehavior : unsigned char {
     TRACK_DISTANCES = 0b00000100
 };
 
-template <
-    typename GR, typename LM,
-    std::underlying_type_t<DijkstraBehavior> BH =
-        (DijkstraBehavior::TRACK_PRED_NODES | DijkstraBehavior::TRACK_DISTANCES),
-    typename SR = DijkstraShortestPathSemiring<typename LM::value_type>,
-    typename HP = FastBinaryHeap<typename GR::Node, typename LM::value_type,
-                                 decltype(SR::less)>>
+template <typename GR, typename LM,
+          std::underlying_type_t<DijkstraBehavior> BH =
+              (DijkstraBehavior::TRACK_PRED_NODES |
+               DijkstraBehavior::TRACK_DISTANCES),
+          typename SR = DijkstraShortestPathSemiring<typename LM::value_type>,
+          typename HP = FastBinaryHeap<
+              typename GR::Node, typename LM::value_type, decltype(SR::less)>>
 class Dijkstra {
 public:
     using Node = GR::Node;
@@ -790,12 +762,49 @@ public:
         return p;
     }
 
-    generator<std::pair<Node, Value>> run() noexcept {
-        while(!emptyQueue()) {
-            co_yield processNextNode();
+    template <typename Algo>
+    struct node_search_algorithm_span {
+        struct end_iterator {};
+        class iterator {
+        public:
+            using iterator_category = std::input_iterator_tag;
+            using value_type = decltype(std::declval<Algo>().processNextNode());
+            using reference = value_type const &;
+            using pointer = value_type *;
+
+            iterator(Algo * alg) : algorithm(alg) {}
+            iterator & operator++() noexcept {
+                node = algorithm->processNextNode();
+                return *this;
+            }
+            friend bool operator==(const iterator & it, end_iterator) noexcept {
+                return it.algorithm->emptyQueue();
+            }
+            reference operator*() const noexcept { return node; }
+
+        private:
+            Algo * algorithm;
+        public:
+            value_type node;
+        };
+
+        iterator begin() {
+            iterator it{algorithm};
+            if(!algorithm->emptyQueue()) ++it;
+            return ++it;
         }
-    }
-    
+        end_iterator end() noexcept { return {}; }
+
+        node_search_algorithm_span(node_search_algorithm_span const &) = delete;
+
+    public:
+        explicit node_search_algorithm_span(Algo * alg) : algorithm(alg) {}
+        Algo * algorithm;
+    };
+
+
+    auto run() noexcept { return node_search_algorithm_span<Dijkstra>{this}; }
+
     Node pred_node(const Node u) const noexcept
         requires(track_predecessor_nodes) {
         assert(heap.state(u) != Heap::PRE_HEAP);
@@ -816,4 +825,4 @@ public:
 
 #endif  // MELON_DIJKSTRA_HPP
 
-#endif //FHAMONIC_MELON_HPP
+#endif  // FHAMONIC_MELON_HPP

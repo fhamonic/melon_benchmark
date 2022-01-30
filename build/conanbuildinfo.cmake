@@ -316,11 +316,7 @@ set(CONAN_SETTINGS_COMPILER_VERSION "10")
 set(CONAN_SETTINGS_OS "Linux")
 set(CONAN_SETTINGS_OS_BUILD "Linux")
 
-<<<<<<< HEAD
-set(CONAN_DEPENDENCIES range-v3 andreasbuhr-cppcoro boost zlib bzip2 libiconv)
-=======
-set(CONAN_DEPENDENCIES range-v3 boost jfalcou-eve zlib bzip2 libiconv)
->>>>>>> fe64afc1923136a27fb3dcb309a8682e18f8410a
+set(CONAN_DEPENDENCIES range-v3 andreasbuhr-cppcoro boost jfalcou-eve zlib bzip2 libiconv)
 # Storing original command line args (CMake helper) flags
 set(CONAN_CMD_CXX_FLAGS ${CONAN_CXX_FLAGS})
 
@@ -871,11 +867,7 @@ macro(conan_define_targets)
                                                                   $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_LIBICONV_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_LIBICONV_MINSIZEREL_LIST}>
                                                                   $<$<CONFIG:Debug>:${CONAN_C_FLAGS_LIBICONV_DEBUG_LIST}  ${CONAN_CXX_FLAGS_LIBICONV_DEBUG_LIST}>)
 
-<<<<<<< HEAD
-    set(CONAN_TARGETS CONAN_PKG::range-v3 CONAN_PKG::andreasbuhr-cppcoro CONAN_PKG::boost CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libiconv)
-=======
-    set(CONAN_TARGETS CONAN_PKG::range-v3 CONAN_PKG::boost CONAN_PKG::jfalcou-eve CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libiconv)
->>>>>>> fe64afc1923136a27fb3dcb309a8682e18f8410a
+    set(CONAN_TARGETS CONAN_PKG::range-v3 CONAN_PKG::andreasbuhr-cppcoro CONAN_PKG::boost CONAN_PKG::jfalcou-eve CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libiconv)
 
 endmacro()
 

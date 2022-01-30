@@ -79,6 +79,7 @@
         "cassert": "cpp",
         "*.ipp": "cpp",
         "*.inc": "cpp",
-        "coroutine": "cpp"
+        "coroutine": "cpp",
+        "span": "cpp"
     }
 }

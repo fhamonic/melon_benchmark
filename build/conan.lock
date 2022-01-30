@@ -6,11 +6,8 @@
     "requires": [
      "1",
      "2",
-<<<<<<< HEAD
-     "3"
-=======
-     "6"
->>>>>>> fe64afc1923136a27fb3dcb309a8682e18f8410a
+     "3",
+     "7"
     ],
     "path": "../conanfile.txt",
     "context": "host"
@@ -62,7 +59,7 @@
     "prev": "0",
     "context": "host"
    },
-   "6": {
+   "7": {
     "ref": "jfalcou-eve/v2021.10.0",
     "options": "",
     "package_id": "5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9",
