@@ -25,12 +25,12 @@ DEALINGS IN THE SOFTWARE.*/
 /**
  * @file all.hpp
  * @author François Hamonic (francois.hamonic@gmail.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2022-01-02
- * 
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 #ifndef FHAMONIC_MELON_HPP
 #define FHAMONIC_MELON_HPP
@@ -576,14 +576,16 @@ struct DijkstraMostProbablePathSemiring {
 template <typename T>
 struct DijkstraMaxFlowPathSemiring {
     static constexpr T zero = std::numeric_limits<T>::max();
-    static constexpr auto plus = [](const T & a, const T & b){ return std::min(a, b); };
+    static constexpr auto plus = [](const T & a, const T & b) {
+        return std::min(a, b);
+    };
     static constexpr std::greater<T> less{};
 };
 
 template <typename T>
 struct DijkstraSpanningTreeSemiring {
     static constexpr T zero = static_cast<T>(0);
-    static constexpr auto plus = [](const T & a, const T & b){ return b; };
+    static constexpr auto plus = [](const T & a, const T & b) { return b; };
     static constexpr std::less<T> less{};
 };
 
@@ -653,8 +655,12 @@ public:
         if constexpr(track_distances) dist_map.resize(g.nb_nodes());
     }
 
-    Dijkstra & reset() noexcept { heap.clear(); return *this; }
-    Dijkstra & addSource(Node s, Value dist = DijkstraSemiringTraits::zero) noexcept {
+    Dijkstra & reset() noexcept {
+        heap.clear();
+        return *this;
+    }
+    Dijkstra & addSource(Node s,
+                         Value dist = DijkstraSemiringTraits::zero) noexcept {
         assert(heap.state(s) != Heap::IN_HEAP);
         heap.push(s, dist);
         if constexpr(track_predecessor_nodes) pred_nodes_map[s] = s;
@@ -720,8 +726,15 @@ public:
 namespace fhamonic {
 namespace melon {
 
+template <typename Algo>
+concept node_search_algorithm = requires(Algo alg) {
+    { alg.emptyQueue() } -> std::convertible_to<bool>;
+    { alg.processNextNode() } -> std::default_initializable;
+};
+
 // TODO requires members
 template <typename Algo>
+requires node_search_algorithm<Algo>
 struct node_search_span {
     struct end_iterator {};
     class iterator {
@@ -765,4 +778,4 @@ public:
 }  // namespace melon
 }  // namespace fhamonic
 
-#endif //FHAMONIC_MELON_HPP
+#endif  // FHAMONIC_MELON_HPP
