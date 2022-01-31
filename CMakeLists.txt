@@ -77,6 +77,8 @@ set_melon_options(dijkstra_tests_melon)
 
 # ################### BENCHMARKS #####################
 
+# ######### DIJKSTRA ###########
+
 add_executable(dijkstra_benchmark_dimacs_lemon_static_graph src/dijkstra/benchmark/dimacs/lemon_static_graph.cpp)
 set_lemon_options(dijkstra_benchmark_dimacs_lemon_static_graph)                       
 add_executable(dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS src/dijkstra/benchmark/dimacs/bgl_adjacency_list_vecS.cpp)
@@ -94,3 +96,14 @@ add_executable(dijkstra_benchmark_snap_bgl_compressed_sparse_row src/dijkstra/be
 set_boost_options(dijkstra_benchmark_snap_bgl_compressed_sparse_row)                                                                                    
 add_executable(dijkstra_benchmark_snap_melon_static_graph src/dijkstra/benchmark/snap/melon_static_graph.cpp)
 set_melon_options(dijkstra_benchmark_snap_melon_static_graph)
+
+# ######### BFS ###########
+
+add_executable(bfs_benchmark_snap_lemon_static_graph src/bfs/benchmark/snap/lemon_static_graph.cpp)
+set_lemon_options(bfs_benchmark_snap_lemon_static_graph)                       
+add_executable(bfs_benchmark_snap_bgl_adjacency_list_vecS src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp)
+set_boost_options(bfs_benchmark_snap_bgl_adjacency_list_vecS)
+add_executable(bfs_benchmark_snap_bgl_compressed_sparse_row src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp)
+set_boost_options(bfs_benchmark_snap_bgl_compressed_sparse_row)                                                                                    
+add_executable(bfs_benchmark_snap_melon_static_graph src/bfs/benchmark/snap/melon_static_graph.cpp)
+set_melon_options(bfs_benchmark_snap_melon_static_graph)

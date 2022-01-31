@@ -7,7 +7,7 @@ int warm_up() {
     Chrono chrono;
     int a,b,c,d;
     a = b = c = d = 1;
-    while(chrono.timeMs() < 10) {
+    while(chrono.timeMs() < 100) {
         a = a*b;
         ++b;
         c = d-a;

@@ -28,6 +28,7 @@ dijkstra-tests:
 	cmp results/dijkstra/tests/lemon.log results/dijkstra/tests/melon.log
 
 dijkstra-benchmark-dimacs:
+	mkdir -p results/dijkstra/dimacs/
 	./build/bin/dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS > results/dijkstra/dimacs/bgl_adjacency_list_vecS.csv
 	./build/bin/dijkstra_benchmark_dimacs_bgl_compressed_sparse_row > results/dijkstra/dimacs/bgl_compressed_sparse_row.csv
 	./build/bin/dijkstra_benchmark_dimacs_lemon_static_graph > results/dijkstra/dimacs/lemon_static_graph.csv
@@ -35,8 +36,18 @@ dijkstra-benchmark-dimacs:
 	python results/dijkstra/dimacs/plot.py
 
 dijkstra-benchmark-snap:
+	mkdir -p results/dijkstra/snap/
 	./build/bin/dijkstra_benchmark_snap_bgl_adjacency_list_vecS > results/dijkstra/snap/bgl_adjacency_list_vecS.csv
 	./build/bin/dijkstra_benchmark_snap_bgl_compressed_sparse_row > results/dijkstra/snap/bgl_compressed_sparse_row.csv
 	./build/bin/dijkstra_benchmark_snap_lemon_static_graph > results/dijkstra/snap/lemon_static_graph.csv
 	./build/bin/dijkstra_benchmark_snap_melon_static_graph > results/dijkstra/snap/melon_static_graph.csv
 	python results/dijkstra/snap/plot.py
+
+
+bfs-benchmark-snap:
+	mkdir -p results/bfs/snap/
+	./build/bin/bfs_benchmark_snap_bgl_adjacency_list_vecS > results/bfs/snap/bgl_adjacency_list_vecS.csv
+	./build/bin/bfs_benchmark_snap_bgl_compressed_sparse_row > results/bfs/snap/bgl_compressed_sparse_row.csv
+	./build/bin/bfs_benchmark_snap_lemon_static_graph > results/bfs/snap/lemon_static_graph.csv
+	./build/bin/bfs_benchmark_snap_melon_static_graph > results/bfs/snap/melon_static_graph.csv
+	python results/bfs/snap/plot.py

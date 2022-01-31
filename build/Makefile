@@ -259,6 +259,154 @@ dijkstra_benchmark_snap_melon_static_graph/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_snap_melon_static_graph.dir/build
 .PHONY : dijkstra_benchmark_snap_melon_static_graph/fast
 
+#=============================================================================
+# Target rules for targets named bfs_benchmark_snap_lemon_static_graph
+
+# Build rule for target.
+bfs_benchmark_snap_lemon_static_graph: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bfs_benchmark_snap_lemon_static_graph
+.PHONY : bfs_benchmark_snap_lemon_static_graph
+
+# fast build rule for target.
+bfs_benchmark_snap_lemon_static_graph/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_lemon_static_graph.dir/build.make CMakeFiles/bfs_benchmark_snap_lemon_static_graph.dir/build
+.PHONY : bfs_benchmark_snap_lemon_static_graph/fast
+
+#=============================================================================
+# Target rules for targets named bfs_benchmark_snap_bgl_adjacency_list_vecS
+
+# Build rule for target.
+bfs_benchmark_snap_bgl_adjacency_list_vecS: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bfs_benchmark_snap_bgl_adjacency_list_vecS
+.PHONY : bfs_benchmark_snap_bgl_adjacency_list_vecS
+
+# fast build rule for target.
+bfs_benchmark_snap_bgl_adjacency_list_vecS/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/bfs_benchmark_snap_bgl_adjacency_list_vecS.dir/build
+.PHONY : bfs_benchmark_snap_bgl_adjacency_list_vecS/fast
+
+#=============================================================================
+# Target rules for targets named bfs_benchmark_snap_bgl_compressed_sparse_row
+
+# Build rule for target.
+bfs_benchmark_snap_bgl_compressed_sparse_row: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bfs_benchmark_snap_bgl_compressed_sparse_row
+.PHONY : bfs_benchmark_snap_bgl_compressed_sparse_row
+
+# fast build rule for target.
+bfs_benchmark_snap_bgl_compressed_sparse_row/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_bgl_compressed_sparse_row.dir/build.make CMakeFiles/bfs_benchmark_snap_bgl_compressed_sparse_row.dir/build
+.PHONY : bfs_benchmark_snap_bgl_compressed_sparse_row/fast
+
+#=============================================================================
+# Target rules for targets named bfs_benchmark_snap_melon_static_graph
+
+# Build rule for target.
+bfs_benchmark_snap_melon_static_graph: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bfs_benchmark_snap_melon_static_graph
+.PHONY : bfs_benchmark_snap_melon_static_graph
+
+# fast build rule for target.
+bfs_benchmark_snap_melon_static_graph/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/build
+.PHONY : bfs_benchmark_snap_melon_static_graph/fast
+
+src/bfs/benchmark/snap/bgl_adjacency_list_vecS.o: src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.o
+.PHONY : src/bfs/benchmark/snap/bgl_adjacency_list_vecS.o
+
+# target to build an object file
+src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/bfs_benchmark_snap_bgl_adjacency_list_vecS.dir/src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.o
+.PHONY : src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.o
+
+src/bfs/benchmark/snap/bgl_adjacency_list_vecS.i: src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.i
+.PHONY : src/bfs/benchmark/snap/bgl_adjacency_list_vecS.i
+
+# target to preprocess a source file
+src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/bfs_benchmark_snap_bgl_adjacency_list_vecS.dir/src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.i
+.PHONY : src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.i
+
+src/bfs/benchmark/snap/bgl_adjacency_list_vecS.s: src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.s
+.PHONY : src/bfs/benchmark/snap/bgl_adjacency_list_vecS.s
+
+# target to generate assembly for a file
+src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/bfs_benchmark_snap_bgl_adjacency_list_vecS.dir/src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.s
+.PHONY : src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.s
+
+src/bfs/benchmark/snap/bgl_compressed_sparse_row.o: src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.o
+.PHONY : src/bfs/benchmark/snap/bgl_compressed_sparse_row.o
+
+# target to build an object file
+src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_bgl_compressed_sparse_row.dir/build.make CMakeFiles/bfs_benchmark_snap_bgl_compressed_sparse_row.dir/src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.o
+.PHONY : src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.o
+
+src/bfs/benchmark/snap/bgl_compressed_sparse_row.i: src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.i
+.PHONY : src/bfs/benchmark/snap/bgl_compressed_sparse_row.i
+
+# target to preprocess a source file
+src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_bgl_compressed_sparse_row.dir/build.make CMakeFiles/bfs_benchmark_snap_bgl_compressed_sparse_row.dir/src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.i
+.PHONY : src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.i
+
+src/bfs/benchmark/snap/bgl_compressed_sparse_row.s: src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.s
+.PHONY : src/bfs/benchmark/snap/bgl_compressed_sparse_row.s
+
+# target to generate assembly for a file
+src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_bgl_compressed_sparse_row.dir/build.make CMakeFiles/bfs_benchmark_snap_bgl_compressed_sparse_row.dir/src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.s
+.PHONY : src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp.s
+
+src/bfs/benchmark/snap/lemon_static_graph.o: src/bfs/benchmark/snap/lemon_static_graph.cpp.o
+.PHONY : src/bfs/benchmark/snap/lemon_static_graph.o
+
+# target to build an object file
+src/bfs/benchmark/snap/lemon_static_graph.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_lemon_static_graph.dir/build.make CMakeFiles/bfs_benchmark_snap_lemon_static_graph.dir/src/bfs/benchmark/snap/lemon_static_graph.cpp.o
+.PHONY : src/bfs/benchmark/snap/lemon_static_graph.cpp.o
+
+src/bfs/benchmark/snap/lemon_static_graph.i: src/bfs/benchmark/snap/lemon_static_graph.cpp.i
+.PHONY : src/bfs/benchmark/snap/lemon_static_graph.i
+
+# target to preprocess a source file
+src/bfs/benchmark/snap/lemon_static_graph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_lemon_static_graph.dir/build.make CMakeFiles/bfs_benchmark_snap_lemon_static_graph.dir/src/bfs/benchmark/snap/lemon_static_graph.cpp.i
+.PHONY : src/bfs/benchmark/snap/lemon_static_graph.cpp.i
+
+src/bfs/benchmark/snap/lemon_static_graph.s: src/bfs/benchmark/snap/lemon_static_graph.cpp.s
+.PHONY : src/bfs/benchmark/snap/lemon_static_graph.s
+
+# target to generate assembly for a file
+src/bfs/benchmark/snap/lemon_static_graph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_lemon_static_graph.dir/build.make CMakeFiles/bfs_benchmark_snap_lemon_static_graph.dir/src/bfs/benchmark/snap/lemon_static_graph.cpp.s
+.PHONY : src/bfs/benchmark/snap/lemon_static_graph.cpp.s
+
+src/bfs/benchmark/snap/melon_static_graph.o: src/bfs/benchmark/snap/melon_static_graph.cpp.o
+.PHONY : src/bfs/benchmark/snap/melon_static_graph.o
+
+# target to build an object file
+src/bfs/benchmark/snap/melon_static_graph.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/src/bfs/benchmark/snap/melon_static_graph.cpp.o
+.PHONY : src/bfs/benchmark/snap/melon_static_graph.cpp.o
+
+src/bfs/benchmark/snap/melon_static_graph.i: src/bfs/benchmark/snap/melon_static_graph.cpp.i
+.PHONY : src/bfs/benchmark/snap/melon_static_graph.i
+
+# target to preprocess a source file
+src/bfs/benchmark/snap/melon_static_graph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/src/bfs/benchmark/snap/melon_static_graph.cpp.i
+.PHONY : src/bfs/benchmark/snap/melon_static_graph.cpp.i
+
+src/bfs/benchmark/snap/melon_static_graph.s: src/bfs/benchmark/snap/melon_static_graph.cpp.s
+.PHONY : src/bfs/benchmark/snap/melon_static_graph.s
+
+# target to generate assembly for a file
+src/bfs/benchmark/snap/melon_static_graph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/src/bfs/benchmark/snap/melon_static_graph.cpp.s
+.PHONY : src/bfs/benchmark/snap/melon_static_graph.cpp.s
+
 src/dijkstra/benchmark/dimacs/bgl_adjacency_list_vecS.o: src/dijkstra/benchmark/dimacs/bgl_adjacency_list_vecS.cpp.o
 .PHONY : src/dijkstra/benchmark/dimacs/bgl_adjacency_list_vecS.o
 
@@ -531,6 +679,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... bfs_benchmark_snap_bgl_adjacency_list_vecS"
+	@echo "... bfs_benchmark_snap_bgl_compressed_sparse_row"
+	@echo "... bfs_benchmark_snap_lemon_static_graph"
+	@echo "... bfs_benchmark_snap_melon_static_graph"
 	@echo "... dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS"
 	@echo "... dijkstra_benchmark_dimacs_bgl_compressed_sparse_row"
 	@echo "... dijkstra_benchmark_dimacs_lemon_static_graph"
@@ -542,6 +694,18 @@ help:
 	@echo "... dijkstra_tests_bgl"
 	@echo "... dijkstra_tests_lemon"
 	@echo "... dijkstra_tests_melon"
+	@echo "... src/bfs/benchmark/snap/bgl_adjacency_list_vecS.o"
+	@echo "... src/bfs/benchmark/snap/bgl_adjacency_list_vecS.i"
+	@echo "... src/bfs/benchmark/snap/bgl_adjacency_list_vecS.s"
+	@echo "... src/bfs/benchmark/snap/bgl_compressed_sparse_row.o"
+	@echo "... src/bfs/benchmark/snap/bgl_compressed_sparse_row.i"
+	@echo "... src/bfs/benchmark/snap/bgl_compressed_sparse_row.s"
+	@echo "... src/bfs/benchmark/snap/lemon_static_graph.o"
+	@echo "... src/bfs/benchmark/snap/lemon_static_graph.i"
+	@echo "... src/bfs/benchmark/snap/lemon_static_graph.s"
+	@echo "... src/bfs/benchmark/snap/melon_static_graph.o"
+	@echo "... src/bfs/benchmark/snap/melon_static_graph.i"
+	@echo "... src/bfs/benchmark/snap/melon_static_graph.s"
 	@echo "... src/dijkstra/benchmark/dimacs/bgl_adjacency_list_vecS.o"
 	@echo "... src/dijkstra/benchmark/dimacs/bgl_adjacency_list_vecS.i"
 	@echo "... src/dijkstra/benchmark/dimacs/bgl_adjacency_list_vecS.s"

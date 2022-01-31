@@ -95,12 +95,12 @@ int main() {
         const int nb_iterations = 30000.0 * 1000.0 / nb_nodes;
         graph_traits<graph_t>::vertex_iterator si, send;
         for(tie(si, send) = vertices(graph); si != send; ++si) {
-            std::vector<vertex_descriptor> p(nb_nodes);
-            std::vector<int> d(nb_nodes);
             vertex_descriptor s = *si;
 
             Chrono chrono;
             double sum = 0;
+            std::vector<vertex_descriptor> p(nb_nodes);
+            std::vector<int> d(nb_nodes);
             dijkstra_shortest_paths(graph, s,
                                     predecessor_map(&p[0]).distance_map(&d[0]));
 

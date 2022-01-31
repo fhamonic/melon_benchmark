@@ -22,4 +22,5 @@ The build process requires CMake 3.12 (https://cmake.org/) or more and the Conan
 ## Benchmarks
 
 ![Dijkstra benchmark plot](/results/dijkstra/dimacs/plot.png)
+![Breadth First Search benchmark plot](/results/bfs/snap/plot.png)
     
