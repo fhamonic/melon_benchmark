@@ -79,7 +79,7 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            Dijkstra<StaticDigraph, StaticDigraph::ArcMap<double>> dijkstra(graph, length_map);
+            Dijkstra dijkstra(graph, length_map);
             dijkstra.addSource(s);
             
             while(!dijkstra.emptyQueue()) {

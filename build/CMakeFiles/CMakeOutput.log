@@ -276,3 +276,20 @@ make[1]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeF
 
 Source file was:
 int main() { return 0; }
+Performing C++ SOURCE FILE Test CXX_COMPILER_HAS_MARCH=NATIVE succeeded with the following output:
+Change Dir: /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_2e23b/fast && make[2]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
+/usr/bin/make  -f CMakeFiles/cmTC_2e23b.dir/build.make CMakeFiles/cmTC_2e23b.dir/build
+make[3]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_2e23b.dir/src.cxx.o
+/usr/bin/c++ -DCXX_COMPILER_HAS_MARCH=NATIVE  -march=native -o CMakeFiles/cmTC_2e23b.dir/src.cxx.o -c /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_2e23b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2e23b.dir/link.txt --verbose=1
+/usr/bin/c++ CMakeFiles/cmTC_2e23b.dir/src.cxx.o -o cmTC_2e23b 
+make[3]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
+make[2]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int main() { return 0; }
