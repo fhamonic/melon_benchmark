@@ -78,6 +78,10 @@ all: CMakeFiles/bfs_benchmark_snap_lemon_static_graph.dir/all
 all: CMakeFiles/bfs_benchmark_snap_bgl_adjacency_list_vecS.dir/all
 all: CMakeFiles/bfs_benchmark_snap_bgl_compressed_sparse_row.dir/all
 all: CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/all
+all: CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/all
+all: CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/all
+all: CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/all
+all: CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -100,6 +104,10 @@ clean: CMakeFiles/bfs_benchmark_snap_lemon_static_graph.dir/clean
 clean: CMakeFiles/bfs_benchmark_snap_bgl_adjacency_list_vecS.dir/clean
 clean: CMakeFiles/bfs_benchmark_snap_bgl_compressed_sparse_row.dir/clean
 clean: CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/clean
+clean: CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/clean
+clean: CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/clean
+clean: CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/clean
+clean: CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -109,7 +117,7 @@ clean: CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/clean
 CMakeFiles/dijkstra_tests_lemon.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_lemon.dir/build.make CMakeFiles/dijkstra_tests_lemon.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_lemon.dir/build.make CMakeFiles/dijkstra_tests_lemon.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=27,28 "Built target dijkstra_tests_lemon"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=35,36 "Built target dijkstra_tests_lemon"
 .PHONY : CMakeFiles/dijkstra_tests_lemon.dir/all
 
 # Build rule for subdir invocation for target.
@@ -135,7 +143,7 @@ CMakeFiles/dijkstra_tests_lemon.dir/clean:
 CMakeFiles/dijkstra_tests_bgl.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_bgl.dir/build.make CMakeFiles/dijkstra_tests_bgl.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_bgl.dir/build.make CMakeFiles/dijkstra_tests_bgl.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=25,26 "Built target dijkstra_tests_bgl"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=33,34 "Built target dijkstra_tests_bgl"
 .PHONY : CMakeFiles/dijkstra_tests_bgl.dir/all
 
 # Build rule for subdir invocation for target.
@@ -161,7 +169,7 @@ CMakeFiles/dijkstra_tests_bgl.dir/clean:
 CMakeFiles/dijkstra_tests_melon.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_melon.dir/build.make CMakeFiles/dijkstra_tests_melon.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_tests_melon.dir/build.make CMakeFiles/dijkstra_tests_melon.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=29,30 "Built target dijkstra_tests_melon"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=37,38 "Built target dijkstra_tests_melon"
 .PHONY : CMakeFiles/dijkstra_tests_melon.dir/all
 
 # Build rule for subdir invocation for target.
@@ -187,7 +195,7 @@ CMakeFiles/dijkstra_tests_melon.dir/clean:
 CMakeFiles/dijkstra_benchmark_dimacs_lemon_static_graph.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_dimacs_lemon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_dimacs_lemon_static_graph.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_dimacs_lemon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_dimacs_lemon_static_graph.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=13,14 "Built target dijkstra_benchmark_dimacs_lemon_static_graph"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=21,22 "Built target dijkstra_benchmark_dimacs_lemon_static_graph"
 .PHONY : CMakeFiles/dijkstra_benchmark_dimacs_lemon_static_graph.dir/all
 
 # Build rule for subdir invocation for target.
@@ -213,7 +221,7 @@ CMakeFiles/dijkstra_benchmark_dimacs_lemon_static_graph.dir/clean:
 CMakeFiles/dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=9,10 "Built target dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=17,18 "Built target dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS"
 .PHONY : CMakeFiles/dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS.dir/all
 
 # Build rule for subdir invocation for target.
@@ -239,7 +247,7 @@ CMakeFiles/dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS.dir/clean:
 CMakeFiles/dijkstra_benchmark_dimacs_bgl_compressed_sparse_row.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_dimacs_bgl_compressed_sparse_row.dir/build.make CMakeFiles/dijkstra_benchmark_dimacs_bgl_compressed_sparse_row.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_dimacs_bgl_compressed_sparse_row.dir/build.make CMakeFiles/dijkstra_benchmark_dimacs_bgl_compressed_sparse_row.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=11,12 "Built target dijkstra_benchmark_dimacs_bgl_compressed_sparse_row"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=19,20 "Built target dijkstra_benchmark_dimacs_bgl_compressed_sparse_row"
 .PHONY : CMakeFiles/dijkstra_benchmark_dimacs_bgl_compressed_sparse_row.dir/all
 
 # Build rule for subdir invocation for target.
@@ -265,7 +273,7 @@ CMakeFiles/dijkstra_benchmark_dimacs_bgl_compressed_sparse_row.dir/clean:
 CMakeFiles/dijkstra_benchmark_dimacs_melon_static_graph.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_dimacs_melon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_dimacs_melon_static_graph.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_dimacs_melon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_dimacs_melon_static_graph.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=15,16 "Built target dijkstra_benchmark_dimacs_melon_static_graph"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=23,24 "Built target dijkstra_benchmark_dimacs_melon_static_graph"
 .PHONY : CMakeFiles/dijkstra_benchmark_dimacs_melon_static_graph.dir/all
 
 # Build rule for subdir invocation for target.
@@ -291,7 +299,7 @@ CMakeFiles/dijkstra_benchmark_dimacs_melon_static_graph.dir/clean:
 CMakeFiles/dijkstra_benchmark_snap_lemon_static_graph.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_snap_lemon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_snap_lemon_static_graph.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_snap_lemon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_snap_lemon_static_graph.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=21,22 "Built target dijkstra_benchmark_snap_lemon_static_graph"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=29,30 "Built target dijkstra_benchmark_snap_lemon_static_graph"
 .PHONY : CMakeFiles/dijkstra_benchmark_snap_lemon_static_graph.dir/all
 
 # Build rule for subdir invocation for target.
@@ -317,7 +325,7 @@ CMakeFiles/dijkstra_benchmark_snap_lemon_static_graph.dir/clean:
 CMakeFiles/dijkstra_benchmark_snap_bgl_adjacency_list_vecS.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_snap_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/dijkstra_benchmark_snap_bgl_adjacency_list_vecS.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_snap_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/dijkstra_benchmark_snap_bgl_adjacency_list_vecS.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=17,18 "Built target dijkstra_benchmark_snap_bgl_adjacency_list_vecS"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=25,26 "Built target dijkstra_benchmark_snap_bgl_adjacency_list_vecS"
 .PHONY : CMakeFiles/dijkstra_benchmark_snap_bgl_adjacency_list_vecS.dir/all
 
 # Build rule for subdir invocation for target.
@@ -343,7 +351,7 @@ CMakeFiles/dijkstra_benchmark_snap_bgl_adjacency_list_vecS.dir/clean:
 CMakeFiles/dijkstra_benchmark_snap_bgl_compressed_sparse_row.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_snap_bgl_compressed_sparse_row.dir/build.make CMakeFiles/dijkstra_benchmark_snap_bgl_compressed_sparse_row.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_snap_bgl_compressed_sparse_row.dir/build.make CMakeFiles/dijkstra_benchmark_snap_bgl_compressed_sparse_row.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=19,20 "Built target dijkstra_benchmark_snap_bgl_compressed_sparse_row"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=27,28 "Built target dijkstra_benchmark_snap_bgl_compressed_sparse_row"
 .PHONY : CMakeFiles/dijkstra_benchmark_snap_bgl_compressed_sparse_row.dir/all
 
 # Build rule for subdir invocation for target.
@@ -369,7 +377,7 @@ CMakeFiles/dijkstra_benchmark_snap_bgl_compressed_sparse_row.dir/clean:
 CMakeFiles/dijkstra_benchmark_snap_melon_static_graph.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_snap_melon_static_graph.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dijkstra_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/dijkstra_benchmark_snap_melon_static_graph.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=23,24 "Built target dijkstra_benchmark_snap_melon_static_graph"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=31,32 "Built target dijkstra_benchmark_snap_melon_static_graph"
 .PHONY : CMakeFiles/dijkstra_benchmark_snap_melon_static_graph.dir/all
 
 # Build rule for subdir invocation for target.
@@ -491,6 +499,110 @@ bfs_benchmark_snap_melon_static_graph: CMakeFiles/bfs_benchmark_snap_melon_stati
 CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/clean
 .PHONY : CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir
+
+# All Build rule for target.
+CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/build.make CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/build.make CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=13,14 "Built target dfs_benchmark_snap_lemon_static_graph"
+.PHONY : CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 0
+.PHONY : CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/rule
+
+# Convenience name for target.
+dfs_benchmark_snap_lemon_static_graph: CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/rule
+.PHONY : dfs_benchmark_snap_lemon_static_graph
+
+# clean rule for target.
+CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/build.make CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/clean
+.PHONY : CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir
+
+# All Build rule for target.
+CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=9,10 "Built target dfs_benchmark_snap_bgl_adjacency_list_vecS"
+.PHONY : CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 0
+.PHONY : CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/rule
+
+# Convenience name for target.
+dfs_benchmark_snap_bgl_adjacency_list_vecS: CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/rule
+.PHONY : dfs_benchmark_snap_bgl_adjacency_list_vecS
+
+# clean rule for target.
+CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/build.make CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/clean
+.PHONY : CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir
+
+# All Build rule for target.
+CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/build.make CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/build.make CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=11,12 "Built target dfs_benchmark_snap_bgl_compressed_sparse_row"
+.PHONY : CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 0
+.PHONY : CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/rule
+
+# Convenience name for target.
+dfs_benchmark_snap_bgl_compressed_sparse_row: CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/rule
+.PHONY : dfs_benchmark_snap_bgl_compressed_sparse_row
+
+# clean rule for target.
+CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/build.make CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/clean
+.PHONY : CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir
+
+# All Build rule for target.
+CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles --progress-num=15,16 "Built target dfs_benchmark_snap_melon_static_graph"
+.PHONY : CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles 0
+.PHONY : CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/rule
+
+# Convenience name for target.
+dfs_benchmark_snap_melon_static_graph: CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/rule
+.PHONY : dfs_benchmark_snap_melon_static_graph
+
+# clean rule for target.
+CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/clean
+.PHONY : CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -43,15 +43,15 @@ int main() {
             Chrono chrono;
 
             int sum = 0;
-            BFS<StaticDigraph, NodeSeachBehavior::TRACK_PRED_ARCS> bfs(graph);
-            bfs.addSource(s);
+            DFS<StaticDigraph, NodeSeachBehavior::TRACK_PRED_ARCS> dfs(graph);
+            dfs.addSource(s);
 
-            // while(!bfs.emptyQueue()) {
-            //     auto u = bfs.processNextNode();
+            // while(!dfs.emptyQueue()) {
+            //     auto u = dfs.processNextNode();
             //     sum += u;
             // }
 
-            for(const auto & u : node_search_span(bfs)) {
+            for(const auto & u : node_search_span(dfs)) {
                 sum += u;
             }
 

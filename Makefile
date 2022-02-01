@@ -51,3 +51,11 @@ bfs-benchmark-snap:
 	./build/bin/bfs_benchmark_snap_lemon_static_graph > results/bfs/snap/lemon_static_graph.csv
 	./build/bin/bfs_benchmark_snap_melon_static_graph > results/bfs/snap/melon_static_graph.csv
 	python results/bfs/snap/plot.py
+
+dfs-benchmark-snap:
+	mkdir -p results/dfs/snap/
+	./build/bin/dfs_benchmark_snap_bgl_adjacency_list_vecS > results/dfs/snap/bgl_adjacency_list_vecS.csv
+	./build/bin/dfs_benchmark_snap_bgl_compressed_sparse_row > results/dfs/snap/bgl_compressed_sparse_row.csv
+	./build/bin/dfs_benchmark_snap_lemon_static_graph > results/dfs/snap/lemon_static_graph.csv
+	./build/bin/dfs_benchmark_snap_melon_static_graph > results/dfs/snap/melon_static_graph.csv
+	python results/dfs/snap/plot.py

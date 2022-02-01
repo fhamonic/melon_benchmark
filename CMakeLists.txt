@@ -107,3 +107,14 @@ add_executable(bfs_benchmark_snap_bgl_compressed_sparse_row src/bfs/benchmark/sn
 set_boost_options(bfs_benchmark_snap_bgl_compressed_sparse_row)                                                                                    
 add_executable(bfs_benchmark_snap_melon_static_graph src/bfs/benchmark/snap/melon_static_graph.cpp)
 set_melon_options(bfs_benchmark_snap_melon_static_graph)
+
+# ######### DFS ###########
+
+add_executable(dfs_benchmark_snap_lemon_static_graph src/dfs/benchmark/snap/lemon_static_graph.cpp)
+set_lemon_options(dfs_benchmark_snap_lemon_static_graph)                       
+add_executable(dfs_benchmark_snap_bgl_adjacency_list_vecS src/dfs/benchmark/snap/bgl_adjacency_list_vecS.cpp)
+set_boost_options(dfs_benchmark_snap_bgl_adjacency_list_vecS)
+add_executable(dfs_benchmark_snap_bgl_compressed_sparse_row src/dfs/benchmark/snap/bgl_compressed_sparse_row.cpp)
+set_boost_options(dfs_benchmark_snap_bgl_compressed_sparse_row)                                                                                    
+add_executable(dfs_benchmark_snap_melon_static_graph src/dfs/benchmark/snap/melon_static_graph.cpp)
+set_melon_options(dfs_benchmark_snap_melon_static_graph)

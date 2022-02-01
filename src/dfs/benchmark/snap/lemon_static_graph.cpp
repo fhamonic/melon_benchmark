@@ -7,7 +7,7 @@
 #include <lemon/smart_graph.h>
 #include <lemon/static_graph.h>
 
-#include <lemon/bfs.h>
+#include <lemon/dfs.h>
 
 #include "chrono.hpp"
 #include "warm_up.hpp"
@@ -60,12 +60,12 @@ int main() {
 
             int sum = 0;
 
-            Bfs<Graph> bfs(graph);
-            bfs.init();
-            bfs.addSource(s);
-            while(!bfs.emptyQueue()) {
-                auto u = bfs.processNextNode();
-                sum += graph.id(u);
+            Dfs<Graph> dfs(graph);
+            dfs.init();
+            dfs.addSource(s);
+            while(!dfs.emptyQueue()) {
+                auto e = dfs.processNextArc();
+                sum += graph.id(graph.target(e));
             }
 
             double time_ms = (chrono.timeUs() / 1000.0);

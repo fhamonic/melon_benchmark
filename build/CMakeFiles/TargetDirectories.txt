@@ -13,5 +13,9 @@
 /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/bfs_benchmark_snap_bgl_adjacency_list_vecS.dir
 /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/bfs_benchmark_snap_bgl_compressed_sparse_row.dir
 /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/bfs_benchmark_snap_melon_static_graph.dir
+/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/dfs_benchmark_snap_lemon_static_graph.dir
+/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/dfs_benchmark_snap_bgl_adjacency_list_vecS.dir
+/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/dfs_benchmark_snap_bgl_compressed_sparse_row.dir
+/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir
 /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/edit_cache.dir
 /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/rebuild_cache.dir
