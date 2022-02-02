@@ -51,7 +51,7 @@ int main() {
             //     sum += u;
             // }
 
-            for(const auto & u : node_search_span(dfs)) {
+            for(const auto & [a ,u] : node_search_span(dfs)) {
                 sum += u;
             }
 
