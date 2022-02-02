@@ -25,12 +25,12 @@ DEALINGS IN THE SOFTWARE.*/
 /**
  * @file all.hpp
  * @author François Hamonic (francois.hamonic@gmail.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2022-01-02
- * 
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 #ifndef FHAMONIC_MELON_HPP
 #define FHAMONIC_MELON_HPP
@@ -95,7 +95,7 @@ public:
     const_iterator cbegin() const noexcept { return _data.get(); }
     const_iterator cend() const noexcept { return _data_end; }
 
-    size_type size() const noexcept { return std::distance(begin(), end()); }
+    size_type size() const noexcept { return std::distance(cbegin(), cend()); }
     void resize(size_type n) {
         if(n == size()) return;
         _data = std::make_unique<value_type[]>(n);
@@ -457,7 +457,8 @@ private:
     using OutArcIt = decltype(std::declval<OutArcRange>().begin());
     using OutArcItEnd = decltype(std::declval<OutArcRange>().end());
 
-    std::stack<std::pair<OutArcIt, OutArcItEnd>> stack;
+    static_assert(std::ranges::borrowed_range<OutArcRange>);
+    std::vector<std::pair<OutArcIt, OutArcItEnd>> stack;
 
     ReachedMap reached_map;
 
@@ -466,13 +467,14 @@ private:
 
 public:
     DFS(const GR & g) : graph(g), stack(), reached_map(g.nb_nodes(), false) {
+        stack.reserve(g.nb_nodes());
         if constexpr(track_predecessor_nodes)
             pred_nodes_map.resize(g.nb_nodes());
         if constexpr(track_predecessor_arcs) pred_arcs_map.resize(g.nb_nodes());
     }
 
     DFS & reset() noexcept {
-        stack.clear();
+        stack.resize(0);
         std::ranges::fill(reached_map, false);
         return *this;
     }
@@ -486,37 +488,32 @@ public:
     bool emptyQueue() const noexcept { return stack.empty(); }
     void pushNode(Node u) noexcept {
         OutArcRange r = graph.out_arcs(u);
-        stack.emplace(r.begin(), r.end());
+        stack.emplace_back(r.begin(), r.end());
         reached_map[u] = true;
-    }
-    std::pair<Arc, Node> popNode() noexcept {
-        Arc a = *stack.top().first;
-        Node u = graph.target(a);
-        ++stack.top().first;
-        return std::make_pair(a, u);
     }
     bool reached(const Node u) const noexcept { return reached_map[u]; }
 
+private:
+    void advance_iterators() {
+        assert(!stack.empty());
+        do {
+            while(stack.back().first != stack.back().second) {
+                if(!reached(graph.target(*stack.back().first))) return;
+                ++stack.back().first;
+            }
+            stack.pop_back();
+        } while(!stack.empty());
+    }
+
+public:
     std::pair<Arc, Node> processNextNode() noexcept {
-        const auto p = popNode();
-        const auto & [a, u] = p;
+        Arc a = *stack.back().first;
+        Node u = graph.target(a);
         pushNode(u);
         // if constexpr(track_predecessor_nodes) pred_nodes_map[u] = u;
         if constexpr(track_predecessor_arcs) pred_arcs_map[u] = a;
-
-        // advance the iterators to the next arc
-        do {
-            while(stack.top().first != stack.top().second) {
-                if(reached(graph.target(*stack.top().first))) {
-                    ++stack.top().first;
-                    continue;
-                }
-                goto ok;
-            }
-            stack.pop();
-        } while(!stack.empty());
-    ok:
-        return p;
+        advance_iterators();
+        return std::make_pair(a, u);
     }
 
     void run() noexcept {
@@ -780,14 +777,16 @@ struct DijkstraMostProbablePathSemiring {
 template <typename T>
 struct DijkstraMaxFlowPathSemiring {
     static constexpr T zero = std::numeric_limits<T>::max();
-    static constexpr auto plus = [](const T & a, const T & b){ return std::min(a, b); };
+    static constexpr auto plus = [](const T & a, const T & b) {
+        return std::min(a, b);
+    };
     static constexpr std::greater<T> less{};
 };
 
 template <typename T>
 struct DijkstraSpanningTreeSemiring {
     static constexpr T zero = static_cast<T>(0);
-    static constexpr auto plus = [](const T & a, const T & b){ return b; };
+    static constexpr auto plus = [](const T & a, const T & b) { return b; };
     static constexpr std::less<T> less{};
 };
 
@@ -1061,13 +1060,14 @@ namespace melon {
 
 template <typename Algo>
 concept node_search_algorithm = requires(Algo alg) {
-    { alg.emptyQueue() } -> std::convertible_to<bool>;
-    { alg.processNextNode() } -> std::default_initializable;
+    { alg.emptyQueue() }
+    ->std::convertible_to<bool>;
+    { alg.processNextNode() }
+    ->std::default_initializable;
 };
 
 template <typename Algo>
-requires node_search_algorithm<Algo>
-struct node_search_span {
+requires node_search_algorithm<Algo> struct node_search_span {
     struct end_iterator {};
     class iterator {
     public:
@@ -1112,4 +1112,4 @@ public:
 
 #endif  // MELON_NODE_SEARCH_SPAN_HPP
 
-#endif //FHAMONIC_MELON_HPP
+#endif  // FHAMONIC_MELON_HPP
