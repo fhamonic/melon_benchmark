@@ -25,3 +25,15 @@ The build process requires CMake 3.12 (https://cmake.org/) or more and the Conan
 ![Breadth First Search benchmark plot](/results/bfs/snap/plot.png)
 ![Depth First Search benchmark plot](/results/dfs/snap/plot.png)
     
+| instance | #nodes | #arcs |
+|---|---|---|
+| USA-road-NY | 264,346 | 733,846 |
+| USA-road-BAY | 321,270 | 800,172 |
+| USA-road-COL | 435,666 | 1,057,066 |
+| USA-road-FLA | 1,070,376 | 2,712,798 |
+| USA-road-NW | 1,207,945 | 2,840,208 |
+| USA-road-NE | 1,524,453 | 3,897,636 |
+|---|---|---|
+| Web-Stanford | 281,904 | 2,312,497 |
+| Amazon0505 | 410,236 | 3,356,824 |
+| WikiTalk | 2,394,385 | 5,021,410 |

@@ -43,7 +43,7 @@ int main() {
             Chrono chrono;
 
             int sum = 0;
-            BFS<StaticDigraph> bfs(graph);
+            BFS<StaticDigraph, NodeSeachBehavior::TRACK_PRED_ARCS> bfs(graph);
             bfs.addSource(s);
 
             // while(!bfs.emptyQueue()) {
