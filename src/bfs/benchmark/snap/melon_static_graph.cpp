@@ -43,17 +43,16 @@ int main() {
             Chrono chrono;
 
             int sum = 0;
-            BFS<StaticDigraph, NodeSeachBehavior::TRACK_PRED_ARCS> bfs(graph);
+            Bfs<StaticDigraph, TraversalAlgorithmBehavior::TRACK_PRED_ARCS> bfs(graph);
             bfs.add_source(s);
 
-            // while(!bfs.empty_queue()) {
-            //     auto u = bfs.next_node();
-            //     sum += u;
-            // }
-
-            for(const auto & u : bfs) {
+            while(!bfs.empty_queue()) {
+                const auto & u = bfs.next_node();
                 sum += u;
             }
+            // for(const auto & u : bfs) {
+            //     sum += u;
+            // }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;

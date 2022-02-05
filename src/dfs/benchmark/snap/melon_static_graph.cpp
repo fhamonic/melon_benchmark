@@ -43,12 +43,16 @@ int main() {
             Chrono chrono;
 
             int sum = 0;
-            DFS<StaticDigraph> dfs(graph);
+            Dfs<StaticDigraph> dfs(graph);
             dfs.add_source(s);
 
-            for(const auto & [a ,u] : dfs) {
+            while(!dfs.empty_queue()) {
+                const auto & [a ,u] = dfs.next_node();
                 sum += u;
             }
+            // for(const auto & [a ,u] : dfs) {
+            //     sum += u;
+            // }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;

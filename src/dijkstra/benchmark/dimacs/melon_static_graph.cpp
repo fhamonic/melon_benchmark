@@ -82,11 +82,6 @@ int main() {
             Dijkstra dijkstra(graph, length_map);
             dijkstra.add_source(s);
             
-            // while(!dijkstra.empty_queue()) {
-            //     auto [u, dist] = dijkstra.next_node();
-            //     sum += dist;
-            // }
-
             for(const auto & [u, dist] : dijkstra) {
                 sum += dist;
             }
