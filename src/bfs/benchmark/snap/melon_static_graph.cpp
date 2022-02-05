@@ -18,7 +18,7 @@ auto parse_gr(const std::filesystem::path & file_name) {
     StaticDigraphBuilder<> builder(nb_nodes);
 
     int from, to;
-    while(gr_file >> from >> to) builder.addArc(from, to);
+    while(gr_file >> from >> to) builder.add_arc(from, to);
 
     return builder.build();
 }
@@ -44,14 +44,14 @@ int main() {
 
             int sum = 0;
             BFS<StaticDigraph, NodeSeachBehavior::TRACK_PRED_ARCS> bfs(graph);
-            bfs.addSource(s);
+            bfs.add_source(s);
 
-            // while(!bfs.emptyQueue()) {
-            //     auto u = bfs.processNextNode();
+            // while(!bfs.empty_queue()) {
+            //     auto u = bfs.next_node();
             //     sum += u;
             // }
 
-            for(const auto & u : node_search_span(bfs)) {
+            for(const auto & u : bfs) {
                 sum += u;
             }
 

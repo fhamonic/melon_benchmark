@@ -18,7 +18,7 @@ auto parse_gr(const std::filesystem::path & file_name) {
     StaticDigraphBuilder<int> builder(nb_nodes);
 
     int from, to;
-    while(gr_file >> from >> to) builder.addArc(from, to, 1);
+    while(gr_file >> from >> to) builder.add_arc(from, to, 1);
 
     return builder.build();
 }
@@ -44,9 +44,13 @@ int main() {
 
             int sum = 0;
             Dijkstra dijkstra(graph, length_map);
-            dijkstra.addSource(s);
-            while(!dijkstra.emptyQueue()) {
-                auto [u, dist] = dijkstra.processNextNode();
+            dijkstra.add_source(s);
+            while(!dijkstra.empty_queue()) {
+                auto [u, dist] = dijkstra.next_node();
+                sum += dist;
+            }
+
+            for(const auto & [u, dist] : dijkstra) {
                 sum += dist;
             }
 

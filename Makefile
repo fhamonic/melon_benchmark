@@ -59,3 +59,5 @@ dfs-benchmark-snap:
 	./build/bin/dfs_benchmark_snap_lemon_static_graph > results/dfs/snap/lemon_static_graph.csv
 	./build/bin/dfs_benchmark_snap_melon_static_graph > results/dfs/snap/melon_static_graph.csv
 	python results/dfs/snap/plot.py
+
+run-benchmarks: dijkstra-benchmark-dimacs bfs-benchmark-snap dfs-benchmark-snap

@@ -34,7 +34,7 @@ auto parse_gr(const std::filesystem::path & file_name) {
                     StaticDigraph::Node from, to;
                     double length;
                     if(iss >> from >> to >> length) {
-                        builder.addArc(from - 1, to - 1, length);
+                        builder.add_arc(from - 1, to - 1, length);
                     }
                     break;
                 }
@@ -80,16 +80,16 @@ int main() {
 
             double sum = 0;
             Dijkstra dijkstra(graph, length_map);
-            dijkstra.addSource(s);
+            dijkstra.add_source(s);
             
-            while(!dijkstra.emptyQueue()) {
-                auto [u, dist] = dijkstra.processNextNode();
-                sum += dist;
-            }
-
-            // for(const auto & [u, dist] : node_search_span(dijkstra)) {
+            // while(!dijkstra.empty_queue()) {
+            //     auto [u, dist] = dijkstra.next_node();
             //     sum += dist;
             // }
+
+            for(const auto & [u, dist] : dijkstra) {
+                sum += dist;
+            }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;

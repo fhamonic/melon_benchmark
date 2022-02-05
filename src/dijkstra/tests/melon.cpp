@@ -33,7 +33,7 @@ auto parse_gr(std::string file_name) {
                     StaticDigraph::Node from, to;
                     double length;
                     if(iss >> from >> to >> length) {
-                        builder.addArc(from - 1, to - 1, length);
+                        builder.add_arc(from - 1, to - 1, length);
                     }
                     break;
                 }
@@ -64,16 +64,15 @@ int main() {
     for(const auto & gr_file : gr_files) {
         auto [graph, length_map] = parse_gr(gr_file);
 
-        std::cout << std::setprecision(16) << gr_file << " : " << graph.nb_nodes() << " nodes , "
-                  << graph.nb_arcs() << " arcs" << std::endl;
+        std::cout << std::setprecision(16) << gr_file << " : "
+                  << graph.nb_nodes() << " nodes , " << graph.nb_arcs()
+                  << " arcs" << std::endl;
 
         for(StaticDigraph::Node s : graph.nodes()) {
             Dijkstra dijkstra(graph, length_map);
-            dijkstra.reset();
-            dijkstra.addSource(s);
+            dijkstra.add_source(s);
             std::vector<double> dists(graph.nb_nodes());
-            while(!dijkstra.emptyQueue()) {
-                auto [u, dist] = dijkstra.processNextNode();
+            for(const auto & [u, dist] : dijkstra) {
                 dists[u] = dist;
             }
 

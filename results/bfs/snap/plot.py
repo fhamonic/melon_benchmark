@@ -42,7 +42,7 @@ ax.set_title(
     'Breadth First Search average runtime on large directed unweighted graphs from SNAP datasets')
 ax.set_xticks(x)
 ax.set_xticklabels(instances)
-plt.xticks(rotation=60)
+plt.xticks(rotation=0)
 ax.legend()
 
 
