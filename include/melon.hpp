@@ -80,7 +80,7 @@ public:
     }
 
     template <std::ranges::random_access_range R>
-    StaticMap(R && r) : StaticMap(std::ranges::size(r)) {
+    explicit StaticMap(R && r) : StaticMap(std::ranges::size(r)) {
         std::ranges::copy(r, _data.get());
     }
     StaticMap(StaticMap &&) = default;
@@ -744,7 +744,7 @@ private:
         _reached_map[u] = true;
     }
     Node pop_node() noexcept {
-        Node u = *_queue_current;
+        const Node u = *_queue_current;
         ++_queue_current;
         return u;
     }
@@ -753,7 +753,7 @@ public:
     Node next_node() noexcept {
         const Node u = pop_node();
         for(Arc a : _graph.out_arcs(u)) {
-            Node w = _graph.target(a);
+            const Node w = _graph.target(a);
             if(reached(w)) continue;
             push_node(w);
             if constexpr(track_predecessor_nodes) _pred_nodes_map[w] = u;
@@ -884,8 +884,8 @@ private:
 
 public:
     std::pair<Arc, Node> next_node() noexcept {
-        Arc a = *_stack.back().first;
-        Node u = _graph.target(a);
+        const Arc a = *_stack.back().first;
+        const Node u = _graph.target(a);
         push_node(u);
         // if constexpr(track_predecessor_nodes) _pred_nodes_map[u] = u;
         if constexpr(track_predecessor_arcs) _pred_arcs_map[u] = a;
@@ -1053,7 +1053,7 @@ private:
 
     void heap_push(Index holeIndex, Pair && p) noexcept {
         while(holeIndex > 0) {
-            Index parent = parent_of(holeIndex);
+            const Index parent = parent_of(holeIndex);
             if(!_cmp(p.second, pair_ref(parent).second)) break;
             heap_move(holeIndex, std::move(pair_ref(parent)));
             holeIndex = parent;
@@ -1239,7 +1239,7 @@ private:
 
     void heap_push(Index holeIndex, Pair && p) noexcept {
         while(holeIndex > sizeof(Pair)) {
-            Index parent = holeIndex / (2 * sizeof(Pair)) * sizeof(Pair);
+            const Index parent = holeIndex / (2 * sizeof(Pair)) * sizeof(Pair);
             if(!_cmp(p.second, pair_ref(parent).second)) break;
             heap_move(holeIndex, std::move(pair_ref(parent)));
             holeIndex = parent;
@@ -1324,6 +1324,8 @@ public:
     using DijkstraSemiringTraits = SR;
     using Heap = HP;
 
+    using ReachedMap = typename GR::NodeMap<bool>;
+
     static constexpr bool track_predecessor_nodes =
         static_cast<bool>(BH & TraversalAlgorithmBehavior::TRACK_PRED_NODES);
     static constexpr bool track_predecessor_arcs =
@@ -1346,13 +1348,17 @@ private:
     const LM & _length_map;
 
     Heap _heap;
+    ReachedMap _reached_map;
     PredNodesMap _pred_nodes_map;
     PredArcsMap _pred_arcs_map;
     DistancesMap _dist_map;
 
 public:
     Dijkstra(const GR & g, const LM & l)
-        : _graph(g), _length_map(l), _heap(g.nb_nodes()) {
+        : _graph(g)
+        , _length_map(l)
+        , _heap(g.nb_nodes())
+        , _reached_map(g.nb_nodes(), false) {
         if constexpr(track_predecessor_nodes)
             _pred_nodes_map.resize(g.nb_nodes());
         if constexpr(track_predecessor_arcs)
@@ -1362,6 +1368,7 @@ public:
 
     Dijkstra & reset() noexcept {
         _heap.clear();
+        _reached_map.fill(false);
         return *this;
     }
     Dijkstra & add_source(Node s,
@@ -1376,8 +1383,10 @@ public:
 
     std::pair<Node, Value> next_node() noexcept {
         const auto p = _heap.pop();
+        _reached_map[p.first] = true;
         for(const Arc a : _graph.out_arcs(p.first)) {
             const Node w = _graph.target(a);
+            if(reached(w)) continue;
             const auto s = _heap.state(w);
             if(s == Heap::IN_HEAP) {
                 const Value new_dist =
@@ -1406,6 +1415,7 @@ public:
     auto begin() noexcept { return traversal_algorithm_iterator(*this); }
     auto end() noexcept { return traversal_algorithm_end_iterator(); }
 
+    bool reached(const Node u) const noexcept { return _reached_map[u]; }
     Node pred_node(const Node u) const noexcept
         requires(track_predecessor_nodes) {
         assert(_heap.state(u) != Heap::PRE_HEAP);
