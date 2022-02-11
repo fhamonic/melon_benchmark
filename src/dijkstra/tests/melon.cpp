@@ -69,18 +69,26 @@ int main() {
                   << " arcs" << std::endl;
 
         for(StaticDigraph::Node s : graph.nodes()) {
-            Dijkstra dijkstra(graph, length_map);
-            dijkstra.add_source(s);
-            std::vector<double> dists(graph.nb_nodes());
-            for(const auto & [u, dist] : dijkstra) {
-                dists[u] = dist;
-            }
+            // Dijkstra<StaticDigraph, std::vector<double>, TraversalAlgorithmBehavior::TRACK_NONE> dijkstra(graph, length_map);
+            // Dijkstra dijkstra(graph, length_map);
+            // dijkstra.add_source(s);
+            // std::vector<double> dists(graph.nb_nodes());
+            // for(const auto & [u, dist] : dijkstra) {
+            //     dists[u] = dist;
+            // }
+            // for(StaticDigraph::Node u : graph.nodes()) {
+            //     std::cout << s << ',' << u << ':' << dists[u] << '\n';
+            //     ++rows;
+            // }
 
+            Dijkstra<StaticDigraph, std::vector<double>, TraversalAlgorithmBehavior::TRACK_DISTANCES> dijkstra(graph, length_map);
+            dijkstra.add_source(s);
+            dijkstra.run();
             for(StaticDigraph::Node u : graph.nodes()) {
-                std::cout << s << ',' << u << ':' << dists[u] << '\n';
+                std::cout << s << ',' << u << ':' << dijkstra.dist(u) << '\n';
                 ++rows;
             }
-            if(rows > 20000000) goto finish;
+            if(rows > 1000000) goto finish;
         }
     }
 finish:

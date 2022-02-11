@@ -134,6 +134,7 @@ private:
     }
 
 public:
+    // Branchless version
     // class reference {
     // private:
     //     span_type * _p;
@@ -160,14 +161,14 @@ public:
     //     }
     // };
 
-    // Branchless version
     struct reference {
         span_type * _p;
         span_type _mask;
 
-        reference(span_type * __x, size_type __y) : _p(__x),
-        _mask(span_type(1) << __y) {} reference() noexcept : _p(0), _mask(0)
-        {} reference(const reference &) = default;
+        reference(span_type * __x, size_type __y)
+            : _p(__x), _mask(span_type(1) << __y) {}
+        reference() noexcept : _p(0), _mask(0) {}
+        reference(const reference &) = default;
 
         operator bool() const noexcept { return !!(*_p & _mask); }
         reference & operator=(bool __x) noexcept {
@@ -187,7 +188,6 @@ public:
             return !bool(*this) && bool(__x);
         }
     };
-    //*/
     using const_reference = bool;
 
     class iterator_base {
@@ -718,7 +718,8 @@ public:
         _queue_current = _queue.begin();
         if constexpr(track_predecessor_nodes)
             _pred_nodes_map.resize(g.nb_nodes());
-        if constexpr(track_predecessor_arcs) _pred_arcs_map.resize(g.nb_nodes());
+        if constexpr(track_predecessor_arcs)
+            _pred_arcs_map.resize(g.nb_nodes());
         if constexpr(track_distances) _dist_map.resize(g.nb_nodes());
     }
 
@@ -736,7 +737,7 @@ public:
     }
 
     bool empty_queue() const noexcept { return _queue_current == _queue.end(); }
-    
+
 private:
     void push_node(Node u) noexcept {
         _queue.push_back(u);
@@ -846,7 +847,8 @@ public:
         _stack.reserve(g.nb_nodes());
         if constexpr(track_predecessor_nodes)
             _pred_nodes_map.resize(g.nb_nodes());
-        if constexpr(track_predecessor_arcs) _pred_arcs_map.resize(g.nb_nodes());
+        if constexpr(track_predecessor_arcs)
+            _pred_arcs_map.resize(g.nb_nodes());
     }
 
     Dfs & reset() noexcept {
@@ -986,13 +988,13 @@ private:
             return first_child +
                    sizeof(Pair) *
                        _cmp(pair_ref(first_child + sizeof(Pair)).second,
-                           pair_ref(first_child).second);
+                            pair_ref(first_child).second);
         else {
             const Index first_half_minimum = minimum_child<I / 2>(first_child);
             const Index second_half_minimum =
                 minimum_child<I - I / 2>(first_child + (I / 2) * sizeof(Pair));
             return _cmp(pair_ref(second_half_minimum).second,
-                       pair_ref(first_half_minimum).second)
+                        pair_ref(first_half_minimum).second)
                        ? second_half_minimum
                        : first_half_minimum;
         }
@@ -1023,7 +1025,7 @@ private:
                     const Index second_half_minimum = minimum_remaining_child(
                         first_child + half * sizeof(Pair), nb_children - half);
                     return _cmp(pair_ref(second_half_minimum).second,
-                               pair_ref(first_half_minimum).second)
+                                pair_ref(first_half_minimum).second)
                                ? second_half_minimum
                                : first_half_minimum;
             }
@@ -1153,14 +1155,16 @@ struct DijkstraMostProbablePathSemiring {
 template <typename T>
 struct DijkstraMaxFlowPathSemiring {
     static constexpr T zero = std::numeric_limits<T>::max();
-    static constexpr auto plus = [](const T & a, const T & b){ return std::min(a, b); };
+    static constexpr auto plus = [](const T & a, const T & b) {
+        return std::min(a, b);
+    };
     static constexpr std::greater<T> less{};
 };
 
 template <typename T>
 struct DijkstraSpanningTreeSemiring {
     static constexpr T zero = static_cast<T>(0);
-    static constexpr auto plus = [](const T & a, const T & b){ return b; };
+    static constexpr auto plus = [](const T & a, const T & b) { return b; };
     static constexpr std::less<T> less{};
 };
 
@@ -1247,7 +1251,7 @@ private:
         Index child = 2 * holeIndex;
         while(child < end) {
             child += sizeof(Pair) * _cmp(pair_ref(child + sizeof(Pair)).second,
-                                        pair_ref(child).second);
+                                         pair_ref(child).second);
             if(_cmp(pair_ref(child).second, p.second)) {
                 heap_move(holeIndex, std::move(pair_ref(child)));
                 holeIndex = child;
@@ -1351,7 +1355,8 @@ public:
         : _graph(g), _length_map(l), _heap(g.nb_nodes()) {
         if constexpr(track_predecessor_nodes)
             _pred_nodes_map.resize(g.nb_nodes());
-        if constexpr(track_predecessor_arcs) _pred_arcs_map.resize(g.nb_nodes());
+        if constexpr(track_predecessor_arcs)
+            _pred_arcs_map.resize(g.nb_nodes());
         if constexpr(track_distances) _dist_map.resize(g.nb_nodes());
     }
 
@@ -1371,11 +1376,11 @@ public:
 
     std::pair<Node, Value> next_node() noexcept {
         const auto p = _heap.pop();
-        for(Arc a : _graph.out_arcs(p.first)) {
-            Node w = _graph.target(a);
+        for(const Arc a : _graph.out_arcs(p.first)) {
+            const Node w = _graph.target(a);
             const auto s = _heap.state(w);
             if(s == Heap::IN_HEAP) {
-                Value new_dist =
+                const Value new_dist =
                     DijkstraSemiringTraits::plus(p.second, _length_map[a]);
                 if(DijkstraSemiringTraits::less(new_dist, _heap.prio(w))) {
                     _heap.decrease(w, new_dist);
@@ -1383,9 +1388,7 @@ public:
                         _pred_nodes_map[w] = p.first;
                     if constexpr(track_predecessor_arcs) _pred_arcs_map[w] = a;
                 }
-                continue;
-            }
-            if(s == Heap::PRE_HEAP) {
+            } else if(s == Heap::PRE_HEAP) {
                 _heap.push(
                     w, DijkstraSemiringTraits::plus(p.second, _length_map[a]));
                 if constexpr(track_predecessor_nodes)

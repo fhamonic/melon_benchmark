@@ -98,7 +98,7 @@ int main() {
                 std::cout << s << ',' << *vi << ':' << d[*vi] << '\n';
                 ++rows;
             }
-            if(rows > 20000000) goto finish;
+            if(rows > 1000000) goto finish;
         }
     }
 finish:

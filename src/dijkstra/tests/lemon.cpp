@@ -91,7 +91,7 @@ int main() {
                           << dijkstra.dist(u) << '\n';
                 ++rows;
             }
-            if(rows > 20000000) goto finish;
+            if(rows > 1000000) goto finish;
         }
     }
 finish:
