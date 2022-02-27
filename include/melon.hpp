@@ -72,7 +72,7 @@ private:
 public:
     StaticMap() : _data(nullptr), _data_end(nullptr){};
     StaticMap(size_type size)
-        : _data(std::make_unique<value_type[]>(size))
+        : _data(std::make_unique_for_overwrite<value_type[]>(size))
         , _data_end(_data.get() + size){};
 
     StaticMap(size_type size, value_type init_value) : StaticMap(size) {
@@ -101,7 +101,7 @@ public:
     }
     void resize(size_type n) {
         if(n == size()) return;
-        _data = std::make_unique<value_type[]>(n);
+        _data = std::make_unique_for_overwrite<value_type[]>(n);
         _data_end = _data.get() + n;
     }
 
@@ -115,7 +115,21 @@ public:
     }
 };
 
+}  // namespace melon
+}  // namespace fhamonic
+
+#ifndef MELON_STATIC_MAP_BOOL_HPP
+#define MELON_STATIC_MAP_BOOL_HPP
+
+#include <algorithm>
 #include <bit>
+#include <cassert>
+#include <memory>
+#include <ranges>
+#include <vector>
+
+namespace fhamonic {
+namespace melon {
 
 template <>
 class StaticMap<bool> {
@@ -165,27 +179,27 @@ public:
         span_type * _p;
         span_type _mask;
 
-        reference(span_type * __x, size_type __y)
-            : _p(__x), _mask(span_type(1) << __y) {}
+        reference(span_type * x, size_type y)
+            : _p(x), _mask(span_type(1) << y) {}
         reference() noexcept : _p(0), _mask(0) {}
         reference(const reference &) = default;
 
         operator bool() const noexcept { return !!(*_p & _mask); }
-        reference & operator=(bool __x) noexcept {
-            if(__x)
+        reference & operator=(bool x) noexcept {
+            if(x)
                 *_p |= _mask;
             else
                 *_p &= ~_mask;
             return *this;
         }
-        reference & operator=(const reference & __x) noexcept {
-            return *this = bool(__x);
+        reference & operator=(const reference & x) noexcept {
+            return *this = bool(x);
         }
-        bool operator==(const reference & __x) const {
-            return bool(*this) == bool(__x);
+        bool operator==(const reference & x) const {
+            return bool(*this) == bool(x);
         }
-        bool operator<(const reference & __x) const {
-            return !bool(*this) && bool(__x);
+        bool operator<(const reference & x) const {
+            return !bool(*this) && bool(x);
         }
     };
     using const_reference = bool;
@@ -373,7 +387,7 @@ private:
 public:
     StaticMap() : _data(nullptr), _size(0){};
     StaticMap(size_type size)
-        : _data(std::make_unique<span_type[]>(nb_spans(size))), _size(size){};
+        : _data(std::make_unique_for_overwrite<span_type[]>(nb_spans(size))), _size(size){};
 
     StaticMap(size_type size, bool init_value) : StaticMap(size) {
         fill(init_value);
@@ -407,7 +421,7 @@ public:
     size_type size() const noexcept { return _size; }
     void resize(size_type n) {
         if(n == _size) return;
-        _data = std::make_unique<span_type[]>(nb_spans(n));
+        _data = std::make_unique_for_overwrite<span_type[]>(nb_spans(n));
         _size = n;
     }
 
@@ -428,6 +442,314 @@ public:
 
 }  // namespace melon
 }  // namespace fhamonic
+
+#endif  // MELON_STATIC_MAP_BOOL_HPP
+#ifndef MELON_STATIC_MAP_ATOMIC_BOOL_HPP
+#define MELON_STATIC_MAP_ATOMIC_BOOL_HPP
+
+#include <algorithm>
+#include <atomic>
+#include <bit>
+#include <cassert>
+#include <memory>
+#include <ranges>
+#include <vector>
+
+#include <range/v3/view/zip.hpp>
+
+namespace fhamonic {
+namespace melon {
+
+template <>
+class StaticMap<std::atomic<bool>> {
+public:
+    using value_type = bool;
+    using size_type = std::size_t;
+    using difference_type = std::ptrdiff_t;
+
+private:
+    using span_type = std::size_t;
+    static_assert(std::is_unsigned_v<span_type>);
+    static constexpr size_type N = sizeof(span_type) << 3;
+    static constexpr size_type span_index_mask = N - 1;
+    static constexpr size_type nb_spans(std::size_t n) {
+        return (n + N - 1) / N;
+    }
+
+public:
+    struct reference {
+        std::atomic<span_type> * _p;
+        span_type _mask;
+
+        reference(std::atomic<span_type> * x, size_type y)
+            : _p(x), _mask(span_type(1) << y) {}
+        reference() noexcept : _p(0), _mask(0) {}
+        reference(const reference &) = default;
+
+        operator bool() const noexcept { return !!(_p->load() & _mask); }
+        reference & operator=(bool x) noexcept {
+            if(x)
+                _p->fetch_or(_mask);
+            else
+                _p->fetch_and(~_mask);
+            return *this;
+        }
+        reference & operator=(const reference & x) noexcept {
+            return *this = bool(x);
+        }
+        bool operator==(const reference & x) const {
+            return bool(*this) == bool(x);
+        }
+        bool operator<(const reference & x) const {
+            return !bool(*this) && bool(x);
+        }
+    };
+    using const_reference = bool;
+
+    class iterator_base {
+    public:
+        using iterator_category = std::random_access_iterator_tag;
+        using difference_type = StaticMap<std::atomic<bool>>::difference_type;
+        using value_type = bool;
+        using pointer = void;
+
+    protected:
+        std::atomic<span_type> * _p;
+        size_type _local_index;
+
+    public:
+        iterator_base(std::atomic<span_type> * p, size_type index)
+            : _p(p), _local_index(index) {}
+
+        iterator_base() = default;
+        iterator_base(const iterator_base &) = default;
+        iterator_base(iterator_base &&) = default;
+
+        iterator_base & operator=(const iterator_base &) = default;
+        iterator_base & operator=(iterator_base &&) = default;
+
+    protected:
+        constexpr void _incr() noexcept {
+            if(_local_index++ == N - 1) {
+                ++_p;
+                _local_index = 0;
+            }
+        }
+        constexpr void _decr() noexcept {
+            if(_local_index++ == 0) {
+                --_p;
+                _local_index = N - 1;
+            }
+        }
+        constexpr void _incr(difference_type i) noexcept {
+            difference_type n = static_cast<difference_type>(_local_index) + i;
+            _p += n / difference_type(N);
+            n = n % difference_type(N);
+            if(n < 0) {
+                n += difference_type(N);
+                --_p;
+            }
+            _local_index = static_cast<size_type>(n);
+        }
+
+    public:
+        friend bool operator==(const iterator_base & x,
+                               const iterator_base & y) noexcept {
+            return x._p == y._p && x._local_index == y._local_index;
+        }
+        friend constexpr std::strong_ordering operator<=>(
+            const iterator_base & x, const iterator_base & y) noexcept {
+            if(const auto cmp = x._p <=> y._p; cmp != 0) return cmp;
+            return x._local_index <=> y._local_index;
+        }
+        difference_type operator-(const iterator_base & other) const noexcept {
+            return (difference_type(N) * (_p - other._p) +
+                    static_cast<difference_type>(_local_index) -
+                    static_cast<difference_type>(other._local_index));
+        }
+    };
+
+    class iterator : public iterator_base {
+    public:
+        using reference = StaticMap<std::atomic<bool>>::reference;
+
+        using iterator_base::iterator_base;
+
+        iterator & operator++() noexcept {
+            _incr();
+            return *this;
+        }
+        iterator operator++(int) noexcept {
+            iterator tmp = *this;
+            _incr();
+            return tmp;
+        }
+        iterator & operator--() noexcept {
+            _decr();
+            return *this;
+        }
+        iterator operator--(int) noexcept {
+            iterator tmp = *this;
+            _decr();
+            return tmp;
+        }
+        iterator & operator+=(difference_type i) noexcept {
+            _incr(i);
+            return *this;
+        }
+
+        iterator & operator-=(difference_type i) noexcept {
+            _incr(-i);
+            return *this;
+        }
+
+        friend iterator operator+(const iterator & x, difference_type n) {
+            iterator tmp = x;
+            tmp += n;
+            return tmp;
+        }
+        friend iterator operator+(difference_type n, const iterator & x) {
+            return x + n;
+        }
+        friend iterator operator-(const iterator & x, difference_type n) {
+            iterator tmp = x;
+            tmp -= n;
+            return tmp;
+        }
+
+        reference operator*() const noexcept {
+            return reference(_p, _local_index);
+        }
+        reference operator[](difference_type i) const { return *(*this + i); }
+    };
+
+    class const_iterator : public iterator_base {
+    public:
+        using reference = const_reference;
+
+        using iterator_base::iterator_base;
+
+        const_iterator & operator++() noexcept {
+            _incr();
+            return *this;
+        }
+        const_iterator operator++(int) noexcept {
+            const_iterator tmp = *this;
+            _incr();
+            return tmp;
+        }
+        const_iterator & operator--() noexcept {
+            _decr();
+            return *this;
+        }
+        const_iterator operator--(int) noexcept {
+            const_iterator tmp = *this;
+            _decr();
+            return tmp;
+        }
+        const_iterator & operator+=(difference_type i) noexcept {
+            _incr(i);
+            return *this;
+        }
+
+        const_iterator & operator-=(difference_type i) noexcept {
+            _incr(-i);
+            return *this;
+        }
+
+        friend const_iterator operator+(const const_iterator & x,
+                                        difference_type n) {
+            const_iterator tmp = x;
+            tmp += n;
+            return tmp;
+        }
+        friend const_iterator operator+(difference_type n,
+                                        const const_iterator & x) {
+            return x + n;
+        }
+        friend const_iterator operator-(const const_iterator & x,
+                                        difference_type n) {
+            const_iterator tmp = x;
+            tmp -= n;
+            return tmp;
+        }
+
+        const_reference operator*() const noexcept {
+            return (_p->load() >> _local_index) & 1;
+        }
+        const_reference operator[](difference_type i) const {
+            return *(*this + i);
+        }
+    };
+
+private:
+    std::unique_ptr<std::atomic<span_type>[]> _data;
+    size_type _size;
+
+public:
+    StaticMap() : _data(nullptr), _size(0){};
+    StaticMap(size_type size)
+        : _data(std::make_unique<std::atomic<span_type>[]>(nb_spans(size)))
+        , _size(size){};
+
+    StaticMap(size_type size, bool init_value) : StaticMap(size) {
+        fill(init_value);
+    };
+
+    StaticMap(const StaticMap & other) : StaticMap(other._size) {
+        const size_type length = nb_spans(_size);
+        for(size_type i = 0; i < length; ++i)
+            _data[i].store(other._data[i].load());
+    };
+    StaticMap(StaticMap &&) = default;
+
+    StaticMap & operator=(const StaticMap & other) {
+        resize(other.size());
+        const size_type length = nb_spans(_size);
+        for(size_type i = 0; i < length; ++i)
+            _data[i].store(other._data[i].load());
+        return *this;
+    };
+    StaticMap & operator=(StaticMap &&) = default;
+
+    iterator begin() noexcept { return iterator(_data.get(), 0); }
+    iterator end() noexcept {
+        return iterator(_data.get() + _size / N, _size & span_index_mask);
+    }
+    const_iterator begin() const noexcept {
+        return const_iterator(_data.get(), 0);
+    }
+    const_iterator end() const noexcept {
+        return const_iterator(_data.get() + _size / N, _size & span_index_mask);
+    }
+
+    size_type size() const noexcept { return _size; }
+    void resize(size_type n) {
+        if(n == _size) return;
+        _data = std::make_unique<std::atomic<span_type>[]>(nb_spans(n));
+        _size = n;
+    }
+
+    reference operator[](size_type i) noexcept {
+        assert(i < size());
+        return reference(_data.get() + i / N, i & span_index_mask);
+    }
+    const_reference operator[](size_type i) const noexcept {
+        assert(i < size());
+        return reference(_data.get() + i / N, i & span_index_mask);
+    }
+
+    void fill(bool b) noexcept {
+        const span_type value = b ? ~span_type(0) : span_type(0);
+        std::for_each(_data.get(), _data.get() + nb_spans(_size),
+                      [value](auto & span) { span.store(value); });
+    }
+};
+
+}  // namespace melon
+}  // namespace fhamonic
+
+#endif  // MELON_STATIC_MAP_ATOMIC_BOOL_HPP
 
 #endif  // MELON_STATIC_MAP_HPP
 
@@ -718,8 +1040,7 @@ public:
         _queue_current = _queue.begin();
         if constexpr(track_predecessor_nodes)
             _pred_nodes_map.resize(g.nb_nodes());
-        if constexpr(track_predecessor_arcs)
-            _pred_arcs_map.resize(g.nb_nodes());
+        if constexpr(track_predecessor_arcs) _pred_arcs_map.resize(g.nb_nodes());
         if constexpr(track_distances) _dist_map.resize(g.nb_nodes());
     }
 
@@ -737,7 +1058,7 @@ public:
     }
 
     bool empty_queue() const noexcept { return _queue_current == _queue.end(); }
-
+    
 private:
     void push_node(Node u) noexcept {
         _queue.push_back(u);
@@ -847,8 +1168,7 @@ public:
         _stack.reserve(g.nb_nodes());
         if constexpr(track_predecessor_nodes)
             _pred_nodes_map.resize(g.nb_nodes());
-        if constexpr(track_predecessor_arcs)
-            _pred_arcs_map.resize(g.nb_nodes());
+        if constexpr(track_predecessor_arcs) _pred_arcs_map.resize(g.nb_nodes());
     }
 
     Dfs & reset() noexcept {
@@ -988,13 +1308,13 @@ private:
             return first_child +
                    sizeof(Pair) *
                        _cmp(pair_ref(first_child + sizeof(Pair)).second,
-                            pair_ref(first_child).second);
+                           pair_ref(first_child).second);
         else {
             const Index first_half_minimum = minimum_child<I / 2>(first_child);
             const Index second_half_minimum =
                 minimum_child<I - I / 2>(first_child + (I / 2) * sizeof(Pair));
             return _cmp(pair_ref(second_half_minimum).second,
-                        pair_ref(first_half_minimum).second)
+                       pair_ref(first_half_minimum).second)
                        ? second_half_minimum
                        : first_half_minimum;
         }
@@ -1025,7 +1345,7 @@ private:
                     const Index second_half_minimum = minimum_remaining_child(
                         first_child + half * sizeof(Pair), nb_children - half);
                     return _cmp(pair_ref(second_half_minimum).second,
-                                pair_ref(first_half_minimum).second)
+                               pair_ref(first_half_minimum).second)
                                ? second_half_minimum
                                : first_half_minimum;
             }
@@ -1106,16 +1426,13 @@ public:
         assert(!_heap_array.empty());
         return _heap_array.front();
     }
-    Pair pop() noexcept {
+    void pop() noexcept {
         assert(!_heap_array.empty());
-        const Pair p = std::move(_heap_array.front());
-        _states_map[p.first] = POST_HEAP;
+        _states_map[_heap_array.front().first] = POST_HEAP;
         const Index n = _heap_array.size() - 1;
         if(n > 0)
             adjust_heap(Index(0), n * sizeof(Pair),
                         std::move(_heap_array.back()));
-        _heap_array.pop_back();
-        return p;
     }
     void decrease(const Node & u, const Prio & p) noexcept {
         heap_push(_indices_map[u], Pair(u, p));
@@ -1155,16 +1472,14 @@ struct DijkstraMostProbablePathSemiring {
 template <typename T>
 struct DijkstraMaxFlowPathSemiring {
     static constexpr T zero = std::numeric_limits<T>::max();
-    static constexpr auto plus = [](const T & a, const T & b) {
-        return std::min(a, b);
-    };
+    static constexpr auto plus = [](const T & a, const T & b){ return std::min(a, b); };
     static constexpr std::greater<T> less{};
 };
 
 template <typename T>
 struct DijkstraSpanningTreeSemiring {
     static constexpr T zero = static_cast<T>(0);
-    static constexpr auto plus = [](const T & a, const T & b) { return b; };
+    static constexpr auto plus = [](const T & a, const T & b){ return b; };
     static constexpr std::less<T> less{};
 };
 
@@ -1251,7 +1566,7 @@ private:
         Index child = 2 * holeIndex;
         while(child < end) {
             child += sizeof(Pair) * _cmp(pair_ref(child + sizeof(Pair)).second,
-                                         pair_ref(child).second);
+                                        pair_ref(child).second);
             if(_cmp(pair_ref(child).second, p.second)) {
                 heap_move(holeIndex, std::move(pair_ref(child)));
                 holeIndex = child;
@@ -1282,16 +1597,14 @@ public:
         assert(!empty());
         return _heap_array[1];
     }
-    Pair pop() noexcept {
+    void pop() noexcept {
         assert(!empty());
         const Index n = _heap_array.size() - 1;
-        const Pair p = std::move(_heap_array[1]);
-        _indices_map[p.first] = POST_HEAP;
+        _indices_map[_heap_array[1].first] = POST_HEAP;
         if(n > 1)
             adjust_heap(static_cast<Index>(sizeof(Pair)), n * sizeof(Pair),
                         std::move(_heap_array.back()));
         _heap_array.pop_back();
-        return p;
     }
     void decrease(const Node & u, const Prio & p) noexcept {
         heap_push(_indices_map[u], Pair(u, p));
@@ -1324,8 +1637,6 @@ public:
     using DijkstraSemiringTraits = SR;
     using Heap = HP;
 
-    using ReachedMap = typename GR::NodeMap<bool>;
-
     static constexpr bool track_predecessor_nodes =
         static_cast<bool>(BH & TraversalAlgorithmBehavior::TRACK_PRED_NODES);
     static constexpr bool track_predecessor_arcs =
@@ -1348,27 +1659,21 @@ private:
     const LM & _length_map;
 
     Heap _heap;
-    ReachedMap _reached_map;
     PredNodesMap _pred_nodes_map;
     PredArcsMap _pred_arcs_map;
     DistancesMap _dist_map;
 
 public:
     Dijkstra(const GR & g, const LM & l)
-        : _graph(g)
-        , _length_map(l)
-        , _heap(g.nb_nodes())
-        , _reached_map(g.nb_nodes(), false) {
+        : _graph(g), _length_map(l), _heap(g.nb_nodes()) {
         if constexpr(track_predecessor_nodes)
             _pred_nodes_map.resize(g.nb_nodes());
-        if constexpr(track_predecessor_arcs)
-            _pred_arcs_map.resize(g.nb_nodes());
+        if constexpr(track_predecessor_arcs) _pred_arcs_map.resize(g.nb_nodes());
         if constexpr(track_distances) _dist_map.resize(g.nb_nodes());
     }
 
     Dijkstra & reset() noexcept {
         _heap.clear();
-        _reached_map.fill(false);
         return *this;
     }
     Dijkstra & add_source(Node s,
@@ -1382,11 +1687,14 @@ public:
     bool empty_queue() const noexcept { return _heap.empty(); }
 
     std::pair<Node, Value> next_node() noexcept {
-        const auto p = _heap.pop();
-        _reached_map[p.first] = true;
+        const auto p = _heap.top();
+        if(_graph.out_arcs(p.first).size()) {
+            __builtin_prefetch(&(*_graph.out_targets(p.first).begin()));
+            __builtin_prefetch(&_length_map[*_graph.out_arcs(p.first).begin()]);
+        }
+        _heap.pop();
         for(const Arc a : _graph.out_arcs(p.first)) {
             const Node w = _graph.target(a);
-            if(reached(w)) continue;
             const auto s = _heap.state(w);
             if(s == Heap::IN_HEAP) {
                 const Value new_dist =
@@ -1415,7 +1723,6 @@ public:
     auto begin() noexcept { return traversal_algorithm_iterator(*this); }
     auto end() noexcept { return traversal_algorithm_end_iterator(); }
 
-    bool reached(const Node u) const noexcept { return _reached_map[u]; }
     Node pred_node(const Node u) const noexcept
         requires(track_predecessor_nodes) {
         assert(_heap.state(u) != Heap::PRE_HEAP);

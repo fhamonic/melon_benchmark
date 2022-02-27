@@ -82,14 +82,9 @@ int main() {
             Dijkstra dijkstra(graph, length_map);
             dijkstra.add_source(s);
             
-            while(!dijkstra.empty_queue()) {
-                const auto [u, dist] = dijkstra.next_node();
+            for(const auto & [u, dist] : dijkstra) {
                 sum += dist;
             }
-
-            // for(const auto & [u, dist] : dijkstra) {
-            //     sum += dist;
-            // }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;
