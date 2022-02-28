@@ -387,7 +387,8 @@ private:
 public:
     StaticMap() : _data(nullptr), _size(0){};
     StaticMap(size_type size)
-        : _data(std::make_unique_for_overwrite<span_type[]>(nb_spans(size))), _size(size){};
+        : _data(std::make_unique_for_overwrite<span_type[]>(nb_spans(size)))
+        , _size(size){};
 
     StaticMap(size_type size, bool init_value) : StaticMap(size) {
         fill(init_value);
@@ -1040,7 +1041,8 @@ public:
         _queue_current = _queue.begin();
         if constexpr(track_predecessor_nodes)
             _pred_nodes_map.resize(g.nb_nodes());
-        if constexpr(track_predecessor_arcs) _pred_arcs_map.resize(g.nb_nodes());
+        if constexpr(track_predecessor_arcs)
+            _pred_arcs_map.resize(g.nb_nodes());
         if constexpr(track_distances) _dist_map.resize(g.nb_nodes());
     }
 
@@ -1058,7 +1060,7 @@ public:
     }
 
     bool empty_queue() const noexcept { return _queue_current == _queue.end(); }
-    
+
 private:
     void push_node(Node u) noexcept {
         _queue.push_back(u);
@@ -1168,7 +1170,8 @@ public:
         _stack.reserve(g.nb_nodes());
         if constexpr(track_predecessor_nodes)
             _pred_nodes_map.resize(g.nb_nodes());
-        if constexpr(track_predecessor_arcs) _pred_arcs_map.resize(g.nb_nodes());
+        if constexpr(track_predecessor_arcs)
+            _pred_arcs_map.resize(g.nb_nodes());
     }
 
     Dfs & reset() noexcept {
@@ -1308,13 +1311,13 @@ private:
             return first_child +
                    sizeof(Pair) *
                        _cmp(pair_ref(first_child + sizeof(Pair)).second,
-                           pair_ref(first_child).second);
+                            pair_ref(first_child).second);
         else {
             const Index first_half_minimum = minimum_child<I / 2>(first_child);
             const Index second_half_minimum =
                 minimum_child<I - I / 2>(first_child + (I / 2) * sizeof(Pair));
             return _cmp(pair_ref(second_half_minimum).second,
-                       pair_ref(first_half_minimum).second)
+                        pair_ref(first_half_minimum).second)
                        ? second_half_minimum
                        : first_half_minimum;
         }
@@ -1345,7 +1348,7 @@ private:
                     const Index second_half_minimum = minimum_remaining_child(
                         first_child + half * sizeof(Pair), nb_children - half);
                     return _cmp(pair_ref(second_half_minimum).second,
-                               pair_ref(first_half_minimum).second)
+                                pair_ref(first_half_minimum).second)
                                ? second_half_minimum
                                : first_half_minimum;
             }
@@ -1472,14 +1475,16 @@ struct DijkstraMostProbablePathSemiring {
 template <typename T>
 struct DijkstraMaxFlowPathSemiring {
     static constexpr T zero = std::numeric_limits<T>::max();
-    static constexpr auto plus = [](const T & a, const T & b){ return std::min(a, b); };
+    static constexpr auto plus = [](const T & a, const T & b) {
+        return std::min(a, b);
+    };
     static constexpr std::greater<T> less{};
 };
 
 template <typename T>
 struct DijkstraSpanningTreeSemiring {
     static constexpr T zero = static_cast<T>(0);
-    static constexpr auto plus = [](const T & a, const T & b){ return b; };
+    static constexpr auto plus = [](const T & a, const T & b) { return b; };
     static constexpr std::less<T> less{};
 };
 
@@ -1566,7 +1571,7 @@ private:
         Index child = 2 * holeIndex;
         while(child < end) {
             child += sizeof(Pair) * _cmp(pair_ref(child + sizeof(Pair)).second,
-                                        pair_ref(child).second);
+                                         pair_ref(child).second);
             if(_cmp(pair_ref(child).second, p.second)) {
                 heap_move(holeIndex, std::move(pair_ref(child)));
                 holeIndex = child;
@@ -1668,7 +1673,8 @@ public:
         : _graph(g), _length_map(l), _heap(g.nb_nodes()) {
         if constexpr(track_predecessor_nodes)
             _pred_nodes_map.resize(g.nb_nodes());
-        if constexpr(track_predecessor_arcs) _pred_arcs_map.resize(g.nb_nodes());
+        if constexpr(track_predecessor_arcs)
+            _pred_arcs_map.resize(g.nb_nodes());
         if constexpr(track_distances) _dist_map.resize(g.nb_nodes());
     }
 
@@ -1688,9 +1694,10 @@ public:
 
     std::pair<Node, Value> next_node() noexcept {
         const auto p = _heap.top();
-        if(_graph.out_arcs(p.first).size()) {
-            __builtin_prefetch(&(*_graph.out_targets(p.first).begin()));
-            __builtin_prefetch(&_length_map[*_graph.out_arcs(p.first).begin()]);
+        if constexpr(std::ranges::contiguous_range<decltype(_graph.out_targets(
+                          p.first))>) {
+            __builtin_prefetch(_graph.out_targets(p.first).data());
+            __builtin_prefetch(&_length_map[_graph.out_arcs(p.first).front()]);
         }
         _heap.pop();
         for(const Arc a : _graph.out_arcs(p.first)) {
