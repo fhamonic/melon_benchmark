@@ -246,10 +246,6 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
-COMPILE_FOR_NATIVE:BOOL=ON
-
-COMPILE_WITH_LTO:BOOL=ON
-
 //Path to a program.
 CONAN_CMD:FILEPATH=/home/plaiseek/.local/bin/conan
 
@@ -283,8 +279,11 @@ MELON_IS_TOP_LEVEL:STATIC=OFF
 //Value Computed by CMake
 MELON_SOURCE_DIR:STATIC=/home/plaiseek/Projects/melon_benchmark/dependencies/melon
 
-//No help, variable specified on the command line.
-WARNINGS:UNINITIALIZED=ON
+//Build with -march=native
+OPTIMIZE_FOR_NATIVE:BOOL=ON
+
+//Enable warnings
+WARNINGS:BOOL=OFF
 
 //Path to a program.
 conanexecutable:FILEPATH=/home/plaiseek/.local/bin/conan

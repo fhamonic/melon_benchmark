@@ -1,5 +1,4 @@
 [includedirs]
-/home/plaiseek/.conan/data/range-v3/0.11.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include
 /home/plaiseek/.conan/data/boost/1.78.0/_/_/package/dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978/include
 /home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/include
 /home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/include
@@ -18,7 +17,6 @@
 
 
 [builddirs]
-/home/plaiseek/.conan/data/range-v3/0.11.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/
 /home/plaiseek/.conan/data/boost/1.78.0/_/_/package/dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978/
 /home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/
 /home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/
@@ -103,70 +101,6 @@ BOOST_STACKTRACE_USE_NOOP
 
 
 [frameworkdirs]
-
-
-
-[includedirs_range-v3]
-/home/plaiseek/.conan/data/range-v3/0.11.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include
-
-[libdirs_range-v3]
-
-
-[bindirs_range-v3]
-
-
-[resdirs_range-v3]
-
-
-[builddirs_range-v3]
-/home/plaiseek/.conan/data/range-v3/0.11.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/
-
-[libs_range-v3]
-
-
-[system_libs_range-v3]
-
-
-[defines_range-v3]
-
-
-[cppflags_range-v3]
-
-
-[cxxflags_range-v3]
-
-
-[cflags_range-v3]
-
-
-[sharedlinkflags_range-v3]
-
-
-[exelinkflags_range-v3]
-
-
-[sysroot_range-v3]
-
-
-[frameworks_range-v3]
-
-
-[frameworkdirs_range-v3]
-
-
-[rootpath_range-v3]
-/home/plaiseek/.conan/data/range-v3/0.11.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9
-
-[name_range-v3]
-range-v3
-
-[version_range-v3]
-0.11.0
-
-[generatornames_range-v3]
-
-
-[generatorfilenames_range-v3]
 
 
 
@@ -479,9 +413,7 @@ cci.20210118
 stacktrace_addr2line_available=True
 [USER_bzip2]
 [USER_libbacktrace]
-[USER_range-v3]
 [USER_zlib]
-[ENV_range-v3]
 [ENV_boost]
 BOOST_ROOT=/home/plaiseek/.conan/data/boost/1.78.0/_/_/package/dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978
 [ENV_zlib]

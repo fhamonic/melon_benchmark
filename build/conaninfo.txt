@@ -8,7 +8,6 @@
 
 [requires]
     boost/1.Y.Z
-    range-v3/0.11.0
 
 [options]
 
@@ -27,7 +26,6 @@
     boost/1.78.0:dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978
     bzip2/1.0.8:c32092bf4d4bb47cf962af898e02823f499b017e
     libbacktrace/cci.20210118:dfbe50feef7f3c6223a476cd5aeadb687084a646
-    range-v3/0.11.0:5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9
     zlib/1.2.11:dfbe50feef7f3c6223a476cd5aeadb687084a646
 
 [full_options]
