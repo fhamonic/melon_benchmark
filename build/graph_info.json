@@ -1,8 +1,16 @@
 {
  "options": [
   [
+   "boost:addr2line_location",
+   "/usr/bin/addr2line"
+  ],
+  [
    "boost:asio_no_deprecated",
    "False"
+  ],
+  [
+   "boost:buildid",
+   "None"
   ],
   [
    "boost:bzip2",
@@ -38,7 +46,15 @@
   ],
   [
    "boost:i18n_backend",
-   "iconv"
+   "deprecated"
+  ],
+  [
+   "boost:i18n_backend_iconv",
+   "libc"
+  ],
+  [
+   "boost:i18n_backend_icu",
+   "False"
   ],
   [
    "boost:layout",
@@ -95,6 +111,10 @@
   [
    "boost:visibility",
    "hidden"
+  ],
+  [
+   "boost:with_stacktrace_backtrace",
+   "True"
   ],
   [
    "boost:without_atomic",
@@ -241,11 +261,11 @@
    "False"
   ],
   [
-   "libiconv:fPIC",
+   "libbacktrace:fPIC",
    "True"
   ],
   [
-   "libiconv:shared",
+   "libbacktrace:shared",
    "False"
   ],
   [

@@ -363,6 +363,19 @@ dfs_benchmark_snap_melon_static_graph/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/build.make CMakeFiles/dfs_benchmark_snap_melon_static_graph.dir/build
 .PHONY : dfs_benchmark_snap_melon_static_graph/fast
 
+#=============================================================================
+# Target rules for targets named melon_test
+
+# Build rule for target.
+melon_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 melon_test
+.PHONY : melon_test
+
+# fast build rule for target.
+melon_test/fast:
+	$(MAKE) $(MAKESILENT) -f dependencies/melon/test/CMakeFiles/melon_test.dir/build.make dependencies/melon/test/CMakeFiles/melon_test.dir/build
+.PHONY : melon_test/fast
+
 src/bfs/benchmark/snap/bgl_adjacency_list_vecS.o: src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp.o
 .PHONY : src/bfs/benchmark/snap/bgl_adjacency_list_vecS.o
 
@@ -846,6 +859,7 @@ help:
 	@echo "... dijkstra_tests_bgl"
 	@echo "... dijkstra_tests_lemon"
 	@echo "... dijkstra_tests_melon"
+	@echo "... melon_test"
 	@echo "... src/bfs/benchmark/snap/bgl_adjacency_list_vecS.o"
 	@echo "... src/bfs/benchmark/snap/bgl_adjacency_list_vecS.i"
 	@echo "... src/bfs/benchmark/snap/bgl_adjacency_list_vecS.s"

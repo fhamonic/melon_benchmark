@@ -1,4 +1,4 @@
-The system is: Linux - 5.10.89-1-MANJARO - x86_64
+The system is: Linux - 5.10.102-1-MANJARO - x86_64
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /usr/bin/c++ 
 Build flags: 
@@ -10,67 +10,67 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/3.22.1/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/3.22.2/CompilerIdCXX/a.out"
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_d9e1b/fast && make[1]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-/usr/bin/make  -f CMakeFiles/cmTC_d9e1b.dir/build.make CMakeFiles/cmTC_d9e1b.dir/build
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_917ad/fast && make[1]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
+/usr/bin/make  -f CMakeFiles/cmTC_917ad.dir/build.make CMakeFiles/cmTC_917ad.dir/build
 make[2]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++   -v -o CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+Building CXX object CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++   -v -o CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 Target: x86_64-pc-linux-gnu
-Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++,d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-werror gdc_include_dir=/usr/include/dlang/gdc
+Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++,d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-linker-build-id --enable-lto --enable-multilib --enable-pgo-build=lto --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-werror --with-build-config=bootstrap-lto --enable-link-serialization=1 gdc_include_dir=/usr/include/dlang/gdc
 Thread model: posix
 Supported LTO compression algorithms: zlib zstd
-gcc version 11.1.0 (GCC) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d9e1b.dir/'
- /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_d9e1b.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccZ9zGQd.s
-GNU C++17 (GCC) version 11.1.0 (x86_64-pc-linux-gnu)
-	compiled by GNU C version 11.1.0, GMP version 6.2.1, MPFR version 4.1.0-p13, MPC version 1.2.1, isl version isl-0.24-GMP
+gcc version 11.2.0 (GCC) 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_917ad.dir/'
+ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_917ad.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccLkNwXN.s
+GNU C++17 (GCC) version 11.2.0 (x86_64-pc-linux-gnu)
+	compiled by GNU C version 11.2.0, GMP version 6.2.1, MPFR version 4.1.0-p13, MPC version 1.2.1, isl version isl-0.24-GMP
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-ignoring nonexistent directory "/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../x86_64-pc-linux-gnu/include"
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../x86_64-pc-linux-gnu/include"
 #include "..." search starts here:
 #include <...> search starts here:
- /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0
- /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0/x86_64-pc-linux-gnu
- /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0/backward
- /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include
+ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0
+ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0/x86_64-pc-linux-gnu
+ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0/backward
+ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include
  /usr/local/include
- /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include-fixed
+ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include-fixed
  /usr/include
 End of search list.
-GNU C++17 (GCC) version 11.1.0 (x86_64-pc-linux-gnu)
-	compiled by GNU C version 11.1.0, GMP version 6.2.1, MPFR version 4.1.0-p13, MPC version 1.2.1, isl version isl-0.24-GMP
+GNU C++17 (GCC) version 11.2.0 (x86_64-pc-linux-gnu)
+	compiled by GNU C version 11.2.0, GMP version 6.2.1, MPFR version 4.1.0-p13, MPC version 1.2.1, isl version isl-0.24-GMP
 
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-Compiler executable checksum: e6d85a433da2a6385241e28f4582b1d3
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d9e1b.dir/'
- as -v --64 -o CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccZ9zGQd.s
-GNU assembler version 2.36.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.36.1
-COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/
-LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.'
-Linking CXX executable cmTC_d9e1b
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d9e1b.dir/link.txt --verbose=1
-/usr/bin/c++  -v CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_d9e1b 
+Compiler executable checksum: 833ac0fac972ed4b3f2c1c21f9d53ffc
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_917ad.dir/'
+ as -v --64 -o CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccLkNwXN.s
+GNU assembler version 2.38 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.38
+COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.'
+Linking CXX executable cmTC_917ad
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_917ad.dir/link.txt --verbose=1
+/usr/bin/c++  -v CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_917ad 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
-COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/lto-wrapper
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/lto-wrapper
 Target: x86_64-pc-linux-gnu
-Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++,d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-werror gdc_include_dir=/usr/include/dlang/gdc
+Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++,d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-linker-build-id --enable-lto --enable-multilib --enable-pgo-build=lto --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-werror --with-build-config=bootstrap-lto --enable-link-serialization=1 gdc_include_dir=/usr/include/dlang/gdc
 Thread model: posix
 Supported LTO compression algorithms: zlib zstd
-gcc version 11.1.0 (GCC) 
-COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/
-LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d9e1b' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_d9e1b.'
- /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccSyJgG5.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_d9e1b /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../.. CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d9e1b' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_d9e1b.'
+gcc version 11.2.0 (GCC) 
+COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_917ad' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_917ad.'
+ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccewkcnh.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_917ad /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../.. CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_917ad' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_917ad.'
 make[2]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
 make[1]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
 
@@ -79,88 +79,88 @@ make[1]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeF
 Parsed CXX implicit include dir info from above output: rv=done
   found start of include info
   found start of implicit include info
-    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0]
-    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0/x86_64-pc-linux-gnu]
-    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0/backward]
-    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0/x86_64-pc-linux-gnu]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0/backward]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include]
     add: [/usr/local/include]
-    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include-fixed]
+    add: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include-fixed]
     add: [/usr/include]
   end of search list found
-  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0] ==> [/usr/include/c++/11.1.0]
-  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0/x86_64-pc-linux-gnu] ==> [/usr/include/c++/11.1.0/x86_64-pc-linux-gnu]
-  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0/backward] ==> [/usr/include/c++/11.1.0/backward]
-  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0] ==> [/usr/include/c++/11.2.0]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0/x86_64-pc-linux-gnu] ==> [/usr/include/c++/11.2.0/x86_64-pc-linux-gnu]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0/backward] ==> [/usr/include/c++/11.2.0/backward]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include]
   collapse include dir [/usr/local/include] ==> [/usr/local/include]
-  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include-fixed] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include-fixed]
+  collapse include dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include-fixed] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include-fixed]
   collapse include dir [/usr/include] ==> [/usr/include]
-  implicit include dirs: [/usr/include/c++/11.1.0;/usr/include/c++/11.1.0/x86_64-pc-linux-gnu;/usr/include/c++/11.1.0/backward;/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include;/usr/local/include;/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include-fixed;/usr/include]
+  implicit include dirs: [/usr/include/c++/11.2.0;/usr/include/c++/11.2.0/x86_64-pc-linux-gnu;/usr/include/c++/11.2.0/backward;/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include;/usr/local/include;/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include-fixed;/usr/include]
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_d9e1b/fast && make[1]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp']
-  ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_d9e1b.dir/build.make CMakeFiles/cmTC_d9e1b.dir/build]
+  ignore line: [Run Build Command(s):/usr/bin/make -f Makefile cmTC_917ad/fast && make[1]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_917ad.dir/build.make CMakeFiles/cmTC_917ad.dir/build]
   ignore line: [make[2]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Building CXX object CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [Target: x86_64-pc-linux-gnu]
-  ignore line: [Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c c++ ada fortran go lto objc obj-c++ d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-werror gdc_include_dir=/usr/include/dlang/gdc]
+  ignore line: [Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c c++ ada fortran go lto objc obj-c++ d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-linker-build-id --enable-lto --enable-multilib --enable-pgo-build=lto --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-werror --with-build-config=bootstrap-lto --enable-link-serialization=1 gdc_include_dir=/usr/include/dlang/gdc]
   ignore line: [Thread model: posix]
   ignore line: [Supported LTO compression algorithms: zlib zstd]
-  ignore line: [gcc version 11.1.0 (GCC) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d9e1b.dir/']
-  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_d9e1b.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccZ9zGQd.s]
-  ignore line: [GNU C++17 (GCC) version 11.1.0 (x86_64-pc-linux-gnu)]
-  ignore line: [	compiled by GNU C version 11.1.0  GMP version 6.2.1  MPFR version 4.1.0-p13  MPC version 1.2.1  isl version isl-0.24-GMP]
+  ignore line: [gcc version 11.2.0 (GCC) ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_917ad.dir/']
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_917ad.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccLkNwXN.s]
+  ignore line: [GNU C++17 (GCC) version 11.2.0 (x86_64-pc-linux-gnu)]
+  ignore line: [	compiled by GNU C version 11.2.0  GMP version 6.2.1  MPFR version 4.1.0-p13  MPC version 1.2.1  isl version isl-0.24-GMP]
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-  ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../x86_64-pc-linux-gnu/include"]
+  ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../x86_64-pc-linux-gnu/include"]
   ignore line: [#include "..." search starts here:]
   ignore line: [#include <...> search starts here:]
-  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0]
-  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0/x86_64-pc-linux-gnu]
-  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../include/c++/11.1.0/backward]
-  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0/x86_64-pc-linux-gnu]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../include/c++/11.2.0/backward]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include]
   ignore line: [ /usr/local/include]
-  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/include-fixed]
+  ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/include-fixed]
   ignore line: [ /usr/include]
   ignore line: [End of search list.]
-  ignore line: [GNU C++17 (GCC) version 11.1.0 (x86_64-pc-linux-gnu)]
-  ignore line: [	compiled by GNU C version 11.1.0  GMP version 6.2.1  MPFR version 4.1.0-p13  MPC version 1.2.1  isl version isl-0.24-GMP]
+  ignore line: [GNU C++17 (GCC) version 11.2.0 (x86_64-pc-linux-gnu)]
+  ignore line: [	compiled by GNU C version 11.2.0  GMP version 6.2.1  MPFR version 4.1.0-p13  MPC version 1.2.1  isl version isl-0.24-GMP]
   ignore line: []
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
-  ignore line: [Compiler executable checksum: e6d85a433da2a6385241e28f4582b1d3]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d9e1b.dir/']
-  ignore line: [ as -v --64 -o CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccZ9zGQd.s]
-  ignore line: [GNU assembler version 2.36.1 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.36.1]
-  ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
-  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.']
-  ignore line: [Linking CXX executable cmTC_d9e1b]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d9e1b.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++  -v CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_d9e1b ]
+  ignore line: [Compiler executable checksum: 833ac0fac972ed4b3f2c1c21f9d53ffc]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_917ad.dir/']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccLkNwXN.s]
+  ignore line: [GNU assembler version 2.38 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.38]
+  ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.']
+  ignore line: [Linking CXX executable cmTC_917ad]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_917ad.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++  -v CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_917ad ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
-  ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/lto-wrapper]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/lto-wrapper]
   ignore line: [Target: x86_64-pc-linux-gnu]
-  ignore line: [Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c c++ ada fortran go lto objc obj-c++ d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-install-libiberty --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-libunwind-exceptions --disable-werror gdc_include_dir=/usr/include/dlang/gdc]
+  ignore line: [Configured with: /build/gcc/src/gcc/configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://bugs.archlinux.org/ --enable-languages=c c++ ada fortran go lto objc obj-c++ d --with-isl --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-linker-build-id --enable-lto --enable-multilib --enable-pgo-build=lto --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-werror --with-build-config=bootstrap-lto --enable-link-serialization=1 gdc_include_dir=/usr/include/dlang/gdc]
   ignore line: [Thread model: posix]
   ignore line: [Supported LTO compression algorithms: zlib zstd]
-  ignore line: [gcc version 11.1.0 (GCC) ]
-  ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
-  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d9e1b' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_d9e1b.']
-  link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccSyJgG5.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_d9e1b /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../.. CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/crtn.o]
-    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/collect2] ==> ignore
+  ignore line: [gcc version 11.2.0 (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_917ad' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_917ad.']
+  link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccewkcnh.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_917ad /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0 -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../.. CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/crtn.o]
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/collect2] ==> ignore
     arg [-plugin] ==> ignore
-    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/liblto_plugin.so] ==> ignore
-    arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccSyJgG5.res] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/liblto_plugin.so] ==> ignore
+    arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/lto-wrapper] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccewkcnh.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -175,16 +175,16 @@ Parsed CXX implicit link information from above output:
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-pie] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_d9e1b] ==> ignore
-    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/Scrt1.o]
-    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/crti.o]
-    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/crtbeginS.o]
-    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0]
-    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib]
+    arg [cmTC_917ad] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/Scrt1.o]
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/crti.o]
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/crtbeginS.o]
+    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0]
+    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib]
     arg [-L/lib/../lib] ==> dir [/lib/../lib]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
-    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../..]
-    arg [CMakeFiles/cmTC_d9e1b.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../..]
+    arg [CMakeFiles/cmTC_917ad.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -192,87 +192,71 @@ Parsed CXX implicit link information from above output:
     arg [-lc] ==> lib [c]
     arg [-lgcc_s] ==> lib [gcc_s]
     arg [-lgcc] ==> lib [gcc]
-    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/crtendS.o]
-    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/crtn.o]
-  collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/Scrt1.o] ==> [/usr/lib/Scrt1.o]
-  collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/crti.o] ==> [/usr/lib/crti.o]
-  collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib/crtn.o] ==> [/usr/lib/crtn.o]
-  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0]
-  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../../../lib] ==> [/usr/lib]
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/crtendS.o]
+    arg [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/crtn.o]
+  collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/Scrt1.o] ==> [/usr/lib/Scrt1.o]
+  collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/crti.o] ==> [/usr/lib/crti.o]
+  collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib/crtn.o] ==> [/usr/lib/crtn.o]
+  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0]
+  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../../../lib] ==> [/usr/lib]
   collapse library dir [/lib/../lib] ==> [/lib]
   collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
-  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/../../..] ==> [/usr/lib]
+  collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/../../..] ==> [/usr/lib]
   implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
-  implicit objs: [/usr/lib/Scrt1.o;/usr/lib/crti.o;/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/crtbeginS.o;/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0/crtendS.o;/usr/lib/crtn.o]
-  implicit dirs: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.1.0;/usr/lib;/lib]
+  implicit objs: [/usr/lib/Scrt1.o;/usr/lib/crti.o;/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/crtbeginS.o;/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0/crtendS.o;/usr/lib/crtn.o]
+  implicit dirs: [/usr/lib/gcc/x86_64-pc-linux-gnu/11.2.0;/usr/lib;/lib]
   implicit fwks: []
 
 
-Performing C++ SOURCE FILE Test CXX_COMPILER_HAS_WALL succeeded with the following output:
+Determining if the include file pthread.h exists passed with the following output:
 Change Dir: /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_32e6a/fast && make[1]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-/usr/bin/make  -f CMakeFiles/cmTC_32e6a.dir/build.make CMakeFiles/cmTC_32e6a.dir/build
-make[2]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_32e6a.dir/src.cxx.o
-/usr/bin/c++ -DCXX_COMPILER_HAS_WALL  -Wall -o CMakeFiles/cmTC_32e6a.dir/src.cxx.o -c /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_32e6a
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_32e6a.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_32e6a.dir/src.cxx.o -o cmTC_32e6a 
-make[2]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_f5f8f/fast && make[1] : on entre dans le répertoire « /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp »
+/usr/bin/make  -f CMakeFiles/cmTC_f5f8f.dir/build.make CMakeFiles/cmTC_f5f8f.dir/build
+make[2] : on entre dans le répertoire « /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp »
+Building CXX object CMakeFiles/cmTC_f5f8f.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++   -std=gnu++20 -o CMakeFiles/cmTC_f5f8f.dir/CheckIncludeFile.cxx.o -c /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+Linking CXX executable cmTC_f5f8f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f5f8f.dir/link.txt --verbose=1
+/usr/bin/c++ CMakeFiles/cmTC_f5f8f.dir/CheckIncludeFile.cxx.o -o cmTC_f5f8f 
+make[2] : on quitte le répertoire « /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp »
+make[1] : on quitte le répertoire « /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp »
+
+
+
+Performing C++ SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD succeeded with the following output:
+Change Dir: /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_985bb/fast && make[1] : on entre dans le répertoire « /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp »
+/usr/bin/make  -f CMakeFiles/cmTC_985bb.dir/build.make CMakeFiles/cmTC_985bb.dir/build
+make[2] : on entre dans le répertoire « /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp »
+Building CXX object CMakeFiles/cmTC_985bb.dir/src.cxx.o
+/usr/bin/c++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++20 -o CMakeFiles/cmTC_985bb.dir/src.cxx.o -c /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_985bb
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_985bb.dir/link.txt --verbose=1
+/usr/bin/c++ CMakeFiles/cmTC_985bb.dir/src.cxx.o -o cmTC_985bb 
+make[2] : on quitte le répertoire « /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp »
+make[1] : on quitte le répertoire « /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp »
 
 
 Source file was:
-int main() { return 0; }
-Performing C++ SOURCE FILE Test CXX_COMPILER_HAS_WEXTRA succeeded with the following output:
-Change Dir: /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp
+#include <pthread.h>
 
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_af864/fast && make[1]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-/usr/bin/make  -f CMakeFiles/cmTC_af864.dir/build.make CMakeFiles/cmTC_af864.dir/build
-make[2]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_af864.dir/src.cxx.o
-/usr/bin/c++ -DCXX_COMPILER_HAS_WEXTRA  -Wextra -o CMakeFiles/cmTC_af864.dir/src.cxx.o -c /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_af864
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_af864.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_af864.dir/src.cxx.o -o cmTC_af864 
-make[2]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
+static void* test_func(void* data)
+{
+  return data;
+}
 
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_cancel(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
 
-Source file was:
-int main() { return 0; }
-Performing C++ SOURCE FILE Test CXX_COMPILER_HAS_MARCH=NATIVE succeeded with the following output:
-Change Dir: /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp
+  return 0;
+}
 
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_ba277/fast && make[1]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-/usr/bin/make  -f CMakeFiles/cmTC_ba277.dir/build.make CMakeFiles/cmTC_ba277.dir/build
-make[2]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_ba277.dir/src.cxx.o
-/usr/bin/c++ -DCXX_COMPILER_HAS_MARCH=NATIVE  -march=native -o CMakeFiles/cmTC_ba277.dir/src.cxx.o -c /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_ba277
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ba277.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_ba277.dir/src.cxx.o -o cmTC_ba277 
-make[2]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-int main() { return 0; }
-Performing C++ SOURCE FILE Test CXX_COMPILER_HAS_FLTO succeeded with the following output:
-Change Dir: /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp
-
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_47839/fast && make[1]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-/usr/bin/make  -f CMakeFiles/cmTC_47839.dir/build.make CMakeFiles/cmTC_47839.dir/build
-make[2]: Entering directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_47839.dir/src.cxx.o
-/usr/bin/c++ -DCXX_COMPILER_HAS_FLTO  -flto -o CMakeFiles/cmTC_47839.dir/src.cxx.o -c /home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_47839
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_47839.dir/link.txt --verbose=1
-/usr/bin/c++ CMakeFiles/cmTC_47839.dir/src.cxx.o -o cmTC_47839 
-make[2]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-make[1]: Leaving directory '/home/plaiseek/Projects/melon_benchmark/build/CMakeFiles/CMakeTmp'
-
-
-Source file was:
-int main() { return 0; }

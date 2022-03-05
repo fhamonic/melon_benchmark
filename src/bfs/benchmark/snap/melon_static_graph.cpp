@@ -5,19 +5,19 @@
 
 #include "chrono.hpp"
 
-#include "melon.hpp"
+#include "melon/all.hpp"
 #include "warm_up.hpp"
 
 using namespace fhamonic::melon;
 
 auto parse_gr(const std::filesystem::path & file_name) {
     std::ifstream gr_file(file_name);
-    int nb_nodes, nb_arcs;
+    std::size_t nb_nodes, nb_arcs;
     gr_file >> nb_nodes >> nb_arcs;
 
     StaticDigraphBuilder<> builder(nb_nodes);
 
-    int from, to;
+    StaticDigraph::vertex from, to;
     while(gr_file >> from >> to) builder.add_arc(from, to);
 
     return builder.build();
@@ -37,9 +37,9 @@ int main() {
         Chrono gr_chrono;
         double avg_time = 0;
         int iterations = 0;
-        const int nb_nodes = graph.nb_nodes();
-        const int nb_iterations = 30000.0 * 1000.0 / nb_nodes;
-        for(StaticDigraph::Node s : graph.nodes()) {
+        const int nb_nodes = graph.nb_vertices();
+        const int nb_iterations = int(30000.0 * 1000.0 / nb_nodes);
+        for(auto && s : graph.vertices()) {
             Chrono chrono;
 
             int sum = 0;

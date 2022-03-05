@@ -3,7 +3,7 @@
     build_type=Release
     compiler=gcc
     compiler.libcxx=libstdc++11
-    compiler.version=10
+    compiler.version=11
     os=Linux
 
 [requires]
@@ -19,19 +19,21 @@
     build_type=Release
     compiler=gcc
     compiler.libcxx=libstdc++11
-    compiler.version=10
+    compiler.version=11
     os=Linux
     os_build=Linux
 
 [full_requires]
-    boost/1.76.0:91068d6d6067a809e746602e9538e15eddb14457
-    bzip2/1.0.8:91a8b22c2c5a149bc617cfc06cdd21bf23b12567
-    libiconv/1.16:19729b9559f3ae196cad45cb2b97468ccb75dcd1
+    boost/1.78.0:dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978
+    bzip2/1.0.8:c32092bf4d4bb47cf962af898e02823f499b017e
+    libbacktrace/cci.20210118:dfbe50feef7f3c6223a476cd5aeadb687084a646
     range-v3/0.11.0:5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9
-    zlib/1.2.11:19729b9559f3ae196cad45cb2b97468ccb75dcd1
+    zlib/1.2.11:dfbe50feef7f3c6223a476cd5aeadb687084a646
 
 [full_options]
+    boost:addr2line_location=/usr/bin/addr2line
     boost:asio_no_deprecated=False
+    boost:buildid=None
     boost:bzip2=True
     boost:debug_level=0
     boost:diagnostic_definitions=False
@@ -40,7 +42,9 @@
     boost:fPIC=True
     boost:filesystem_no_deprecated=False
     boost:header_only=False
-    boost:i18n_backend=iconv
+    boost:i18n_backend=deprecated
+    boost:i18n_backend_iconv=libc
+    boost:i18n_backend_icu=False
     boost:layout=system
     boost:lzma=False
     boost:magic_autolink=False
@@ -55,6 +59,7 @@
     boost:shared=False
     boost:system_no_deprecated=False
     boost:visibility=hidden
+    boost:with_stacktrace_backtrace=True
     boost:without_atomic=False
     boost:without_chrono=False
     boost:without_container=False
@@ -91,8 +96,8 @@
     bzip2:build_executable=True
     bzip2:fPIC=True
     bzip2:shared=False
-    libiconv:fPIC=True
-    libiconv:shared=False
+    libbacktrace:fPIC=True
+    libbacktrace:shared=False
     zlib:fPIC=True
     zlib:minizip=deprecated
     zlib:shared=False

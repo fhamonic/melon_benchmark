@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.12)
 
 project(
-    dijkstra_benchmark_dimacs_melon
+    MELON_BENCHMARKS
     VERSION 1.0
     DESCRIPTION
-        "Benchamrking different Dijkstras."
+        "Graph libraries benchmarks"
     LANGUAGES CXX)
 
 # set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -13,41 +13,36 @@ project(
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CONAN_DISABLE_CHECK_COMPILER ON)
 
-option(WARNINGS "" OFF)
-option(HARDCORE_WARNINGS "" OFF)
 option(COMPILE_FOR_NATIVE "" OFF)
 option(COMPILE_WITH_LTO "" OFF)
 
-set(WARNINGS_LIST "-Wall;-Wextra;")
-set(HARDCORE_WARNINGS_LIST
-    "-Wall;-Wextra;-Wshadow;-Wpedantic;-Wnon-virtual-dtor;-Wold-style-cast;-Wcast-align;-Wunused;-Woverloaded-virtual;-Wpedantic;-Wconversion;-Wsign-conversion;-Wmisleading-indentation;-Wduplicated-cond;-Wduplicated-branches;-Wlogical-op;-Wnull-dereference;-Wuseless-cast;-Wdouble-promotion;-Wformat=2;-Wlifetime"
-)
-
 # ################### Modules ####################
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH "${CMAKE_BINARY_DIR}" ${CMAKE_MODULE_PATH})
 include(GNUInstallDirs)
-include(CMakeBuildTypeUtils)
+include(CompilerWarnings)
+include(Conan)
+run_conan()
+
+add_subdirectory(dependencies/melon)
 
 # ################### Packages ####################
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup(TARGETS)
-
+find_package(range-v3 REQUIRED)
+find_package(Boost REQUIRED)
 find_package(LEMON REQUIRED)
 
 # ############ COMPILATION OPTIONS MACRO #############
 function(set_common_options _target)
 target_include_directories(${_target} PUBLIC include)
-target_compile_options_if_exists(${_target} PRIVATE ${WARNINGS}
-                                 ${WARNINGS_LIST})
-target_compile_options_if_exists(${_target} PRIVATE ${COMPILE_FOR_NATIVE}
-                                 -march=native)
-target_compile_options_if_exists(${_target} PRIVATE ${COMPILE_WITH_LTO}
-                                 -flto)
+# target_compile_options_if_exists(${_target} PRIVATE ${COMPILE_FOR_NATIVE}
+#                                  -march=native)
+# target_compile_options_if_exists(${_target} PRIVATE ${COMPILE_WITH_LTO}
+#                                  -flto)
 endfunction()
 
 function(set_boost_options _target)
 set_target_properties(${_target} PROPERTIES CXX_STANDARD 20)
-target_link_libraries(${_target} CONAN_PKG::boost)
+target_link_libraries(${_target} Boost::boost)
 set_common_options(${_target})
 endfunction()
 
@@ -60,7 +55,7 @@ endfunction()
 
 function(set_melon_options _target)
 set_target_properties(${_target} PROPERTIES CXX_STANDARD 20)
-target_link_libraries(${_target} CONAN_PKG::range-v3)
+target_link_libraries(${_target} melon)
 set_common_options(${_target})
 endfunction()
 

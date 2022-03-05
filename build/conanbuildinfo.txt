@@ -1,30 +1,29 @@
 [includedirs]
 /home/plaiseek/.conan/data/range-v3/0.11.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include
-/home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/include
-/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/include
-/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/include
-/home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/include
+/home/plaiseek/.conan/data/boost/1.78.0/_/_/package/dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978/include
+/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/include
+/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/include
+/home/plaiseek/.conan/data/libbacktrace/cci.20210118/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/include
 
 [libdirs]
-/home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/lib
-/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/lib
-/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/lib
-/home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/lib
+/home/plaiseek/.conan/data/boost/1.78.0/_/_/package/dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978/lib
+/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/lib
+/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/lib
+/home/plaiseek/.conan/data/libbacktrace/cci.20210118/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/lib
 
 [bindirs]
-/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/bin
-/home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/bin
+/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/bin
 
 [resdirs]
 
 
 [builddirs]
 /home/plaiseek/.conan/data/range-v3/0.11.0/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/
-/home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/
-/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/
-/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/
-/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/lib/cmake
-/home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/
+/home/plaiseek/.conan/data/boost/1.78.0/_/_/package/dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978/
+/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/
+/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/
+/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/lib/cmake
+/home/plaiseek/.conan/data/libbacktrace/cci.20210118/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/
 
 [libs]
 boost_contract
@@ -35,9 +34,9 @@ boost_context
 boost_graph
 boost_iostreams
 boost_json
+boost_locale
 boost_log_setup
 boost_log
-boost_locale
 boost_math_c99
 boost_math_c99f
 boost_math_c99l
@@ -55,7 +54,6 @@ boost_stacktrace_noop
 boost_timer
 boost_type_erasure
 boost_thread
-boost_atomic
 boost_chrono
 boost_container
 boost_date_time
@@ -65,20 +63,23 @@ boost_test_exec_monitor
 boost_exception
 boost_wave
 boost_filesystem
-boost_system
+boost_atomic
 boost_wserialization
 boost_serialization
 z
 bz2
-iconv
-charset
+backtrace
 
 [system_libs]
+dl
 rt
 pthread
 
 [defines]
-
+BOOST_STACKTRACE_ADDR2LINE_LOCATION="/usr/bin/addr2line"
+BOOST_STACKTRACE_USE_ADDR2LINE
+BOOST_STACKTRACE_USE_BACKTRACE
+BOOST_STACKTRACE_USE_NOOP
 
 [cppflags]
 
@@ -170,10 +171,10 @@ range-v3
 
 
 [includedirs_boost]
-/home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/include
+/home/plaiseek/.conan/data/boost/1.78.0/_/_/package/dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978/include
 
 [libdirs_boost]
-/home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/lib
+/home/plaiseek/.conan/data/boost/1.78.0/_/_/package/dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978/lib
 
 [bindirs_boost]
 
@@ -182,7 +183,7 @@ range-v3
 
 
 [builddirs_boost]
-/home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457/
+/home/plaiseek/.conan/data/boost/1.78.0/_/_/package/dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978/
 
 [libs_boost]
 boost_contract
@@ -193,9 +194,9 @@ boost_context
 boost_graph
 boost_iostreams
 boost_json
+boost_locale
 boost_log_setup
 boost_log
-boost_locale
 boost_math_c99
 boost_math_c99f
 boost_math_c99l
@@ -213,7 +214,6 @@ boost_stacktrace_noop
 boost_timer
 boost_type_erasure
 boost_thread
-boost_atomic
 boost_chrono
 boost_container
 boost_date_time
@@ -223,16 +223,20 @@ boost_test_exec_monitor
 boost_exception
 boost_wave
 boost_filesystem
-boost_system
+boost_atomic
 boost_wserialization
 boost_serialization
 
 [system_libs_boost]
+dl
 rt
 pthread
 
 [defines_boost]
-
+BOOST_STACKTRACE_ADDR2LINE_LOCATION="/usr/bin/addr2line"
+BOOST_STACKTRACE_USE_ADDR2LINE
+BOOST_STACKTRACE_USE_BACKTRACE
+BOOST_STACKTRACE_USE_NOOP
 
 [cppflags_boost]
 
@@ -259,13 +263,13 @@ pthread
 
 
 [rootpath_boost]
-/home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457
+/home/plaiseek/.conan/data/boost/1.78.0/_/_/package/dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978
 
 [name_boost]
 boost
 
 [version_boost]
-1.76.0
+1.78.0
 
 [generatornames_boost]
 cmake_find_package=Boost
@@ -277,10 +281,10 @@ cmake_find_package_multi=Boost
 
 
 [includedirs_zlib]
-/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/include
+/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/include
 
 [libdirs_zlib]
-/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/lib
+/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/lib
 
 [bindirs_zlib]
 
@@ -289,7 +293,7 @@ cmake_find_package_multi=Boost
 
 
 [builddirs_zlib]
-/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/
+/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/
 
 [libs_zlib]
 z
@@ -325,7 +329,7 @@ z
 
 
 [rootpath_zlib]
-/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1
+/home/plaiseek/.conan/data/zlib/1.2.11/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646
 
 [name_zlib]
 zlib
@@ -342,20 +346,20 @@ cmake_find_package_multi=ZLIB
 
 
 [includedirs_bzip2]
-/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/include
+/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/include
 
 [libdirs_bzip2]
-/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/lib
+/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/lib
 
 [bindirs_bzip2]
-/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/bin
+/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/bin
 
 [resdirs_bzip2]
 
 
 [builddirs_bzip2]
-/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/
-/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/lib/cmake
+/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/
+/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/lib/cmake
 
 [libs_bzip2]
 bz2
@@ -391,7 +395,7 @@ bz2
 
 
 [rootpath_bzip2]
-/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567
+/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e
 
 [name_bzip2]
 bzip2
@@ -407,82 +411,80 @@ cmake_find_package_multi=BZip2
 
 
 
-[includedirs_libiconv]
-/home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/include
+[includedirs_libbacktrace]
+/home/plaiseek/.conan/data/libbacktrace/cci.20210118/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/include
 
-[libdirs_libiconv]
-/home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/lib
+[libdirs_libbacktrace]
+/home/plaiseek/.conan/data/libbacktrace/cci.20210118/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/lib
 
-[bindirs_libiconv]
-/home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/bin
-
-[resdirs_libiconv]
+[bindirs_libbacktrace]
 
 
-[builddirs_libiconv]
-/home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/
-
-[libs_libiconv]
-iconv
-charset
-
-[system_libs_libiconv]
+[resdirs_libbacktrace]
 
 
-[defines_libiconv]
+[builddirs_libbacktrace]
+/home/plaiseek/.conan/data/libbacktrace/cci.20210118/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646/
+
+[libs_libbacktrace]
+backtrace
+
+[system_libs_libbacktrace]
 
 
-[cppflags_libiconv]
+[defines_libbacktrace]
 
 
-[cxxflags_libiconv]
+[cppflags_libbacktrace]
 
 
-[cflags_libiconv]
+[cxxflags_libbacktrace]
 
 
-[sharedlinkflags_libiconv]
+[cflags_libbacktrace]
 
 
-[exelinkflags_libiconv]
+[sharedlinkflags_libbacktrace]
 
 
-[sysroot_libiconv]
+[exelinkflags_libbacktrace]
 
 
-[frameworks_libiconv]
+[sysroot_libbacktrace]
 
 
-[frameworkdirs_libiconv]
+[frameworks_libbacktrace]
 
 
-[rootpath_libiconv]
-/home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1
+[frameworkdirs_libbacktrace]
 
-[name_libiconv]
-libiconv
 
-[version_libiconv]
-1.16
+[rootpath_libbacktrace]
+/home/plaiseek/.conan/data/libbacktrace/cci.20210118/_/_/package/dfbe50feef7f3c6223a476cd5aeadb687084a646
 
-[generatornames_libiconv]
-cmake_find_package=Iconv
-cmake_find_package_multi=Iconv
+[name_libbacktrace]
+libbacktrace
 
-[generatorfilenames_libiconv]
+[version_libbacktrace]
+cci.20210118
+
+[generatornames_libbacktrace]
+
+
+[generatorfilenames_libbacktrace]
 
 
 
 [USER_boost]
+stacktrace_addr2line_available=True
 [USER_bzip2]
-[USER_libiconv]
+[USER_libbacktrace]
 [USER_range-v3]
 [USER_zlib]
 [ENV_range-v3]
 [ENV_boost]
-BOOST_ROOT=/home/plaiseek/.conan/data/boost/1.76.0/_/_/package/91068d6d6067a809e746602e9538e15eddb14457
+BOOST_ROOT=/home/plaiseek/.conan/data/boost/1.78.0/_/_/package/dc8aedd23a0f0a773a5fcdcfe1ae3e89c4205978
 [ENV_zlib]
 [ENV_bzip2]
-PATH=["/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/91a8b22c2c5a149bc617cfc06cdd21bf23b12567/bin"]
-[ENV_libiconv]
-PATH=["/home/plaiseek/.conan/data/libiconv/1.16/_/_/package/19729b9559f3ae196cad45cb2b97468ccb75dcd1/bin"]
+PATH=["/home/plaiseek/.conan/data/bzip2/1.0.8/_/_/package/c32092bf4d4bb47cf962af898e02823f499b017e/bin"]
+[ENV_libbacktrace]

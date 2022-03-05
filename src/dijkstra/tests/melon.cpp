@@ -3,9 +3,7 @@
 #include <iostream>
 #include <sstream>
 
-// #include "melon_rend-indexed.hpp"
-// #include "melon_1-index.hpp"
-#include "melon.hpp"
+#include "melon/all.hpp"
 
 using namespace fhamonic::melon;
 
@@ -30,7 +28,7 @@ auto parse_gr(std::string file_name) {
                     break;
                 }
                 case 'a': {
-                    StaticDigraph::Node from, to;
+                    StaticDigraph::vertex from, to;
                     double length;
                     if(iss >> from >> to >> length) {
                         builder.add_arc(from - 1, to - 1, length);
@@ -65,18 +63,18 @@ int main() {
         auto [graph, length_map] = parse_gr(gr_file);
 
         std::cout << std::setprecision(16) << gr_file << " : "
-                  << graph.nb_nodes() << " nodes , " << graph.nb_arcs()
+                  << graph.nb_vertices() << " nodes , " << graph.nb_arcs()
                   << " arcs" << std::endl;
 
-        for(StaticDigraph::Node s : graph.nodes()) {
+        for(auto && s : graph.vertices()) {
             // Dijkstra<StaticDigraph, std::vector<double>, TraversalAlgorithmBehavior::TRACK_NONE> dijkstra(graph, length_map);
             // Dijkstra dijkstra(graph, length_map);
             // dijkstra.add_source(s);
-            // std::vector<double> dists(graph.nb_nodes());
+            // std::vector<double> dists(graph.nb_vertices());
             // for(const auto & [u, dist] : dijkstra) {
             //     dists[u] = dist;
             // }
-            // for(StaticDigraph::Node u : graph.nodes()) {
+            // for(StaticDigraph::Node u : graph.vertices()) {
             //     std::cout << s << ',' << u << ':' << dists[u] << '\n';
             //     ++rows;
             // }
@@ -84,7 +82,7 @@ int main() {
             Dijkstra<StaticDigraph, std::vector<double>, TraversalAlgorithmBehavior::TRACK_DISTANCES> dijkstra(graph, length_map);
             dijkstra.add_source(s);
             dijkstra.run();
-            for(StaticDigraph::Node u : graph.nodes()) {
+            for(auto && u : graph.vertices()) {
                 std::cout << s << ',' << u << ':' << dijkstra.dist(u) << '\n';
                 ++rows;
             }
