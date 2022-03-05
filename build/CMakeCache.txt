@@ -254,10 +254,7 @@ COMPILE_WITH_LTO:BOOL=ON
 CONAN_CMD:FILEPATH=/home/plaiseek/.local/bin/conan
 
 //Enable Test Builds
-ENABLE_TESTING:BOOL=ON
-
-//The directory containing a CMake configuration file for GTest.
-GTest_DIR:PATH=/usr/lib64/cmake/GTest
+ENABLE_TESTING:BOOL=OFF
 
 //Path to Lemon graph library
 LEMON_DIR:PATH=/usr/local
@@ -288,9 +285,6 @@ MELON_SOURCE_DIR:STATIC=/home/plaiseek/Projects/melon_benchmark/dependencies/mel
 
 //No help, variable specified on the command line.
 WARNINGS:UNINITIALIZED=ON
-
-//Treat compiler warnings as errors
-WARNINGS_AS_ERRORS:BOOL=OFF
 
 //Path to a program.
 conanexecutable:FILEPATH=/home/plaiseek/.local/bin/conan
@@ -364,10 +358,6 @@ CMAKE_GENERATOR_INSTANCE:INTERNAL=
 CMAKE_GENERATOR_PLATFORM:INTERNAL=
 //Name of generator toolset.
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
-//Test CMAKE_HAVE_LIBC_PTHREAD
-CMAKE_HAVE_LIBC_PTHREAD:INTERNAL=1
-//Have include pthread.h
-CMAKE_HAVE_PTHREAD_H:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=/home/plaiseek/Projects/melon_benchmark
@@ -422,7 +412,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -469,8 +459,6 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 FIND_PACKAGE_MESSAGE_DETAILS_BZip2:INTERNAL=[1.0.8][v1.0.8()]
 //Details about finding Boost
 FIND_PACKAGE_MESSAGE_DETAILS_Boost:INTERNAL=[1.78.0][v1.78.0()]
-//Details about finding GTest
-FIND_PACKAGE_MESSAGE_DETAILS_GTest:INTERNAL=[/usr/lib64/cmake/GTest/GTestConfig.cmake][c ][v1.11.0()]
 //Details about finding ZLIB
 FIND_PACKAGE_MESSAGE_DETAILS_ZLIB:INTERNAL=[1.2.11][v1.2.11()]
 //Details about finding libbacktrace
