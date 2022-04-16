@@ -8,7 +8,7 @@
 using namespace fhamonic::melon;
 
 auto parse_gr(std::string file_name) {
-    StaticDigraphBuilder<double> builder(0);
+    static_digraphBuilder<double> builder(0);
 
     std::ifstream gr_file(file_name);
     std::string line;
@@ -23,12 +23,12 @@ auto parse_gr(std::string file_name) {
                     std::string format;
                     std::size_t nb_nodes, nb_arcs;
                     if(iss >> format >> nb_nodes >> nb_arcs) {
-                        builder = StaticDigraphBuilder<double>(nb_nodes);
+                        builder = static_digraphBuilder<double>(nb_nodes);
                     }
                     break;
                 }
                 case 'a': {
-                    StaticDigraph::vertex from, to;
+                    static_digraph::vertex from, to;
                     double length;
                     if(iss >> from >> to >> length) {
                         builder.add_arc(from - 1, to - 1, length);
@@ -79,7 +79,7 @@ int main() {
             //     ++rows;
             // }
 
-            Dijkstra<StaticDigraph, std::vector<double>, TraversalAlgorithmBehavior::TRACK_DISTANCES> dijkstra(graph, length_map);
+            Dijkstra<static_digraph, std::vector<double>, TraversalAlgorithmBehavior::TRACK_DISTANCES> dijkstra(graph, length_map);
             dijkstra.add_source(s);
             dijkstra.run();
             for(auto && u : graph.vertices()) {

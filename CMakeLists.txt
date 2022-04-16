@@ -9,8 +9,8 @@ project(
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # ################### Options ####################
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CONAN_DISABLE_CHECK_COMPILER ON)
 
 option(WARNINGS "Enable warnings" OFF)
 option(OPTIMIZE_FOR_NATIVE "Build with -march=native" OFF)
@@ -76,58 +76,58 @@ set_melon_options(dijkstra_tests_melon)
 
 # ######### DIJKSTRA ###########
 
-add_executable(dijkstra_benchmark_dimacs_lemon_static_graph
-               src/dijkstra/benchmark/dimacs/lemon_static_graph.cpp)
-set_lemon_options(dijkstra_benchmark_dimacs_lemon_static_graph)
+add_executable(dijkstra_benchmark_dimacs_lemon_static_digraph
+               src/dijkstra/benchmark/dimacs/lemon_static_digraph.cpp)
+set_lemon_options(dijkstra_benchmark_dimacs_lemon_static_digraph)
 add_executable(dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS
                src/dijkstra/benchmark/dimacs/bgl_adjacency_list_vecS.cpp)
 set_boost_options(dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS)
 add_executable(dijkstra_benchmark_dimacs_bgl_compressed_sparse_row
                src/dijkstra/benchmark/dimacs/bgl_compressed_sparse_row.cpp)
 set_boost_options(dijkstra_benchmark_dimacs_bgl_compressed_sparse_row)
-add_executable(dijkstra_benchmark_dimacs_melon_static_graph
-               src/dijkstra/benchmark/dimacs/melon_static_graph.cpp)
-set_melon_options(dijkstra_benchmark_dimacs_melon_static_graph)
+add_executable(dijkstra_benchmark_dimacs_melon_static_digraph
+               src/dijkstra/benchmark/dimacs/melon_static_digraph.cpp)
+set_melon_options(dijkstra_benchmark_dimacs_melon_static_digraph)
 
-add_executable(dijkstra_benchmark_snap_lemon_static_graph
-               src/dijkstra/benchmark/snap/lemon_static_graph.cpp)
-set_lemon_options(dijkstra_benchmark_snap_lemon_static_graph)
+add_executable(dijkstra_benchmark_snap_lemon_static_digraph
+               src/dijkstra/benchmark/snap/lemon_static_digraph.cpp)
+set_lemon_options(dijkstra_benchmark_snap_lemon_static_digraph)
 add_executable(dijkstra_benchmark_snap_bgl_adjacency_list_vecS
                src/dijkstra/benchmark/snap/bgl_adjacency_list_vecS.cpp)
 set_boost_options(dijkstra_benchmark_snap_bgl_adjacency_list_vecS)
 add_executable(dijkstra_benchmark_snap_bgl_compressed_sparse_row
                src/dijkstra/benchmark/snap/bgl_compressed_sparse_row.cpp)
 set_boost_options(dijkstra_benchmark_snap_bgl_compressed_sparse_row)
-add_executable(dijkstra_benchmark_snap_melon_static_graph
-               src/dijkstra/benchmark/snap/melon_static_graph.cpp)
-set_melon_options(dijkstra_benchmark_snap_melon_static_graph)
+add_executable(dijkstra_benchmark_snap_melon_static_digraph
+               src/dijkstra/benchmark/snap/melon_static_digraph.cpp)
+set_melon_options(dijkstra_benchmark_snap_melon_static_digraph)
 
 # ######### BFS ###########
 
-add_executable(bfs_benchmark_snap_lemon_static_graph
-               src/bfs/benchmark/snap/lemon_static_graph.cpp)
-set_lemon_options(bfs_benchmark_snap_lemon_static_graph)
+add_executable(bfs_benchmark_snap_lemon_static_digraph
+               src/bfs/benchmark/snap/lemon_static_digraph.cpp)
+set_lemon_options(bfs_benchmark_snap_lemon_static_digraph)
 add_executable(bfs_benchmark_snap_bgl_adjacency_list_vecS
                src/bfs/benchmark/snap/bgl_adjacency_list_vecS.cpp)
 set_boost_options(bfs_benchmark_snap_bgl_adjacency_list_vecS)
 add_executable(bfs_benchmark_snap_bgl_compressed_sparse_row
                src/bfs/benchmark/snap/bgl_compressed_sparse_row.cpp)
 set_boost_options(bfs_benchmark_snap_bgl_compressed_sparse_row)
-add_executable(bfs_benchmark_snap_melon_static_graph
-               src/bfs/benchmark/snap/melon_static_graph.cpp)
-set_melon_options(bfs_benchmark_snap_melon_static_graph)
+add_executable(bfs_benchmark_snap_melon_static_digraph
+               src/bfs/benchmark/snap/melon_static_digraph.cpp)
+set_melon_options(bfs_benchmark_snap_melon_static_digraph)
 
 # ######### DFS ###########
 
-add_executable(dfs_benchmark_snap_lemon_static_graph
-               src/dfs/benchmark/snap/lemon_static_graph.cpp)
-set_lemon_options(dfs_benchmark_snap_lemon_static_graph)
+add_executable(dfs_benchmark_snap_lemon_static_digraph
+               src/dfs/benchmark/snap/lemon_static_digraph.cpp)
+set_lemon_options(dfs_benchmark_snap_lemon_static_digraph)
 add_executable(dfs_benchmark_snap_bgl_adjacency_list_vecS
                src/dfs/benchmark/snap/bgl_adjacency_list_vecS.cpp)
 set_boost_options(dfs_benchmark_snap_bgl_adjacency_list_vecS)
 add_executable(dfs_benchmark_snap_bgl_compressed_sparse_row
                src/dfs/benchmark/snap/bgl_compressed_sparse_row.cpp)
 set_boost_options(dfs_benchmark_snap_bgl_compressed_sparse_row)
-add_executable(dfs_benchmark_snap_melon_static_graph
-               src/dfs/benchmark/snap/melon_static_graph.cpp)
-set_melon_options(dfs_benchmark_snap_melon_static_graph)
+add_executable(dfs_benchmark_snap_melon_static_digraph
+               src/dfs/benchmark/snap/melon_static_digraph.cpp)
+set_melon_options(dfs_benchmark_snap_melon_static_digraph)

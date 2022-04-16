@@ -15,9 +15,9 @@ auto parse_gr(const std::filesystem::path & file_name) {
     std::size_t nb_nodes, nb_arcs;
     gr_file >> nb_nodes >> nb_arcs;
 
-    StaticDigraphBuilder<> builder(nb_nodes);
+    static_digraphBuilder<> builder(nb_nodes);
 
-    StaticDigraph::vertex from, to;
+    static_digraph::vertex from, to;
     while(gr_file >> from >> to) builder.add_arc(from, to);
 
     return builder.build();
@@ -38,19 +38,19 @@ int main() {
         double avg_time = 0;
         int iterations = 0;
         const int nb_nodes = graph.nb_vertices();
-        const int nb_iterations = 30000.0 * 1000.0 / nb_nodes;
+        const int nb_iterations = int(30000.0 * 1000.0 / nb_nodes);
         for(auto && s : graph.vertices()) {
             Chrono chrono;
 
             int sum = 0;
-            Dfs<StaticDigraph> dfs(graph);
-            dfs.add_source(s);
+            Bfs<static_digraph, TraversalAlgorithmBehavior::TRACK_PRED_ARCS> bfs(graph);
+            bfs.add_source(s);
 
-            while(!dfs.empty_queue()) {
-                const auto & [a ,u] = dfs.next_node();
+            while(!bfs.empty_queue()) {
+                const auto & u = bfs.next_node();
                 sum += u;
             }
-            // for(const auto & [a ,u] : dfs) {
+            // for(const auto & u : bfs) {
             //     sum += u;
             // }
 

@@ -15,10 +15,10 @@ auto parse_gr(const std::filesystem::path & file_name) {
     std::size_t nb_nodes, nb_arcs;
     gr_file >> nb_nodes >> nb_arcs;
 
-    StaticDigraphBuilder<> builder(nb_nodes);
+    static_digraphBuilder<int> builder(nb_nodes);
 
-    StaticDigraph::vertex from, to;
-    while(gr_file >> from >> to) builder.add_arc(from, to);
+    static_digraph::vertex from, to;
+    while(gr_file >> from >> to) builder.add_arc(from, to, 1);
 
     return builder.build();
 }
@@ -32,27 +32,27 @@ int main() {
     (void)warm_up();
 
     for(const auto & gr_file : gr_files) {
-        auto [graph] = parse_gr(gr_file);
+        auto [graph, length_map] = parse_gr(gr_file);
 
         Chrono gr_chrono;
         double avg_time = 0;
         int iterations = 0;
         const int nb_nodes = graph.nb_vertices();
-        const int nb_iterations = int(30000.0 * 1000.0 / nb_nodes);
+        const int nb_iterations = 30000.0 * 1000.0 / nb_nodes;
         for(auto && s : graph.vertices()) {
             Chrono chrono;
 
             int sum = 0;
-            Bfs<StaticDigraph, TraversalAlgorithmBehavior::TRACK_PRED_ARCS> bfs(graph);
-            bfs.add_source(s);
-
-            while(!bfs.empty_queue()) {
-                const auto & u = bfs.next_node();
-                sum += u;
+            Dijkstra dijkstra(graph, length_map);
+            dijkstra.add_source(s);
+            while(!dijkstra.empty_queue()) {
+                auto [u, dist] = dijkstra.next_node();
+                sum += dist;
             }
-            // for(const auto & u : bfs) {
-            //     sum += u;
-            // }
+
+            for(auto && [u, dist] : dijkstra) {
+                sum += dist;
+            }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;

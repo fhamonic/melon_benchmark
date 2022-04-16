@@ -15,10 +15,10 @@ auto parse_gr(const std::filesystem::path & file_name) {
     std::size_t nb_nodes, nb_arcs;
     gr_file >> nb_nodes >> nb_arcs;
 
-    StaticDigraphBuilder<int> builder(nb_nodes);
+    static_digraphBuilder<> builder(nb_nodes);
 
-    StaticDigraph::vertex from, to;
-    while(gr_file >> from >> to) builder.add_arc(from, to, 1);
+    static_digraph::vertex from, to;
+    while(gr_file >> from >> to) builder.add_arc(from, to);
 
     return builder.build();
 }
@@ -32,7 +32,7 @@ int main() {
     (void)warm_up();
 
     for(const auto & gr_file : gr_files) {
-        auto [graph, length_map] = parse_gr(gr_file);
+        auto [graph] = parse_gr(gr_file);
 
         Chrono gr_chrono;
         double avg_time = 0;
@@ -43,16 +43,16 @@ int main() {
             Chrono chrono;
 
             int sum = 0;
-            Dijkstra dijkstra(graph, length_map);
-            dijkstra.add_source(s);
-            while(!dijkstra.empty_queue()) {
-                auto [u, dist] = dijkstra.next_node();
-                sum += dist;
-            }
+            Dfs<static_digraph> dfs(graph);
+            dfs.add_source(s);
 
-            for(auto && [u, dist] : dijkstra) {
-                sum += dist;
+            while(!dfs.empty_queue()) {
+                const auto & [a ,u] = dfs.next_node();
+                sum += u;
             }
+            // for(const auto & [a ,u] : dfs) {
+            //     sum += u;
+            // }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;

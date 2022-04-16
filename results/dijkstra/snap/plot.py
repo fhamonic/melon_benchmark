@@ -9,7 +9,7 @@ def readCSV(file_name, delimiter=','):
 
 
 instances = [row['instance'] for row in readCSV(
-    'results/dijkstra/snap/melon_static_graph.csv')]
+    'results/dijkstra/snap/melon_static_digraph.csv')]
 libs = ["BGL_adjacency_list_vecS", "BGL_compressed_sparse_row_graph",
         "LEMON_StaticDigraph", "MELON_StaticDigraph"]
 data = [
@@ -18,9 +18,9 @@ data = [
     [int(float(row['time_ms']))
      for row in readCSV('results/dijkstra/snap/bgl_compressed_sparse_row.csv')],
     [int(float(row['time_ms']))
-     for row in readCSV('results/dijkstra/snap/lemon_static_graph.csv')],
+     for row in readCSV('results/dijkstra/snap/lemon_static_digraph.csv')],
     [int(float(row['time_ms']))
-     for row in readCSV('results/dijkstra/snap/melon_static_graph.csv')]
+     for row in readCSV('results/dijkstra/snap/melon_static_digraph.csv')]
 ]
 x = np.arange(len(instances))
 
