@@ -1,3 +1,6 @@
 [submodule "dependencies/melon"]
 	path = dependencies/melon
 	url = https://github.com/fhamonic/melon
+[submodule "dependencies/CXXGraph"]
+	path = dependencies/CXXGraph
+	url = https://github.com/ZigRazor/CXXGraph

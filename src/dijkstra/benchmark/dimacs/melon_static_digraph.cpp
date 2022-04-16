@@ -11,7 +11,7 @@
 using namespace fhamonic::melon;
 
 auto parse_gr(const std::filesystem::path & file_name) {
-    static_digraphBuilder<double> builder(0);
+    static_digraph_builder<double> builder(0);
 
     std::ifstream gr_file(file_name);
     std::string line;
@@ -26,7 +26,7 @@ auto parse_gr(const std::filesystem::path & file_name) {
                     std::string format;
                     std::size_t nb_nodes, nb_arcs;
                     if(iss >> format >> nb_nodes >> nb_arcs) {
-                        builder = static_digraphBuilder<double>(nb_nodes);
+                        builder = static_digraph_builder<double>(nb_nodes);
                     }
                     break;
                 }

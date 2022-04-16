@@ -31,6 +31,8 @@ add_subdirectory(dependencies/melon)
 # ################### Packages ####################
 find_package(range-v3 REQUIRED)
 find_package(Boost REQUIRED)
+find_package(ZLIB REQUIRED)
+find_package(OpenSSL REQUIRED)
 find_package(LEMON REQUIRED)
 
 # ############ COMPILATION OPTIONS MACRO #############
@@ -61,6 +63,14 @@ function(set_melon_options _target)
     set_common_options(${_target})
 endfunction()
 
+function(set_cxxgraph_options _target)
+    set_target_properties(${_target} PROPERTIES CXX_STANDARD 17)
+    target_include_directories(${_target} PUBLIC dependencies/CXXGraph/include)
+    target_link_libraries(${_target} ZLIB::ZLIB)
+    target_link_libraries(${_target} OpenSSL::OpenSSL)
+    set_common_options(${_target})
+endfunction()
+
 # ################ CORRECTNESS TEST ##################
 
 add_executable(dijkstra_tests_lemon src/dijkstra/tests/lemon.cpp)
@@ -85,6 +95,9 @@ set_boost_options(dijkstra_benchmark_dimacs_bgl_adjacency_list_vecS)
 add_executable(dijkstra_benchmark_dimacs_bgl_compressed_sparse_row
                src/dijkstra/benchmark/dimacs/bgl_compressed_sparse_row.cpp)
 set_boost_options(dijkstra_benchmark_dimacs_bgl_compressed_sparse_row)
+# add_executable(dijkstra_benchmark_dimacs_cxxgraph
+#                src/dijkstra/benchmark/dimacs/cxxgraph.cpp)
+# set_cxxgraph_options(dijkstra_benchmark_dimacs_cxxgraph)
 add_executable(dijkstra_benchmark_dimacs_melon_static_digraph
                src/dijkstra/benchmark/dimacs/melon_static_digraph.cpp)
 set_melon_options(dijkstra_benchmark_dimacs_melon_static_digraph)

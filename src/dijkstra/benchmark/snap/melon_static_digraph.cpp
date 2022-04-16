@@ -15,7 +15,7 @@ auto parse_gr(const std::filesystem::path & file_name) {
     std::size_t nb_nodes, nb_arcs;
     gr_file >> nb_nodes >> nb_arcs;
 
-    static_digraphBuilder<int> builder(nb_nodes);
+    static_digraph_builder<int> builder(nb_nodes);
 
     static_digraph::vertex from, to;
     while(gr_file >> from >> to) builder.add_arc(from, to, 1);

@@ -4,7 +4,7 @@ CPUS?=$(shell getconf _NPROCESSORS_ONLN || echo 1)
 
 BUILD_DIR = build
 
-.PHONY: all clean
+.PHONY: all clean init-submodules update-submodules
 
 all: $(BUILD_DIR)
 	@cd $(BUILD_DIR) && \
@@ -60,3 +60,9 @@ dfs-benchmark-snap:
 	python results/dfs/snap/plot.py
 
 run-benchmarks: dijkstra-benchmark-dimacs bfs-benchmark-snap dfs-benchmark-snap
+
+init-submodules:
+	git submodule update --init --recursive
+	
+update-submodules:
+	git submodule update --recursive --remote

@@ -21,8 +21,13 @@ macro(run_conan)
 
     include(${CMAKE_CURRENT_BINARY_DIR}/conan.cmake)
 
-    conan_cmake_configure(REQUIRES boost/1.78.0 GENERATORS
-    cmake_find_package)
+    conan_cmake_configure(
+        REQUIRES
+        boost/1.78.0
+        zlib/1.2.12
+        openssl/3.0.2
+        GENERATORS
+        cmake_find_package)
 
     conan_cmake_autodetect(settings)
 
