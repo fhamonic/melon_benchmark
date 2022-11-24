@@ -9,7 +9,7 @@
 #include "warm_up.hpp"
 
 // auto parse_gr(const std::filesystem::path & file_name) {
-//     static_digraph_builder<double> builder(0);
+//     arc_list_builder<static_forward_digraph,double> builder(0);
 
 //     std::ifstream gr_file(file_name);
 //     std::string line;
@@ -24,12 +24,12 @@
 //                     std::string format;
 //                     std::size_t nb_nodes, nb_arcs;
 //                     if(iss >> format >> nb_nodes >> nb_arcs) {
-//                         builder = static_digraph_builder<double>(nb_nodes);
+//                         builder = arc_list_builder<static_forward_digraph,double>(nb_nodes);
 //                     }
 //                     break;
 //                 }
 //                 case 'a': {
-//                     static_digraph::vertex from, to;
+//                     static_digraph::vertex_t from, to;
 //                     double length;
 //                     if(iss >> from >> to >> length) {
 //                         builder.add_arc(from - 1, to - 1, length);

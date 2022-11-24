@@ -7,13 +7,43 @@
 #include <lemon/smart_graph.h>
 #include <lemon/static_graph.h>
 
-#include <lemon/dijkstra.h>
 #include <lemon/bfs.h>
+#include <lemon/dijkstra.h>
+#include <lemon/quad_heap.h>
+#include <lemon/dheap.h>
 
 #include "chrono.hpp"
 #include "warm_up.hpp"
 
 using namespace lemon;
+
+template <typename GR, typename LEN>
+struct DijkstraTraits {
+    typedef GR Digraph;
+    typedef LEN LengthMap;
+    typedef typename LEN::Value Value;
+    typedef DijkstraDefaultOperationTraits<Value> OperationTraits;
+    typedef typename Digraph::template NodeMap<int> HeapCrossRef;
+    static HeapCrossRef * createHeapCrossRef(const Digraph & g) {
+        return new HeapCrossRef(g);
+    }
+
+    // typedef BinHeap<typename LEN::Value, HeapCrossRef, std::less<Value>> Heap;
+    // typedef QuadHeap<typename LEN::Value, HeapCrossRef, std::less<Value>> Heap;
+    typedef DHeap<typename LEN::Value, HeapCrossRef, 2, std::less<Value>> Heap;
+    static Heap * createHeap(HeapCrossRef & r) { return new Heap(r); }
+
+    typedef typename Digraph::template NodeMap<typename Digraph::Arc> PredMap;
+    static PredMap * createPredMap(const Digraph & g) { return new PredMap(g); }
+
+    typedef NullMap<typename Digraph::Node, bool> ProcessedMap;
+    static ProcessedMap * createProcessedMap(const Digraph &) {
+        return new ProcessedMap();
+    }
+
+    typedef typename Digraph::template NodeMap<typename LEN::Value> DistMap;
+    static DistMap * createDistMap(const Digraph & g) { return new DistMap(g); }
+};
 
 void parse_gr(const std::filesystem::path & file_name, ListDigraph & graph,
               ListDigraph::ArcMap<double> & length_map) {
@@ -100,7 +130,12 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            Dijkstra<Graph, Graph::ArcMap<double>> dijkstra(graph, length_map);
+            // Dijkstra<Graph, Graph::ArcMap<double>> dijkstra(graph,
+            // length_map);
+            Dijkstra<Graph, Graph::ArcMap<double>,
+                     DijkstraTraits<Graph, Graph::ArcMap<double>>>
+                dijkstra(graph, length_map);
+
             dijkstra.init();
             dijkstra.addSource(s);
             while(!dijkstra.emptyQueue()) {

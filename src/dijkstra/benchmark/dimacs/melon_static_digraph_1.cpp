@@ -1,41 +1,38 @@
 #include <filesystem>
-#include <fstream>
 #include <iostream>
-#include <sstream>
+
+#include "melon/adaptor/reverse.hpp"
+#include "melon/algorithm/dijkstra.hpp"
+#include "melon/static_digraph.hpp"
 
 #include "chrono.hpp"
-
-#include "melon/static_digraph.hpp"
-#include "melon/arc_list_builder.hpp"
-#include "melon/algorithm/dijkstra.hpp"
-
+#include "melon_parsers.hpp"
 #include "warm_up.hpp"
 
 using namespace fhamonic::melon;
 
-auto parse_gr(const std::filesystem::path & file_name) {
-    std::ifstream gr_file(file_name);
-    std::size_t nb_nodes, nb_arcs;
-    gr_file >> nb_nodes >> nb_arcs;
-
-    arc_list_builder<static_digraph,int> builder(nb_nodes);
-
-    static_digraph::vertex_t from, to;
-    while(gr_file >> from >> to) builder.add_arc(from, to, 1);
-
-    return builder.build();
-}
-
 int main() {
     std::vector<std::filesystem::path> gr_files(
-        {"data/web-Stanford.txt", "data/Amazon0505.txt", "data/WikiTalk.txt"});
+        {"data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.NY.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.BAY.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.BAY.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.COL.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.COL.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.FLA.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.FLA.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NW.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.NW.gr",
+         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NE.gr",
+         "data/9th_DIMACS_USA_roads/time/USA-road-t.NE.gr"});
 
     std::cout << "instance,nb_nodes,nb_arcs,time_ms\n";
 
     (void)warm_up();
 
     for(const auto & gr_file : gr_files) {
-        auto [graph, length_map] = parse_gr(gr_file);
+        auto [graph, length_map] =
+            parse_melon_weighted_digraph<static_digraph, double>(gr_file);
 
         Chrono gr_chrono;
         double avg_time = 0;
@@ -45,13 +42,9 @@ int main() {
         for(auto && s : graph.vertices()) {
             Chrono chrono;
 
-            int sum = 0;
+            double sum = 0;
             dijkstra algo(graph, length_map);
             algo.add_source(s);
-            while(!algo.empty_queue()) {
-                auto [u, dist] = algo.next_entry();
-                sum += dist;
-            }
 
             for(auto && [u, dist] : algo) {
                 sum += dist;

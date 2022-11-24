@@ -1,52 +1,25 @@
 #include <filesystem>
-#include <fstream>
 #include <iostream>
-#include <sstream>
+
+#include "melon/algorithm/dijkstra.hpp"
+#include "melon/static_forward_digraph.hpp"
 
 #include "chrono.hpp"
-
-#include "melon/all.hpp"
+#include "melon_parsers.hpp"
 #include "warm_up.hpp"
 
 using namespace fhamonic::melon;
 
-auto parse_gr(const std::filesystem::path & file_name) {
-    static_digraph_builder<double> builder(0);
+struct dijkstra_traits {
+    using semiring = shortest_path_semiring<double>;
+    using heap = d_ary_heap<2, static_forward_digraph::vertex_t, double,
+                            decltype(semiring::less),
+                            static_forward_digraph::vertex_map<std::size_t>>;
 
-    std::ifstream gr_file(file_name);
-    std::string line;
-    while(getline(gr_file, line)) {
-        std::istringstream iss(line);
-        char ch;
-        if(iss >> ch) {
-            switch(ch) {
-                case 'c':
-                    break;
-                case 'p': {
-                    std::string format;
-                    std::size_t nb_nodes, nb_arcs;
-                    if(iss >> format >> nb_nodes >> nb_arcs) {
-                        builder = static_digraph_builder<double>(nb_nodes);
-                    }
-                    break;
-                }
-                case 'a': {
-                    static_digraph::vertex from, to;
-                    double length;
-                    if(iss >> from >> to >> length) {
-                        builder.add_arc(from - 1, to - 1, length);
-                    }
-                    break;
-                }
-                default:
-                    std::cerr << "Error in reading " << file_name << std::endl;
-                    std::abort();
-            }
-        }
-    }
-
-    return builder.build();
-}
+    static constexpr bool store_pred_vertices = false;
+    static constexpr bool store_pred_arcs = false;
+    static constexpr bool store_distances = false;
+};
 
 int main() {
     std::vector<std::filesystem::path> gr_files(
@@ -68,7 +41,9 @@ int main() {
     (void)warm_up();
 
     for(const auto & gr_file : gr_files) {
-        auto [graph, length_map] = parse_gr(gr_file);
+        auto [graph, length_map] =
+            parse_melon_weighted_digraph<static_forward_digraph, double>(
+                gr_file);
 
         Chrono gr_chrono;
         double avg_time = 0;
@@ -79,12 +54,18 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            Dijkstra dijkstra(graph, length_map);
-            dijkstra.add_source(s);
-            
-            for(auto && [u, dist] : dijkstra) {
+            dijkstra<decltype(graph), decltype(length_map), dijkstra_traits>
+                algo(graph, length_map);
+            algo.add_source(s);
+
+            for(auto && [u, dist] : algo) {
                 sum += dist;
             }
+
+            // algo.run();
+            // for(auto && u : graph.vertices()) {
+            //     sum += algo.dist(u);
+            // }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;

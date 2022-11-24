@@ -11,7 +11,7 @@ def readCSV(file_name, delimiter=','):
 instances = [row['instance'] for row in readCSV(
     'results/dijkstra/dimacs/melon_static_digraph.csv')]
 libs = ["BGL_adjacency_list_vecS", "BGL_compressed_sparse_row_graph",
-        "LEMON_StaticDigraph", "MELON_StaticDigraph"]
+        "LEMON_StaticDigraph", "MELON_static_digraph"]
 data = [
     [int(float(row['time_ms']))
      for row in readCSV('results/dijkstra/dimacs/bgl_adjacency_list_vecS.csv')],

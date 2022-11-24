@@ -5,7 +5,10 @@
 
 #include "chrono.hpp"
 
-#include "melon/all.hpp"
+#include "melon/algorithm/depth_first_search.hpp"
+#include "melon/arc_list_builder.hpp"
+#include "melon/static_digraph.hpp"
+
 #include "warm_up.hpp"
 
 using namespace fhamonic::melon;
@@ -15,9 +18,9 @@ auto parse_gr(const std::filesystem::path & file_name) {
     std::size_t nb_nodes, nb_arcs;
     gr_file >> nb_nodes >> nb_arcs;
 
-    static_digraph_builder<> builder(nb_nodes);
+    arc_list_builder<static_digraph> builder(nb_nodes);
 
-    static_digraph::vertex from, to;
+    static_digraph::vertex_t from, to;
     while(gr_file >> from >> to) builder.add_arc(from, to);
 
     return builder.build();
@@ -43,11 +46,11 @@ int main() {
             Chrono chrono;
 
             int sum = 0;
-            Dfs<static_digraph> dfs(graph);
+            depth_first_search dfs(graph);
             dfs.add_source(s);
 
             while(!dfs.empty_queue()) {
-                const auto & [a ,u] = dfs.next_node();
+                const auto & [a, u] = dfs.next_entry();
                 sum += u;
             }
             // for(const auto & [a ,u] : dfs) {

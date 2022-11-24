@@ -3,12 +3,14 @@
 #include <iostream>
 #include <sstream>
 
-#include "melon/all.hpp"
+#include "melon/algorithm/dijkstra.hpp"
+#include "melon/arc_list_builder.hpp"
+#include "melon/static_digraph.hpp"
 
 using namespace fhamonic::melon;
 
 auto parse_gr(std::string file_name) {
-    static_digraph_builder<double> builder(0);
+    arc_list_builder<static_digraph, double> builder(0);
 
     std::ifstream gr_file(file_name);
     std::string line;
@@ -23,12 +25,13 @@ auto parse_gr(std::string file_name) {
                     std::string format;
                     std::size_t nb_nodes, nb_arcs;
                     if(iss >> format >> nb_nodes >> nb_arcs) {
-                        builder = static_digraph_builder<double>(nb_nodes);
+                        builder =
+                            arc_list_builder<static_digraph, double>(nb_nodes);
                     }
                     break;
                 }
                 case 'a': {
-                    static_digraph::vertex from, to;
+                    static_digraph::vertex_t from, to;
                     double length;
                     if(iss >> from >> to >> length) {
                         builder.add_arc(from - 1, to - 1, length);
@@ -44,6 +47,20 @@ auto parse_gr(std::string file_name) {
 
     return builder.build();
 }
+
+struct dijkstra_traits {
+    using semiring = shortest_path_semiring<double>;
+    // using heap = fast_binary_heap<static_digraph::vertex_t, double,
+    //                      decltype(semiring::less)>;
+
+    using heap = d_ary_heap<8, static_digraph::vertex_t, double,
+                            decltype(semiring::less),
+                            static_digraph::vertex_map<std::size_t>>;
+
+    static constexpr bool store_pred_vertices = false;
+    static constexpr bool store_pred_arcs = false;
+    static constexpr bool store_distances = true;
+};
 
 int main() {
     std::vector<std::string> gr_files({
@@ -67,8 +84,9 @@ int main() {
                   << " arcs" << std::endl;
 
         for(auto && s : graph.vertices()) {
-            // Dijkstra<StaticDigraph, std::vector<double>, TraversalAlgorithmBehavior::TRACK_NONE> dijkstra(graph, length_map);
-            // Dijkstra dijkstra(graph, length_map);
+            // Dijkstra<StaticDigraph, std::vector<double>,
+            // TraversalAlgorithmBehavior::TRACK_NONE> dijkstra(graph,
+            // length_map); Dijkstra dijkstra(graph, length_map);
             // dijkstra.add_source(s);
             // std::vector<double> dists(graph.nb_vertices());
             // for(const auto & [u, dist] : dijkstra) {
@@ -79,11 +97,12 @@ int main() {
             //     ++rows;
             // }
 
-            Dijkstra<static_digraph, std::vector<double>, TraversalAlgorithmBehavior::TRACK_DISTANCES> dijkstra(graph, length_map);
-            dijkstra.add_source(s);
-            dijkstra.run();
+            dijkstra<decltype(graph), decltype(length_map), dijkstra_traits>
+                algo(graph, length_map);
+            algo.add_source(s);
+            algo.run();
             for(auto && u : graph.vertices()) {
-                std::cout << s << ',' << u << ':' << dijkstra.dist(u) << '\n';
+                std::cout << s << ',' << u << ':' << algo.dist(u) << '\n';
                 ++rows;
             }
             if(rows > 1000000) goto finish;
