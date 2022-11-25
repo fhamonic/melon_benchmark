@@ -12,9 +12,10 @@ using namespace fhamonic::melon;
 
 struct dijkstra_traits {
     using semiring = shortest_path_semiring<double>;
-    using heap = d_ary_heap<2, static_forward_digraph::vertex_t, double,
-                            decltype(semiring::less),
-                            static_forward_digraph::vertex_map<std::size_t>>;
+    using heap =
+        d_ary_heap<2, static_forward_digraph::vertex_t, double,
+                   decltype(semiring::less),
+                   graph_vertex_map<static_forward_digraph, std::size_t>>;
 
     static constexpr bool store_pred_vertices = false;
     static constexpr bool store_pred_arcs = false;

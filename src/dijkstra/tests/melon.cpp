@@ -55,7 +55,7 @@ struct dijkstra_traits {
 
     using heap = d_ary_heap<8, static_digraph::vertex_t, double,
                             decltype(semiring::less),
-                            static_digraph::vertex_map<std::size_t>>;
+                            graph_vertex_map<static_digraph, std::size_t>>;
 
     static constexpr bool store_pred_vertices = false;
     static constexpr bool store_pred_arcs = false;
