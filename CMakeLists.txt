@@ -29,7 +29,6 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}/dependencies/melon" ${CMAKE_M
 add_subdirectory(dependencies/melon)
 
 # ################### Packages ####################
-find_package(range-v3 REQUIRED)
 find_package(Boost REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OpenSSL REQUIRED)
