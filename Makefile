@@ -43,7 +43,7 @@ tests-dijkstra: $(TEST_DIR)
 	cmp $(TEST_DIR)/dijkstra/lemon.log $(TEST_DIR)/dijkstra/melon.log
 
 .SECONDEXPANSION:
-$(BENCHMARK_DIR)/%.csv: $(BUILD_DIR)/benchmark_$$(basename $$(subst /,_,$$(subst $$(BENCHMARK_DIR)/,,$$@))) $(BENCHMARK_DIR)
+$(BENCHMARK_DIR)/%.csv: $(BUILD_DIR)/benchmark_$$(basename $$(subst /,_,$$(subst $$(BENCHMARK_DIR)/,,$$@)))
 	@cd $(BENCHMARK_DIR) && \
 	mkdir -p $(word 3,$(subst /, ,$@)) && \
 	mkdir -p $(word 3,$(subst /, ,$@))/$(word 4,$(subst /, ,$@))
@@ -53,28 +53,28 @@ BENCHMARKS = benchmark-dijkstra-dimacs benchmark-dijkstra-snap benchmark-bfs-sna
 
 run-benchamrks: $(BENCHMARKS)
 
-benchmark-dijkstra-dimacs: \
+benchmark-dijkstra-dimacs: $(BENCHMARK_DIR) \
 $(BENCHMARK_DIR)/dijkstra/dimacs/bgl_adjacency_list_vecS.csv \
 $(BENCHMARK_DIR)/dijkstra/dimacs/bgl_compressed_sparse_row.csv \
 $(BENCHMARK_DIR)/dijkstra/dimacs/lemon_StaticDigraph.csv \
 $(BENCHMARK_DIR)/dijkstra/dimacs/melon_static_digraph.csv
 	python plot_scripts/execution_times.py "$(BENCHMARK_DIR)/dijkstra/dimacs"
 
-benchmark-dijkstra-snap: \
+benchmark-dijkstra-snap: $(BENCHMARK_DIR) \
 $(BENCHMARK_DIR)/dijkstra/snap/bgl_adjacency_list_vecS.csv \
 $(BENCHMARK_DIR)/dijkstra/snap/bgl_compressed_sparse_row.csv \
 $(BENCHMARK_DIR)/dijkstra/snap/lemon_StaticDigraph.csv \
 $(BENCHMARK_DIR)/dijkstra/snap/melon_static_digraph.csv
 	python plot_scripts/execution_times.py "$(BENCHMARK_DIR)/dijkstra/snap"
 
-benchmark-bfs-snap: \
+benchmark-bfs-snap: $(BENCHMARK_DIR) \
  $(BENCHMARK_DIR)/bfs/snap/bgl_adjacency_list_vecS.csv \
  $(BENCHMARK_DIR)/bfs/snap/bgl_compressed_sparse_row.csv \
  $(BENCHMARK_DIR)/bfs/snap/lemon_StaticDigraph.csv \
  $(BENCHMARK_DIR)/bfs/snap/melon_static_digraph.csv
 	python plot_scripts/execution_times.py "$(BENCHMARK_DIR)/bfs/snap"
 
-benchmark-dfs-snap: \
+benchmark-dfs-snap: $(BENCHMARK_DIR) \
  $(BENCHMARK_DIR)/dfs/snap/bgl_adjacency_list_vecS.csv \
  $(BENCHMARK_DIR)/dfs/snap/bgl_compressed_sparse_row.csv \
  $(BENCHMARK_DIR)/dfs/snap/lemon_StaticDigraph.csv \

@@ -7,6 +7,7 @@ import sys
 dir = sys.argv[1]
 dataset_name = os.path.split(dir)[1]
 algo_name = os.path.split(os.path.split(dir)[0])[1]
+cpu_name = os.path.split(os.path.split(os.path.split(dir)[0])[0])[1]
 csv_files = list(filter(lambda f: f.endswith('.csv'), os.listdir(dir)))
 csv_files.sort()
 csv_paths = [dir + "/" + csv_file for csv_file in csv_files]
@@ -40,7 +41,7 @@ rect_plots = [ax.bar(x - (len(libs) - 1) * width/2 + i * width,
 
 ax.set_ylabel('miliseconds')
 ax.set_title(
-    '{} average runtime on {} dataset'.format(algo_name, dataset_name))
+    '{} average runtime on {} dataset\nwith {}'.format(algo_name, dataset_name, cpu_name))
 ax.set_xticks(x)
 ax.set_xticklabels(instances)
 plt.xticks(rotation=60)
