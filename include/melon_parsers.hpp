@@ -5,11 +5,11 @@
 #include <fstream>
 #include <sstream>
 
-#include "melon/arc_list_builder.hpp"
+#include "melon/static_digraph_builder.hpp"
 
 template <typename G, typename W>
 auto parse_melon_weighted_digraph(const std::filesystem::path & file_name) {
-    fhamonic::melon::arc_list_builder<G, W> builder(0);
+    fhamonic::melon::static_digraph_builder<G, W> builder(0);
 
     std::ifstream gr_file(file_name);
     std::string line;
@@ -25,7 +25,7 @@ auto parse_melon_weighted_digraph(const std::filesystem::path & file_name) {
                     std::size_t nb_nodes, nb_arcs;
                     if(iss >> format >> nb_nodes >> nb_arcs) {
                         builder =
-                            fhamonic::melon::arc_list_builder<G, W>(
+                            fhamonic::melon::static_digraph_builder<G, W>(
                                 nb_nodes);
                     }
                     break;
