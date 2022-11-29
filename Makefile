@@ -1,7 +1,7 @@
 MAKEFLAGS += --no-print-directory
 
 CPUS?=$(shell getconf _NPROCESSORS_ONLN || echo 1)
-CPU_NAME?=$(shell cat /proc/cpuinfo | grep -i "^model name" | awk -F": " '{print $$2}' | head -1 | sed 's/ \+/_/g' || echo "use_linux_damn_it")
+CPU_NAME?=$(shell cat /proc/cpuinfo | grep -i "^model name" | awk -F": " '{print $$2}' | head -1 | sed -r "s/[^A-z0-9\-]+/_/g" || echo "use_linux_damn_it")
 
 BUILD_DIR = build
 BENCHMARKS_DIR = benchmarks
@@ -51,7 +51,7 @@ $(BENCHMARK_DIR)/%.csv: $(BUILD_DIR)/benchmark_$$(basename $$(subst /,_,$$(subst
 
 BENCHMARKS = benchmark-dijkstra-dimacs benchmark-dijkstra-snap benchmark-bfs-snap benchmark-dfs-snap
 
-run-benchamrks: $(BENCHMARKS)
+run-benchmarks: $(BENCHMARKS)
 
 benchmark-dijkstra-dimacs: $(BENCHMARK_DIR) \
 $(BENCHMARK_DIR)/dijkstra/dimacs/bgl_adjacency_list_vecS.csv \
