@@ -31,6 +31,9 @@ $(BENCHMARKS_DIR):
 $(BENCHMARK_DIR): $(BENCHMARKS_DIR)
 	@mkdir -p $(BENCHMARK_DIR)
 
+clean-benchmark:
+	@rm -rf $(BENCHMARK_DIR)
+
 $(TESTS_DIR):
 	@mkdir -p $(TESTS_DIR)
 
