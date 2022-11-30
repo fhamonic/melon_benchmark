@@ -58,15 +58,15 @@ int main() {
                 algo(graph, length_map);
             algo.add_source(s);
 
-            while(!algo.finished()) {
-                const auto & [u, dist] = algo.current();
-                sum += dist;
-                algo.advance();
-            }
-
-            // for(auto && [u, dist] : algo) {
+            // while(!algo.finished()) {
+            //     const auto & [u, dist] = algo.current();
             //     sum += dist;
+            //     algo.advance();
             // }
+
+            for(auto && [u, dist] : algo) {
+                sum += dist;
+            }
 
             // algo.run();
             // for(auto && u : graph.vertices()) {
