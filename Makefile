@@ -37,13 +37,13 @@ clean-benchmark:
 $(TESTS_DIR):
 	@mkdir -p $(TESTS_DIR)
 
-tests-dijkstra: $(TEST_DIR)
-	mkdir -p $(TEST_DIR)/dijkstra
-	./build/dijkstra_tests_bgl > $(TEST_DIR)/dijkstra/bgl.log
-	./build/dijkstra_tests_lemon > $(TEST_DIR)/dijkstra/lemon.log
-	./build/dijkstra_tests_melon > $(TEST_DIR)/dijkstra/melon.log
-	cmp $(TEST_DIR)/dijkstra/bgl.log $(TEST_DIR)/dijkstra/lemon.log
-	cmp $(TEST_DIR)/dijkstra/lemon.log $(TEST_DIR)/dijkstra/melon.log
+tests-dijkstra: $(TESTS_DIR)
+	mkdir -p $(TESTS_DIR)/dijkstra
+	./build/dijkstra_tests_bgl > $(TESTS_DIR)/dijkstra/bgl.log
+	./build/dijkstra_tests_lemon > $(TESTS_DIR)/dijkstra/lemon.log
+	./build/dijkstra_tests_melon > $(TESTS_DIR)/dijkstra/melon.log
+	cmp $(TESTS_DIR)/dijkstra/bgl.log $(TESTS_DIR)/dijkstra/lemon.log
+	cmp $(TESTS_DIR)/dijkstra/lemon.log $(TESTS_DIR)/dijkstra/melon.log
 
 .SECONDEXPANSION:
 $(BENCHMARK_DIR)/%.csv: $(BUILD_DIR)/benchmark_$$(basename $$(subst /,_,$$(subst $$(BENCHMARK_DIR)/,,$$@)))
