@@ -10,7 +10,7 @@ TESTS_DIR = tests
 
 .PHONY: all clean init-submodules update-submodules $(BENCHMARKS)
 
-all: $(BUILD_DIR)
+all: $(BUILD_DIR) run-benchmarks
 	@cd $(BUILD_DIR) && \
 	cmake --build . --parallel $(CPUS)
 
