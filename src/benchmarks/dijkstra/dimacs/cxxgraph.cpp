@@ -29,7 +29,7 @@
 //                     break;
 //                 }
 //                 case 'a': {
-//                     static_digraph::vertex_t from, to;
+//                     vertex_t<static_digraph> from, to;
 //                     double length;
 //                     if(iss >> from >> to >> length) {
 //                         builder.add_arc(from - 1, to - 1, length);

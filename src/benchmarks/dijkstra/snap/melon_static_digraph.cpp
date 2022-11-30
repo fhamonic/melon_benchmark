@@ -5,9 +5,9 @@
 
 #include "chrono.hpp"
 
+#include "melon/algorithm/dijkstra.hpp"
 #include "melon/static_digraph.hpp"
 #include "melon/static_digraph_builder.hpp"
-#include "melon/algorithm/dijkstra.hpp"
 
 #include "warm_up.hpp"
 
@@ -18,9 +18,9 @@ auto parse_gr(const std::filesystem::path & file_name) {
     std::size_t nb_nodes, nb_arcs;
     gr_file >> nb_nodes >> nb_arcs;
 
-    static_digraph_builder<static_digraph,int> builder(nb_nodes);
+    static_digraph_builder<static_digraph, int> builder(nb_nodes);
 
-    static_digraph::vertex_t from, to;
+    vertex_t<static_digraph> from, to;
     while(gr_file >> from >> to) builder.add_arc(from, to, 1);
 
     return builder.build();
@@ -48,8 +48,9 @@ int main() {
             int sum = 0;
             dijkstra algo(graph, length_map);
             algo.add_source(s);
-            while(!algo.empty_queue()) {
-                auto [u, dist] = algo.next_entry();
+            while(!algo.finished()) {
+                auto [u, dist] = algo.current();
+                algo.advance();
                 sum += dist;
             }
 

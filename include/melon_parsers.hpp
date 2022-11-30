@@ -24,14 +24,13 @@ auto parse_melon_weighted_digraph(const std::filesystem::path & file_name) {
                     std::string format;
                     std::size_t nb_nodes, nb_arcs;
                     if(iss >> format >> nb_nodes >> nb_arcs) {
-                        builder =
-                            fhamonic::melon::static_digraph_builder<G, W>(
-                                nb_nodes);
+                        builder = fhamonic::melon::static_digraph_builder<G, W>(
+                            nb_nodes);
                     }
                     break;
                 }
                 case 'a': {
-                    typename G::vertex_t from, to;
+                    fhamonic::melon::vertex_t<G> from, to;
                     W length;
                     if(iss >> from >> to >> length) {
                         builder.add_arc(from - 1, to - 1, length);

@@ -6,8 +6,8 @@
 #include "chrono.hpp"
 
 #include "melon/algorithm/breadth_first_search.hpp"
-#include "melon/static_digraph_builder.hpp"
 #include "melon/static_digraph.hpp"
+#include "melon/static_digraph_builder.hpp"
 
 #include "warm_up.hpp"
 
@@ -20,7 +20,7 @@ auto parse_gr(const std::filesystem::path & file_name) {
 
     static_digraph_builder<static_digraph> builder(nb_nodes);
 
-    static_digraph::vertex_t from, to;
+    vertex_t<static_digraph> from, to;
     while(gr_file >> from >> to) builder.add_arc(from, to);
 
     return builder.build();
@@ -49,8 +49,9 @@ int main() {
             breadth_first_search bfs(graph);
             bfs.add_source(s);
 
-            while(!bfs.empty_queue()) {
-                const auto & u = bfs.next_entry();
+            while(!bfs.finished()) {
+                const auto & u = bfs.current();
+                bfs.advance();
                 sum += u;
             }
             // for(const auto & u : bfs) {

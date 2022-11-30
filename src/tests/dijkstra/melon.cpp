@@ -31,7 +31,7 @@ auto parse_gr(std::string file_name) {
                     break;
                 }
                 case 'a': {
-                    static_digraph::vertex_t from, to;
+                    vertex_t<static_digraph> from, to;
                     double length;
                     if(iss >> from >> to >> length) {
                         builder.add_arc(from - 1, to - 1, length);
@@ -50,12 +50,12 @@ auto parse_gr(std::string file_name) {
 
 struct dijkstra_traits {
     using semiring = shortest_path_semiring<double>;
-    // using heap = fast_binary_heap<static_digraph::vertex_t, double,
+    // using heap = fast_binary_heap<vertex_t<static_digraph>, double,
     //                      decltype(semiring::less)>;
 
-    using heap = d_ary_heap<8, static_digraph::vertex_t, double,
+    using heap = d_ary_heap<8, vertex_t<static_digraph>, double,
                             decltype(semiring::less),
-                            graph_vertex_map<static_digraph, std::size_t>>;
+                            vertex_map_t<static_digraph, std::size_t>>;
 
     static constexpr bool store_pred_vertices = false;
     static constexpr bool store_pred_arcs = false;
