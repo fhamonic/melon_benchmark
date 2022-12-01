@@ -1,8 +1,9 @@
 #include <filesystem>
 #include <iostream>
+#include <type_traits>
 
 #include "melon/algorithm/dijkstra.hpp"
-#include "melon/static_forward_digraph.hpp"
+#include "melon/static_digraph.hpp"
 
 #include "chrono.hpp"
 #include "melon_parsers.hpp"
@@ -12,9 +13,9 @@ using namespace fhamonic::melon;
 
 struct dijkstra_traits {
     using semiring = shortest_path_semiring<double>;
-    using heap = d_ary_heap<2, vertex_t<static_forward_digraph>, double,
-                            decltype(semiring::less),
-                            vertex_map_t<static_forward_digraph, std::size_t>>;
+    using heap = d_ary_heap<2, vertex_t<static_digraph>, double,
+                            std::decay_t<decltype(semiring::less)>,
+                            vertex_map_t<static_digraph, std::size_t>>;
 
     static constexpr bool store_pred_vertices = false;
     static constexpr bool store_pred_arcs = false;
@@ -42,8 +43,7 @@ int main() {
 
     for(const auto & gr_file : gr_files) {
         auto [graph, length_map] =
-            parse_melon_weighted_digraph<static_forward_digraph, double>(
-                gr_file);
+            parse_melon_weighted_digraph<static_digraph, double>(gr_file);
 
         Chrono gr_chrono;
         double avg_time = 0;

@@ -26,7 +26,7 @@ data = [
 ]
 x = np.arange(len(instances))
 
-width = 0.225  # width of the bars
+width = 0.9 / len(libs)
 fig_size = plt.rcParams["figure.figsize"]
 fig_size[0] = 10
 fig_size[1] = 6

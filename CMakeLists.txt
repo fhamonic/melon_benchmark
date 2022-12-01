@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.12)
 
 project(
-    MEBENCHMARK_LONS
-    VERSION 1.0
-    DESCRIPTION "Graph libraries benchmarks"
-    LANGUAGES CXX)
+  MEBENCHMARK_LONS
+  VERSION 1.0
+  DESCRIPTION "Graph libraries benchmarks"
+  LANGUAGES CXX)
 
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -24,7 +24,8 @@ include(Conan)
 run_conan()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}" ${CMAKE_MODULE_PATH})
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}/dependencies/melon" ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}/dependencies/melon"
+                      ${CMAKE_MODULE_PATH})
 
 add_subdirectory(dependencies/melon)
 
@@ -36,38 +37,38 @@ find_package(LEMON REQUIRED)
 
 # ############ COMPILATION OPTIONS MACRO #############
 function(set_common_options _target)
-    target_include_directories(${_target} PUBLIC include)
-    set_project_optimizations(${_target})
-    if(WARNINGS)
-        set_project_warnings(${_target})
-    endif()
+  target_include_directories(${_target} PUBLIC include)
+  set_project_optimizations(${_target})
+  if(WARNINGS)
+    set_project_warnings(${_target})
+  endif()
 endfunction()
 
 function(set_boost_options _target)
-    set_target_properties(${_target} PROPERTIES CXX_STANDARD 20)
-    target_link_libraries(${_target} Boost::boost)
-    set_common_options(${_target})
+  set_target_properties(${_target} PROPERTIES CXX_STANDARD 20)
+  target_link_libraries(${_target} Boost::boost)
+  set_common_options(${_target})
 endfunction()
 
 function(set_lemon_options _target)
-    set_target_properties(${_target} PROPERTIES CXX_STANDARD 17)
-    target_include_directories(${_target} PUBLIC ${LEMON_INCLUDE_DIRS})
-    target_link_libraries(${_target} ${LEMON_LIBRARIES})
-    set_common_options(${_target})
+  set_target_properties(${_target} PROPERTIES CXX_STANDARD 17)
+  target_include_directories(${_target} PUBLIC ${LEMON_INCLUDE_DIRS})
+  target_link_libraries(${_target} ${LEMON_LIBRARIES})
+  set_common_options(${_target})
 endfunction()
 
 function(set_melon_options _target)
-    set_target_properties(${_target} PROPERTIES CXX_STANDARD 20)
-    target_link_libraries(${_target} melon)
-    set_common_options(${_target})
+  set_target_properties(${_target} PROPERTIES CXX_STANDARD 20)
+  target_link_libraries(${_target} melon)
+  set_common_options(${_target})
 endfunction()
 
 function(set_cxxgraph_options _target)
-    set_target_properties(${_target} PROPERTIES CXX_STANDARD 17)
-    target_include_directories(${_target} PUBLIC dependencies/CXXGraph/include)
-    target_link_libraries(${_target} ZLIB::ZLIB)
-    target_link_libraries(${_target} OpenSSL::OpenSSL)
-    set_common_options(${_target})
+  set_target_properties(${_target} PROPERTIES CXX_STANDARD 17)
+  target_include_directories(${_target} PUBLIC dependencies/CXXGraph/include)
+  target_link_libraries(${_target} ZLIB::ZLIB)
+  target_link_libraries(${_target} OpenSSL::OpenSSL)
+  set_common_options(${_target})
 endfunction()
 
 # ############### CORRECTNESS TESTS ##################
@@ -95,11 +96,16 @@ add_executable(benchmark_dijkstra_dimacs_bgl_compressed_sparse_row
                src/benchmarks/dijkstra/dimacs/bgl_compressed_sparse_row.cpp)
 set_boost_options(benchmark_dijkstra_dimacs_bgl_compressed_sparse_row)
 # add_executable(benchmark_dijkstra_dimacs_cxxgraph
-#                src/benchmarks/dijkstra/dimacs/cxxgraph.cpp)
+# src/benchmarks/dijkstra/dimacs/cxxgraph.cpp)
 # set_cxxgraph_options(benchmark_dijkstra_dimacs_cxxgraph)
 add_executable(benchmark_dijkstra_dimacs_melon_static_digraph
                src/benchmarks/dijkstra/dimacs/melon_static_digraph.cpp)
 set_melon_options(benchmark_dijkstra_dimacs_melon_static_digraph)
+add_executable(
+  benchmark_dijkstra_dimacs_melon_static_forward_weighted_digraph
+  src/benchmarks/dijkstra/dimacs/melon_static_forward_weighted_digraph.cpp)
+set_melon_options(
+  benchmark_dijkstra_dimacs_melon_static_forward_weighted_digraph)
 
 add_executable(benchmark_dijkstra_snap_lemon_StaticDigraph
                src/benchmarks/dijkstra/snap/lemon_StaticDigraph.cpp)
@@ -113,6 +119,10 @@ set_boost_options(benchmark_dijkstra_snap_bgl_compressed_sparse_row)
 add_executable(benchmark_dijkstra_snap_melon_static_digraph
                src/benchmarks/dijkstra/snap/melon_static_digraph.cpp)
 set_melon_options(benchmark_dijkstra_snap_melon_static_digraph)
+add_executable(
+  benchmark_dijkstra_snap_melon_static_forward_weighted_digraph
+  src/benchmarks/dijkstra/snap/melon_static_forward_weighted_digraph.cpp)
+set_melon_options(benchmark_dijkstra_snap_melon_static_forward_weighted_digraph)
 
 # ######### BFS ###########
 

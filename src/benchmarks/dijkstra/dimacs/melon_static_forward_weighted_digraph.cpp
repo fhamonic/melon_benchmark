@@ -1,15 +1,27 @@
 #include <filesystem>
 #include <iostream>
+#include <type_traits>
 
-#include "melon/adaptor/reverse.hpp"
 #include "melon/algorithm/dijkstra.hpp"
-#include "melon/static_digraph.hpp"
+#include "melon/static_forward_weighted_digraph.hpp"
 
 #include "chrono.hpp"
 #include "melon_parsers.hpp"
 #include "warm_up.hpp"
 
 using namespace fhamonic::melon;
+
+struct dijkstra_traits {
+    using semiring = shortest_path_semiring<double>;
+    using heap = d_ary_heap<
+        2, vertex_t<static_forward_weighted_digraph<double>>, double,
+        std::decay_t<decltype(semiring::less)>,
+        vertex_map_t<static_forward_weighted_digraph<double>, std::size_t>>;
+
+    static constexpr bool store_pred_vertices = false;
+    static constexpr bool store_pred_arcs = false;
+    static constexpr bool store_distances = false;
+};
 
 int main() {
     std::vector<std::filesystem::path> gr_files(
@@ -31,8 +43,10 @@ int main() {
     (void)warm_up();
 
     for(const auto & gr_file : gr_files) {
-        auto [graph, length_map] =
-            parse_melon_weighted_digraph<static_digraph, double>(gr_file);
+        auto graph =
+            parse_melon_static_forward_weighted_digraph<double>(gr_file);
+
+        auto length_map = graph.weights_map();
 
         Chrono gr_chrono;
         double avg_time = 0;
@@ -43,12 +57,24 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            dijkstra algo(graph, length_map);
+            dijkstra<decltype(graph), decltype(length_map), dijkstra_traits>
+                algo(graph, length_map);
             algo.add_source(s);
+
+            // while(!algo.finished()) {
+            //     const auto & [u, dist] = algo.current();
+            //     sum += dist;
+            //     algo.advance();
+            // }
 
             for(auto && [u, dist] : algo) {
                 sum += dist;
             }
+
+            // algo.run();
+            // for(auto && u : graph.vertices()) {
+            //     sum += algo.dist(u);
+            // }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;
