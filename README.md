@@ -21,9 +21,9 @@ The build process requires CMake 3.12 (https://cmake.org/) or more and the Conan
     
 ## Benchmarks
 
-![Dijkstra benchmark plot](/results/dijkstra/dimacs/plot.png)
-![Breadth First Search benchmark plot](/results/bfs/snap/plot.png)
-![Depth First Search benchmark plot](/results/dfs/snap/plot.png)
+![Dijkstra benchmark plot](/benchmarks/Intel_R_Core_TM_i7_9750H_CPU_2_60GHz/dijkstra_dimacs.png)
+![Breadth First Search benchmark plot](/benchmarks/Intel_R_Core_TM_i7_9750H_CPU_2_60GHz/bfs_snap.png)
+![Depth First Search benchmark plot](/benchmarks/Intel_R_Core_TM_i7_9750H_CPU_2_60GHz/dfs_snap.png)
     
 | instance | #nodes | #arcs |
 |---|---|---|
