@@ -21,9 +21,9 @@ The build process requires CMake 3.12 (https://cmake.org/) or more and the Conan
     
 ## Benchmarks
 
-![Dijkstra benchmark plot](/results/dijkstra/dimacs/plot.png)
-![Breadth First Search benchmark plot](/results/bfs/snap/plot.png)
-![Depth First Search benchmark plot](/results/dfs/snap/plot.png)
+![Dijkstra benchmark plot](/benchmarks/AMD_Ryzen_9_7950X_16-Core_Processor/dijkstra_dimacs.png)
+![Breadth First Search benchmark plot](/benchmarks/AMD_Ryzen_9_7950X_16-Core_Processor/bfs_snap.png)
+![Depth First Search benchmark plot](/benchmarks/AMD_Ryzen_9_7950X_16-Core_Processor/dfs_snap.png)
     
 | instance | #nodes | #arcs |
 |---|---|---|
