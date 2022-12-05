@@ -52,36 +52,43 @@ $(BENCHMARK_DIR)/%.csv: $(BUILD_DIR)/benchmark_$$(basename $$(subst /,_,$$(subst
 	mkdir -p $(word 3,$(subst /, ,$@))/$(word 4,$(subst /, ,$@))
 	./$< > $@
 
-BENCHMARKS = benchmark-dijkstra-dimacs benchmark-dijkstra-snap benchmark-bfs-snap benchmark-dfs-snap
+BENCHMARKS = benchmark-dijkstra-dimacs-csr_graphs benchmark-dijkstra-dimacs-melon_static_graphs benchmark-bfs-snap benchmark-dfs-snap
 
 run-benchmarks: $(BENCHMARKS)
 
-benchmark-dijkstra-dimacs: $(BENCHMARK_DIR) \
-$(BENCHMARK_DIR)/dijkstra/dimacs/bgl_adjacency_list_vecS.csv \
+benchmark-dijkstra-dimacs-csr_graphs: $(BENCHMARK_DIR) \
 $(BENCHMARK_DIR)/dijkstra/dimacs/bgl_compressed_sparse_row.csv \
 $(BENCHMARK_DIR)/dijkstra/dimacs/lemon_StaticDigraph.csv \
 $(BENCHMARK_DIR)/dijkstra/dimacs/melon_static_digraph.csv
-# $(BENCHMARK_DIR)/dijkstra/dimacs/melon_static_forward_weighted_digraph.csv
-	python plot_scripts/execution_times.py "$(BENCHMARK_DIR)/dijkstra/dimacs"
+	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
 
-benchmark-dijkstra-snap: $(BENCHMARK_DIR) \
+benchmark-dijkstra-dimacs-melon_static_graphs: $(BENCHMARK_DIR) \
+$(BENCHMARK_DIR)/dijkstra/dimacs/melon_static_digraph.csv \
+$(BENCHMARK_DIR)/dijkstra/dimacs/melon_static_forward_weighted_digraph.csv
+	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
+
+benchmark-dijkstra-snap-csr_graphs: $(BENCHMARK_DIR) \
 $(BENCHMARK_DIR)/dijkstra/snap/bgl_adjacency_list_vecS.csv \
 $(BENCHMARK_DIR)/dijkstra/snap/bgl_compressed_sparse_row.csv \
 $(BENCHMARK_DIR)/dijkstra/snap/lemon_StaticDigraph.csv \
 $(BENCHMARK_DIR)/dijkstra/snap/melon_static_digraph.csv
+	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
+
+# benchmark-dijkstra-snap-static_graphs: $(BENCHMARK_DIR) \
+# $(BENCHMARK_DIR)/dijkstra/snap/melon_static_digraph.csv \
 # $(BENCHMARK_DIR)/dijkstra/snap/melon_static_forward_weighted_digraph.csv
-	python plot_scripts/execution_times.py "$(BENCHMARK_DIR)/dijkstra/snap"
+# 	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
 
 benchmark-bfs-snap: $(BENCHMARK_DIR) \
  $(BENCHMARK_DIR)/bfs/snap/bgl_adjacency_list_vecS.csv \
  $(BENCHMARK_DIR)/bfs/snap/bgl_compressed_sparse_row.csv \
  $(BENCHMARK_DIR)/bfs/snap/lemon_StaticDigraph.csv \
  $(BENCHMARK_DIR)/bfs/snap/melon_static_digraph.csv
-	python plot_scripts/execution_times.py "$(BENCHMARK_DIR)/bfs/snap"
+	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
 
 benchmark-dfs-snap: $(BENCHMARK_DIR) \
  $(BENCHMARK_DIR)/dfs/snap/bgl_adjacency_list_vecS.csv \
  $(BENCHMARK_DIR)/dfs/snap/bgl_compressed_sparse_row.csv \
  $(BENCHMARK_DIR)/dfs/snap/lemon_StaticDigraph.csv \
  $(BENCHMARK_DIR)/dfs/snap/melon_static_digraph.csv
-	python plot_scripts/execution_times.py "$(BENCHMARK_DIR)/dfs/snap"
+	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"

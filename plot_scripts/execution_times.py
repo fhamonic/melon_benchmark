@@ -4,13 +4,17 @@ import numpy as np
 import os
 import sys
 
-dir = sys.argv[1]
-dataset_name = os.path.split(dir)[1]
-algo_name = os.path.split(os.path.split(dir)[0])[1]
-cpu_name = os.path.split(os.path.split(os.path.split(dir)[0])[0])[1]
-csv_files = list(filter(lambda f: f.endswith('.csv'), os.listdir(dir)))
-csv_files.sort()
-csv_paths = [dir + "/" + csv_file for csv_file in csv_files]
+print(sys.argv[2])
+
+target_name = sys.argv[1]
+csv_paths = sys.argv[2].split(' ')
+
+output_file_name = '_'.join(target_name.split('-')[1:])
+output_file_path = '/'.join(csv_paths[0].split('/')
+                            [:-3]) + '/' + output_file_name + ".png"
+algo_name = target_name.split('-')[1]
+dataset_name = target_name.split('-')[2]
+cpu_name = csv_paths[0].split('/')[1]
 
 
 def readCSV(file_name, delimiter=','):
@@ -18,7 +22,7 @@ def readCSV(file_name, delimiter=','):
     return list([row for row in file])
 
 
-libs = [os.path.splitext(f)[0] for f in csv_files]
+legend = [csv_path.split('/')[-1].split('.')[0] for csv_path in csv_paths]
 instances = [row['instance'] for row in readCSV(csv_paths[0])]
 data = [
     [int(float(row['time_ms']))
@@ -26,7 +30,7 @@ data = [
 ]
 x = np.arange(len(instances))
 
-width = 0.9 / len(libs)
+width = 0.9 / len(legend)
 fig_size = plt.rcParams["figure.figsize"]
 fig_size[0] = 10
 fig_size[1] = 6
@@ -35,9 +39,8 @@ plt.rcParams.update({'font.size': 10})
 
 fig, ax = plt.subplots()
 
-rect_plots = [ax.bar(x - (len(libs) - 1) * width/2 + i * width,
-                     data[i], width, label=libs[i]) for i in range(len(libs))]
-
+rect_plots = [ax.bar(x - (len(legend) - 1) * width/2 + i * width,
+                     data[i], width, label=legend[i]) for i in range(len(legend))]
 
 ax.set_ylabel('miliseconds')
 ax.set_title(
@@ -62,5 +65,4 @@ for rect_plot in rect_plots:
     autolabel(rect_plot)
 
 fig.tight_layout()
-
-plt.savefig('{}/../../{}_{}.png'.format(dir, algo_name, dataset_name))
+plt.savefig(output_file_path)
