@@ -99,8 +99,14 @@ set_boost_options(benchmark_dijkstra_dimacs_bgl_compressed_sparse_row)
 # src/benchmarks/dijkstra/dimacs/cxxgraph.cpp)
 # set_cxxgraph_options(benchmark_dijkstra_dimacs_cxxgraph)
 add_executable(benchmark_dijkstra_dimacs_melon_static_digraph
-               src/benchmarks/dijkstra/dimacs/melon_static_digraph.cpp)
+src/benchmarks/dijkstra/dimacs/melon_static_digraph.cpp)
 set_melon_options(benchmark_dijkstra_dimacs_melon_static_digraph)
+add_executable(benchmark_dijkstra_dimacs_melon_static_digraph_4_heap
+               src/benchmarks/dijkstra/dimacs/melon_static_digraph_4_heap.cpp)
+set_melon_options(benchmark_dijkstra_dimacs_melon_static_digraph_4_heap)
+add_executable(benchmark_dijkstra_dimacs_melon_static_digraph_8_heap
+               src/benchmarks/dijkstra/dimacs/melon_static_digraph_8_heap.cpp)
+set_melon_options(benchmark_dijkstra_dimacs_melon_static_digraph_8_heap)
 add_executable(
   benchmark_dijkstra_dimacs_melon_static_forward_weighted_digraph
   src/benchmarks/dijkstra/dimacs/melon_static_forward_weighted_digraph.cpp)

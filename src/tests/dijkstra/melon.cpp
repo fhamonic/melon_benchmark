@@ -54,11 +54,10 @@ struct dijkstra_traits {
     //                      decltype(semiring::less)>;
 
     using heap = d_ary_heap<8, vertex_t<static_digraph>, double,
-                            decltype(semiring::less),
+                            std::decay_t<decltype(semiring::less)>,
                             vertex_map_t<static_digraph, std::size_t>>;
 
-    static constexpr bool store_pred_vertices = false;
-    static constexpr bool store_pred_arcs = false;
+    static constexpr bool store_paths = false;
     static constexpr bool store_distances = true;
 };
 

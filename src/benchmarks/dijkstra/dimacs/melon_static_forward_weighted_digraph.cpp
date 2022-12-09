@@ -18,8 +18,7 @@ struct dijkstra_traits {
         std::decay_t<decltype(semiring::less)>,
         vertex_map_t<static_forward_weighted_digraph<double>, std::size_t>>;
 
-    static constexpr bool store_pred_vertices = false;
-    static constexpr bool store_pred_arcs = false;
+    static constexpr bool store_paths = false;
     static constexpr bool store_distances = false;
 };
 
