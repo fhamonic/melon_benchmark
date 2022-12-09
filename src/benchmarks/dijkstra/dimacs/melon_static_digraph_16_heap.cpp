@@ -13,7 +13,7 @@ using namespace fhamonic::melon;
 
 struct dijkstra_traits {
     using semiring = shortest_path_semiring<double>;
-    using heap = d_ary_heap<8, vertex_t<static_digraph>, double,
+    using heap = d_ary_heap<16, vertex_t<static_digraph>, double,
                             std::decay_t<decltype(semiring::less)>,
                             vertex_map_t<static_digraph, std::size_t>>;
 

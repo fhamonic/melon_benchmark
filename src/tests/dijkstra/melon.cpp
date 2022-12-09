@@ -50,9 +50,6 @@ auto parse_gr(std::string file_name) {
 
 struct dijkstra_traits {
     using semiring = shortest_path_semiring<double>;
-    // using heap = fast_binary_heap<vertex_t<static_digraph>, double,
-    //                      decltype(semiring::less)>;
-
     using heap = d_ary_heap<8, vertex_t<static_digraph>, double,
                             std::decay_t<decltype(semiring::less)>,
                             vertex_map_t<static_digraph, std::size_t>>;
