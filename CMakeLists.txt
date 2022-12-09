@@ -89,6 +89,12 @@ set_melon_options(dijkstra_tests_melon)
 add_executable(benchmark_dijkstra_dimacs_lemon_StaticDigraph
                src/benchmarks/dijkstra/dimacs/lemon_StaticDigraph.cpp)
 set_lemon_options(benchmark_dijkstra_dimacs_lemon_StaticDigraph)
+add_executable(benchmark_dijkstra_dimacs_lemon_StaticDigraph_4_heap
+               src/benchmarks/dijkstra/dimacs/lemon_StaticDigraph_4_heap.cpp)
+set_lemon_options(benchmark_dijkstra_dimacs_lemon_StaticDigraph_4_heap)
+add_executable(benchmark_dijkstra_dimacs_lemon_StaticDigraph_8_heap
+               src/benchmarks/dijkstra/dimacs/lemon_StaticDigraph_8_heap.cpp)
+set_lemon_options(benchmark_dijkstra_dimacs_lemon_StaticDigraph_8_heap)
 add_executable(benchmark_dijkstra_dimacs_bgl_adjacency_list_vecS
                src/benchmarks/dijkstra/dimacs/bgl_adjacency_list_vecS.cpp)
 set_boost_options(benchmark_dijkstra_dimacs_bgl_adjacency_list_vecS)
@@ -107,6 +113,9 @@ set_melon_options(benchmark_dijkstra_dimacs_melon_static_digraph_4_heap)
 add_executable(benchmark_dijkstra_dimacs_melon_static_digraph_8_heap
                src/benchmarks/dijkstra/dimacs/melon_static_digraph_8_heap.cpp)
 set_melon_options(benchmark_dijkstra_dimacs_melon_static_digraph_8_heap)
+add_executable(benchmark_dijkstra_dimacs_melon_static_digraph_16_heap
+               src/benchmarks/dijkstra/dimacs/melon_static_digraph_16_heap.cpp)
+set_melon_options(benchmark_dijkstra_dimacs_melon_static_digraph_16_heap)
 add_executable(
   benchmark_dijkstra_dimacs_melon_static_forward_weighted_digraph
   src/benchmarks/dijkstra/dimacs/melon_static_forward_weighted_digraph.cpp)
