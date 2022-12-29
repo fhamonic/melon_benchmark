@@ -6,8 +6,8 @@
 #include "chrono.hpp"
 
 #include "melon/algorithm/breadth_first_search.hpp"
-#include "melon/static_digraph.hpp"
-#include "melon/static_digraph_builder.hpp"
+#include "melon/container/static_digraph.hpp"
+#include "melon/utility/static_digraph_builder.hpp"
 
 #include "warm_up.hpp"
 

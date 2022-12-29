@@ -116,11 +116,6 @@ set_melon_options(benchmark_dijkstra_dimacs_melon_static_digraph_8_heap)
 add_executable(benchmark_dijkstra_dimacs_melon_static_digraph_16_heap
                src/benchmarks/dijkstra/dimacs/melon_static_digraph_16_heap.cpp)
 set_melon_options(benchmark_dijkstra_dimacs_melon_static_digraph_16_heap)
-add_executable(
-  benchmark_dijkstra_dimacs_melon_static_forward_weighted_digraph
-  src/benchmarks/dijkstra/dimacs/melon_static_forward_weighted_digraph.cpp)
-set_melon_options(
-  benchmark_dijkstra_dimacs_melon_static_forward_weighted_digraph)
 
 add_executable(benchmark_dijkstra_snap_lemon_StaticDigraph
                src/benchmarks/dijkstra/snap/lemon_StaticDigraph.cpp)
@@ -134,10 +129,6 @@ set_boost_options(benchmark_dijkstra_snap_bgl_compressed_sparse_row)
 add_executable(benchmark_dijkstra_snap_melon_static_digraph
                src/benchmarks/dijkstra/snap/melon_static_digraph.cpp)
 set_melon_options(benchmark_dijkstra_snap_melon_static_digraph)
-add_executable(
-  benchmark_dijkstra_snap_melon_static_forward_weighted_digraph
-  src/benchmarks/dijkstra/snap/melon_static_forward_weighted_digraph.cpp)
-set_melon_options(benchmark_dijkstra_snap_melon_static_forward_weighted_digraph)
 
 # ######### BFS ###########
 

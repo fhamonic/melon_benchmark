@@ -3,7 +3,7 @@
 #include <type_traits>
 
 #include "melon/algorithm/dijkstra.hpp"
-#include "melon/static_digraph.hpp"
+#include "melon/container/static_digraph.hpp"
 
 #include "chrono.hpp"
 #include "melon_parsers.hpp"
@@ -14,7 +14,9 @@ using namespace fhamonic::melon;
 struct dijkstra_traits {
     using semiring = shortest_path_semiring<double>;
     using heap = d_ary_heap<16, vertex_t<static_digraph>, double,
-                            std::decay_t<decltype(semiring::less)>,
+                            decltype([](const auto & e1, const auto & e2) {
+                                return semiring::less(e1.second, e2.second);
+                            }),
                             vertex_map_t<static_digraph, std::size_t>>;
 
     static constexpr bool store_paths = false;

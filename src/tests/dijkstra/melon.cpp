@@ -4,8 +4,8 @@
 #include <sstream>
 
 #include "melon/algorithm/dijkstra.hpp"
-#include "melon/static_digraph_builder.hpp"
-#include "melon/static_digraph.hpp"
+#include "melon/container/static_digraph.hpp"
+#include "melon/utility/static_digraph_builder.hpp"
 
 using namespace fhamonic::melon;
 
@@ -26,7 +26,8 @@ auto parse_gr(std::string file_name) {
                     std::size_t nb_nodes, nb_arcs;
                     if(iss >> format >> nb_nodes >> nb_arcs) {
                         builder =
-                            static_digraph_builder<static_digraph, double>(nb_nodes);
+                            static_digraph_builder<static_digraph, double>(
+                                nb_nodes);
                     }
                     break;
                 }
@@ -51,7 +52,9 @@ auto parse_gr(std::string file_name) {
 struct dijkstra_traits {
     using semiring = shortest_path_semiring<double>;
     using heap = d_ary_heap<8, vertex_t<static_digraph>, double,
-                            std::decay_t<decltype(semiring::less)>,
+                            decltype([](const auto & e1, const auto & e2) {
+                                return semiring::less(e1.second, e2.second);
+                            }),
                             vertex_map_t<static_digraph, std::size_t>>;
 
     static constexpr bool store_paths = false;

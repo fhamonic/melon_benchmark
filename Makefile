@@ -53,7 +53,6 @@ $(BENCHMARK_DIR)/%.csv: $(BUILD_DIR)/benchmark_$$(basename $$(subst /,_,$$(subst
 	./$< > $@
 
 BENCHMARKS = benchmark-dijkstra-dimacs-csr_graphs \
-benchmark-dijkstra-dimacs-melon_static_graphs \
 benchmark-bfs-snap \
 benchmark-dfs-snap \
 benchmark-dijkstra-dimacs-melon_heap_degree \
@@ -79,11 +78,6 @@ benchmark-dijkstra-dimacs-lemon_heap_degree: $(BENCHMARK_DIR) \
 $(BENCHMARK_DIR)/dijkstra/dimacs/lemon_StaticDigraph.csv \
 $(BENCHMARK_DIR)/dijkstra/dimacs/lemon_StaticDigraph_4_heap.csv \
 $(BENCHMARK_DIR)/dijkstra/dimacs/lemon_StaticDigraph_8_heap.csv
-	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
-
-benchmark-dijkstra-dimacs-melon_static_graphs: $(BENCHMARK_DIR) \
-$(BENCHMARK_DIR)/dijkstra/dimacs/melon_static_digraph.csv \
-$(BENCHMARK_DIR)/dijkstra/dimacs/melon_static_forward_weighted_digraph.csv
 	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
 
 benchmark-dijkstra-snap-csr_graphs: $(BENCHMARK_DIR) \
