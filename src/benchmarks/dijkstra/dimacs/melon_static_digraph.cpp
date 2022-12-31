@@ -40,9 +40,6 @@ int main() {
 
     std::cout << "instance,nb_nodes,nb_arcs,time_ms\n";
 
-    // auto lmd = [n = gr_files.size()](const std::size_t i) { return i < n; };
-    // static_assert(std::movable<decltype(lmd)>);
-
     (void)warm_up();
 
     for(const auto & gr_file : gr_files) {
@@ -56,10 +53,6 @@ int main() {
         const int nb_iterations = 30000.0 * 1000.0 / nb_nodes;
         for(auto && s : graph.vertices()) {
             Chrono chrono;
-
-            auto targets_map = arc_targets_map(graph);
-            static_assert(contiguous_value_map<decltype(targets_map),
-                                               arc_t<static_digraph>>);
 
             double sum = 0;
             dijkstra<decltype(graph), decltype(length_map), dijkstra_traits>
@@ -75,11 +68,6 @@ int main() {
             for(auto && [u, dist] : algo) {
                 sum += dist;
             }
-
-            // algo.run();
-            // for(auto && u : graph.vertices()) {
-            //     sum += algo.dist(u);
-            // }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;

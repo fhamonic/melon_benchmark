@@ -49,14 +49,14 @@ int main() {
             breadth_first_search bfs(graph);
             bfs.add_source(s);
 
-            while(!bfs.finished()) {
-                const auto & u = bfs.current();
-                bfs.advance();
-                sum += u;
-            }
-            // for(const auto & u : bfs) {
+            // while(!bfs.finished()) {
+            //     const auto & u = bfs.current();
+            //     bfs.advance();
             //     sum += u;
             // }
+            for(const auto & u : bfs) {
+                sum += u;
+            }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;

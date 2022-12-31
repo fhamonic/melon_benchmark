@@ -32,8 +32,11 @@ void parse_gr(const std::filesystem::path & file_name, graph_t & graph) {
         arcs.emplace_back(from, to);
     }
 
-    graph = graph_t(edges_are_unsorted_multi_pass, arcs.begin(), arcs.end(),
-                    nb_nodes);
+    std::sort(arcs.begin(), arcs.end(), [](const auto & a, const auto & b) {
+        if(a.first == b.first) return a.second < b.second;
+        return a.first < b.first;
+    });
+    graph = graph_t(edges_are_sorted, arcs.begin(), arcs.end(), nb_nodes);
 }
 
 class my_visitor : public boost::default_bfs_visitor {

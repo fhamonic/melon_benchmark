@@ -31,16 +31,19 @@ void parse_gr(const std::filesystem::path & file_name, graph_t & graph) {
     while(gr_file >> from >> to) {
         arcs.emplace_back(from, to);
     }
-
-    graph = graph_t(edges_are_unsorted_multi_pass, arcs.begin(), arcs.end(),
-                    nb_nodes);
+    std::sort(arcs.begin(), arcs.end(), [](const auto & a, const auto & b) {
+        if(a.first == b.first) return a.second < b.second;
+        return a.first < b.first;
+    });
+    graph = graph_t(edges_are_sorted, arcs.begin(), arcs.end(), nb_nodes);
 }
 
 class my_visitor : public boost::default_dfs_visitor {
 public:
     int & sum;
     my_visitor(int & sum) : sum(sum) {}
-    void discover_vertex(const graph_t::vertex_descriptor & v, const graph_t & g) {
+    void discover_vertex(const graph_t::vertex_descriptor & v,
+                         const graph_t & g) {
         (void)g;
         sum += v;
     }
@@ -71,7 +74,8 @@ int main() {
             Chrono chrono;
             int sum = 0;
 
-            // std::vector<default_color_type> vertex_color(num_vertices(graph));
+            // std::vector<default_color_type>
+            // vertex_color(num_vertices(graph));
             my_visitor vis(sum);
             boost::depth_first_search(graph, root_vertex(s).visitor(vis));
 

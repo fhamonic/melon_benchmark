@@ -37,6 +37,7 @@ int main() {
     for(const auto & gr_file : gr_files) {
         auto [graph] = parse_gr(gr_file);
 
+            depth_first_search dfs(graph);
         Chrono gr_chrono;
         double avg_time = 0;
         int iterations = 0;
@@ -44,19 +45,18 @@ int main() {
         const int nb_iterations = 30000.0 * 1000.0 / nb_nodes;
         for(auto && s : graph.vertices()) {
             Chrono chrono;
-
+dfs.reset();
             int sum = 0;
-            depth_first_search dfs(graph);
             dfs.add_source(s);
 
-            while(!dfs.finished()) {
-                const auto & u = dfs.current();
-                dfs.advance();
-                sum += u;
-            }
-            // for(const auto & [a ,u] : dfs) {
+            // while(!dfs.finished()) {
+            //     const auto & u = dfs.current();
+            //     dfs.advance();
             //     sum += u;
             // }
+            for(const auto & u : dfs) {
+                sum += u;
+            }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;

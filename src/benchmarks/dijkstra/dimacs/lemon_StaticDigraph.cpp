@@ -3,15 +3,15 @@
 #include <iostream>
 #include <sstream>
 
+#include <lemon/dfs.h>
 #include <lemon/list_graph.h>
 #include <lemon/smart_graph.h>
 #include <lemon/static_graph.h>
-#include <lemon/dfs.h>
 
 #include <lemon/bfs.h>
+#include <lemon/dheap.h>
 #include <lemon/dijkstra.h>
 #include <lemon/quad_heap.h>
-#include <lemon/dheap.h>
 
 #include "chrono.hpp"
 #include "warm_up.hpp"
@@ -29,8 +29,9 @@ struct DijkstraTraits {
         return new HeapCrossRef(g);
     }
 
-    // typedef BinHeap<typename LEN::Value, HeapCrossRef, std::less<Value>> Heap;
-    // typedef QuadHeap<typename LEN::Value, HeapCrossRef, std::less<Value>> Heap;
+    // typedef BinHeap<typename LEN::Value, HeapCrossRef, std::less<Value>>
+    // Heap; typedef QuadHeap<typename LEN::Value, HeapCrossRef,
+    // std::less<Value>> Heap;
     typedef DHeap<typename LEN::Value, HeapCrossRef, 2, std::less<Value>> Heap;
     static Heap * createHeap(HeapCrossRef & r) { return new Heap(r); }
 
@@ -46,8 +47,18 @@ struct DijkstraTraits {
     static DistMap * createDistMap(const Digraph & g) { return new DistMap(g); }
 };
 
-void parse_gr(const std::filesystem::path & file_name, ListDigraph & graph,
-              ListDigraph::ArcMap<double> & length_map) {
+struct arc_entry {
+    int first;
+    int second;
+    double weight;
+    arc_entry(int u, int v, double l) : first(u), second(v), weight(l) {}
+};
+std::unique_ptr<StaticDigraph::ArcMap<double>> parse_gr(
+    const std::filesystem::path & file_name, StaticDigraph & graph) {
+    std::vector<arc_entry> arcs;
+    std::string format;
+    int nb_nodes, nb_arcs;
+
     std::ifstream gr_file(file_name);
     std::string line;
     while(getline(gr_file, line)) {
@@ -58,22 +69,14 @@ void parse_gr(const std::filesystem::path & file_name, ListDigraph & graph,
                 case 'c':
                     break;
                 case 'p': {
-                    std::string format;
-                    int nb_nodes, nb_arcs;
-                    if(iss >> format >> nb_nodes >> nb_arcs) {
-                        for(int i = 0; i < nb_nodes; ++i) {
-                            graph.addNode();
-                        }
-                    }
+                    iss >> format >> nb_nodes >> nb_arcs;
                     break;
                 }
                 case 'a': {
                     int from, to;
                     double length;
                     if(iss >> from >> to >> length) {
-                        auto a = graph.addArc(graph.nodeFromId(from - 1),
-                                              graph.nodeFromId(to - 1));
-                        length_map[a] = length;
+                        arcs.emplace_back(from - 1, to - 1, length);
                     }
                     break;
                 }
@@ -83,6 +86,17 @@ void parse_gr(const std::filesystem::path & file_name, ListDigraph & graph,
             }
         }
     }
+
+    std::sort(arcs.begin(), arcs.end(), [](const auto & a, const auto & b) {
+        if(a.first == b.first) return a.second < b.second;
+        return a.first < b.first;
+    });
+    graph.build(nb_nodes, arcs.begin(), arcs.end());
+    auto length_map = std::make_unique<StaticDigraph::ArcMap<double>>(graph);
+    for(std::size_t i = 0; i < nb_arcs; ++i) {
+        (*length_map)[graph.arcFromId(i)] = arcs[i].weight;
+    }
+    return std::move(length_map);
 }
 
 int main() {
@@ -105,37 +119,24 @@ int main() {
     (void)warm_up();
 
     for(const auto & gr_file : gr_files) {
-        // using Graph = ListDigraph;
-        // ListDigraph graph;
-        // ListDigraph::ArcMap<double> length_map(graph);
-        // parse_gr(gr_file, graph, length_map);
-
         using Graph = StaticDigraph;
-        ListDigraph list_graph;
-        ListDigraph::ArcMap<double> list_length_map(list_graph);
-        parse_gr(gr_file, list_graph, list_length_map);
         StaticDigraph graph;
-        StaticDigraph::ArcMap<double> length_map(graph);
-        ListDigraph::NodeMap<StaticDigraph::Node> node_ref_map(list_graph);
-        ListDigraph::ArcMap<StaticDigraph::Arc> arc_ref_map(list_graph);
-        graph.build(list_graph, node_ref_map, arc_ref_map);
-        for(ListDigraph::ArcIt a(list_graph); a != INVALID; ++a)
-            length_map[arc_ref_map[a]] = list_length_map[a];
+        std::unique_ptr<StaticDigraph::ArcMap<double>> length_map =
+            parse_gr(gr_file, graph);
 
         Chrono gr_chrono;
         double avg_time = 0;
         int iterations = 0;
         const int nb_nodes = countNodes(graph);
         const int nb_iterations = 30000.0 * 1000.0 / nb_nodes;
-        for(Graph::NodeIt s(graph); s != INVALID; ++s) {
+        for(int i = 0;; ++i) {
+            Graph::Node s = graph.nodeFromId(i);
             Chrono chrono;
 
             double sum = 0;
-            // Dijkstra<Graph, Graph::ArcMap<double>> dijkstra(graph,
-            // length_map);
             Dijkstra<Graph, Graph::ArcMap<double>,
                      DijkstraTraits<Graph, Graph::ArcMap<double>>>
-                dijkstra(graph, length_map);
+                dijkstra(graph, *length_map);
 
             dijkstra.init();
             dijkstra.addSource(s);

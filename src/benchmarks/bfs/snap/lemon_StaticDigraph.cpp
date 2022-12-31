@@ -14,18 +14,23 @@
 
 using namespace lemon;
 
-void parse_txt(const std::filesystem::path & file_name, ListDigraph & graph) {
+void parse_txt(const std::filesystem::path & file_name, StaticDigraph & graph) {
     std::ifstream gr_file(file_name);
 
     int nb_nodes, nb_arcs;
     gr_file >> nb_nodes >> nb_arcs;
 
-    for(int i = 0; i < nb_nodes; ++i) graph.addNode();
-
+    std::vector<std::pair<int, int>> arcs;
+    arcs.reserve(nb_arcs);
     int from, to;
     while(gr_file >> from >> to) {
-        graph.addArc(graph.nodeFromId(from), graph.nodeFromId(to));
+        arcs.push_back(std::make_pair(from, to));
     }
+    std::sort(arcs.begin(), arcs.end(), [](const auto & a, const auto & b) {
+        if(a.first == b.first) return a.second < b.second;
+        return a.first < b.first;
+    });
+    graph.build(nb_nodes, arcs.begin(), arcs.end());
 }
 
 int main() {
@@ -37,25 +42,17 @@ int main() {
     (void)warm_up();
 
     for(const auto & gr_file : gr_files) {
-        // using Graph = ListDigraph;
-        // ListDigraph graph;
-        // ListDigraph::ArcMap<double> length_map(graph);
-        // parse_gr(gr_file, graph, length_map);
-
         using Graph = StaticDigraph;
-        ListDigraph list_graph;
-        parse_txt(gr_file, list_graph);
         StaticDigraph graph;
-        ListDigraph::NodeMap<StaticDigraph::Node> node_ref_map(list_graph);
-        ListDigraph::ArcMap<StaticDigraph::Arc> arc_ref_map(list_graph);
-        graph.build(list_graph, node_ref_map, arc_ref_map);
+        parse_txt(gr_file, graph);
 
         Chrono gr_chrono;
         double avg_time = 0;
         int iterations = 0;
         const int nb_nodes = countNodes(graph);
         const int nb_iterations = 30000.0 * 1000.0 / nb_nodes;
-        for(Graph::NodeIt s(graph); s != INVALID; ++s) {
+        for(int i=0; ; ++i) {
+            Graph::Node s = graph.nodeFromId(i);
             Chrono chrono;
 
             int sum = 0;

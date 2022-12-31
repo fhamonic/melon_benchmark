@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -11,8 +12,18 @@
 
 using namespace lemon;
 
-void parse_gr(std::string file_name, ListDigraph & graph,
-              ListDigraph::ArcMap<double> & length_map) {
+struct arc_entry {
+    int first;
+    int second;
+    double weight;
+    arc_entry(int u, int v, double l) : first(u), second(v), weight(l) {}
+};
+std::unique_ptr<StaticDigraph::ArcMap<double>> parse_gr(
+    const std::filesystem::path & file_name, StaticDigraph & graph) {
+    std::vector<arc_entry> arcs;
+    std::string format;
+    int nb_nodes, nb_arcs;
+
     std::ifstream gr_file(file_name);
     std::string line;
     while(getline(gr_file, line)) {
@@ -23,22 +34,14 @@ void parse_gr(std::string file_name, ListDigraph & graph,
                 case 'c':
                     break;
                 case 'p': {
-                    std::string format;
-                    int nb_nodes, nb_arcs;
-                    if(iss >> format >> nb_nodes >> nb_arcs) {
-                        for(int i = 0; i < nb_nodes; ++i) {
-                            graph.addNode();
-                        }
-                    }
+                    iss >> format >> nb_nodes >> nb_arcs;
                     break;
                 }
                 case 'a': {
                     int from, to;
                     double length;
                     if(iss >> from >> to >> length) {
-                        auto a = graph.addArc(graph.nodeFromId(from - 1),
-                                              graph.nodeFromId(to - 1));
-                        length_map[a] = length;
+                        arcs.emplace_back(from - 1, to - 1, length);
                     }
                     break;
                 }
@@ -48,6 +51,17 @@ void parse_gr(std::string file_name, ListDigraph & graph,
             }
         }
     }
+
+    std::sort(arcs.begin(), arcs.end(), [](const auto & a, const auto & b) {
+        if(a.first == b.first) return a.second < b.second;
+        return a.first < b.first;
+    });
+    graph.build(nb_nodes, arcs.begin(), arcs.end());
+    auto length_map = std::make_unique<StaticDigraph::ArcMap<double>>(graph);
+    for(std::size_t i = 0; i < nb_arcs; ++i) {
+        (*length_map)[graph.arcFromId(i)] = arcs[i].weight;
+    }
+    return std::move(length_map);
 }
 
 int main() {
@@ -66,28 +80,23 @@ int main() {
     int rows = 0;
     for(const auto & gr_file : gr_files) {
         using Graph = StaticDigraph;
-        ListDigraph list_graph;
-        ListDigraph::ArcMap<double> list_length_map(list_graph);
-        parse_gr(gr_file, list_graph, list_length_map);
         StaticDigraph graph;
-        StaticDigraph::ArcMap<double> length_map(graph);
-        ListDigraph::NodeMap<StaticDigraph::Node> node_ref_map(list_graph);
-        ListDigraph::ArcMap<StaticDigraph::Arc> arc_ref_map(list_graph);
-        graph.build(list_graph, node_ref_map, arc_ref_map);
-        for(ListDigraph::ArcIt a(list_graph); a != INVALID; ++a)
-            length_map[arc_ref_map[a]] = list_length_map[a];
+        std::unique_ptr<StaticDigraph::ArcMap<double>> length_map =
+            parse_gr(gr_file, graph);
 
         const int nb_nodes = countNodes(graph);
         std::cout << std::setprecision(16) << gr_file << " : " << nb_nodes
                   << " nodes , " << countArcs(graph) << " arcs" << std::endl;
 
-        for(Graph::NodeIt s(graph); s != INVALID; ++s) {
-            Dijkstra<Graph, Graph::ArcMap<double>> dijkstra(graph, length_map);
+        for(int i = 0; i < nb_nodes; ++i) {
+            Graph::Node s = graph.nodeFromId(i);
+            Dijkstra<Graph, Graph::ArcMap<double>> dijkstra(graph, *length_map);
             dijkstra.run(s);
 
-            for(Graph::NodeIt u(graph); u != INVALID; ++u) {
-                std::cout << nb_nodes - 1 - graph.id(s) << ','
-                          << nb_nodes - 1 - graph.id(u) << ':'
+            for(int j = 0; j < nb_nodes; ++j) {
+                Graph::Node u = graph.nodeFromId(j);
+                std::cout << graph.id(s) << ','
+                          << graph.id(u) << ':'
                           << dijkstra.dist(u) << '\n';
                 ++rows;
             }
