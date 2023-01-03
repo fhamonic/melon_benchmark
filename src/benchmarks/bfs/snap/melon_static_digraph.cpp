@@ -45,6 +45,8 @@ int main() {
         for(auto && s : graph.vertices()) {
             Chrono chrono;
 
+            static_assert(output_value_map<static_filter_map<vertex_t<static_digraph>>, vertex_t<static_digraph>>);
+
             int sum = 0;
             breadth_first_search bfs(graph);
             bfs.add_source(s);

@@ -56,7 +56,8 @@ BENCHMARKS = benchmark-dijkstra-dimacs-csr_graphs \
 benchmark-bfs-snap \
 benchmark-dfs-snap \
 benchmark-dijkstra-dimacs-melon_heap_degree \
-benchmark-dijkstra-dimacs-lemon_heap_degree
+benchmark-dijkstra-dimacs-lemon_heap_degree \
+benchmark-edmonds_karp-BVZtsukuba
 
 run-benchmarks: $(BENCHMARKS)
 
@@ -104,4 +105,10 @@ benchmark-dfs-snap: $(BENCHMARK_DIR) \
  $(BENCHMARK_DIR)/dfs/snap/bgl_compressed_sparse_row.csv \
  $(BENCHMARK_DIR)/dfs/snap/lemon_StaticDigraph.csv \
  $(BENCHMARK_DIR)/dfs/snap/melon_static_digraph.csv
+	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
+
+
+benchmark-edmonds_karp-BVZtsukuba: $(BENCHMARK_DIR) \
+ $(BENCHMARK_DIR)/edmonds-karp/BVZtsukuba/lemon_StaticDigraph.csv \
+ $(BENCHMARK_DIR)/edmonds-karp/BVZtsukuba/melon_static_digraph.csv
 	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"

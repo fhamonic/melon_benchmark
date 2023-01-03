@@ -16,7 +16,9 @@ auto parse_melon_weighted_digraph(const std::filesystem::path & file_name) {
 
     std::ifstream gr_file(file_name);
     std::string line;
+    std::size_t line_no = 0;
     while(getline(gr_file, line)) {
+        ++line_no;
         std::istringstream iss(line);
         char ch;
         if(iss >> ch) {
@@ -40,8 +42,11 @@ auto parse_melon_weighted_digraph(const std::filesystem::path & file_name) {
                     }
                     break;
                 }
+                case 'n': {
+                    break;
+                }
                 default:
-                    std::cerr << "Error in reading " << file_name << std::endl;
+                    std::cerr << "Error in reading " << file_name << ":" << line_no <<std::endl;
                     std::abort();
             }
         }
