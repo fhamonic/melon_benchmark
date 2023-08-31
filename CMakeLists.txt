@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(WARNINGS "Enable warnings" OFF)
-option(OPTIMIZE_FOR_NATIVE "Build with -march=native" ON)
+option(OPTIMIZE_FOR_NATIVE "Build with -march=native" OFF)
 
 # ################### Modules ####################
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})

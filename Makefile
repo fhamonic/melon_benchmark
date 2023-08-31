@@ -3,10 +3,11 @@ MAKEFLAGS += --no-print-directory
 CPUS?=$(shell getconf _NPROCESSORS_ONLN || echo 1)
 CPU_NAME?=$(shell cat /proc/cpuinfo | grep -i "^model name" | awk -F": " '{print $$2}' | head -1 | sed -E "s/[^A-Za-z0-9]+/_/g" || echo "use_linux_damn_it")
 
-CC = g++-12
+CC = g++
+MARCH_NATIVE = OFF
 BUILD_DIR = build
 BENCHMARKS_DIR = benchmarks
-BENCHMARK_DIR = $(BENCHMARKS_DIR)/$(CPU_NAME)_$(CC)
+BENCHMARK_DIR = $(BENCHMARKS_DIR)/$(CPU_NAME)_$(CC)_march-native-${MARCH_NATIVE}
 TESTS_DIR = tests
 
 .PHONY: all clean init-submodules update-submodules $(BENCHMARKS)
@@ -18,7 +19,7 @@ all: $(BUILD_DIR)
 $(BUILD_DIR):
 	@conan install . -of=$(BUILD_DIR) -b=missing
 	@cd $(BUILD_DIR) && \
-	cmake .. -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_CXX_COMPILER=$(CC) -DCMAKE_BUILD_TYPE=Release
+	cmake .. -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_CXX_COMPILER=$(CC) -DCMAKE_BUILD_TYPE=Release -DOPTIMIZE_FOR_NATIVE=${MARCH_NATIVE}
 clean:
 	@rm -rf $(BUILD_DIR)
 
