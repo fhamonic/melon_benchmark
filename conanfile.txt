@@ -1,0 +1,7 @@
+[requires]
+boost/1.83.0
+melon/0.5
+
+[generators]
+CMakeDeps
+CMakeToolchain

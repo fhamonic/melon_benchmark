@@ -3,21 +3,22 @@ MAKEFLAGS += --no-print-directory
 CPUS?=$(shell getconf _NPROCESSORS_ONLN || echo 1)
 CPU_NAME?=$(shell cat /proc/cpuinfo | grep -i "^model name" | awk -F": " '{print $$2}' | head -1 | sed -E "s/[^A-Za-z0-9]+/_/g" || echo "use_linux_damn_it")
 
+CC = g++-12
 BUILD_DIR = build
 BENCHMARKS_DIR = benchmarks
-BENCHMARK_DIR = $(BENCHMARKS_DIR)/$(CPU_NAME)
+BENCHMARK_DIR = $(BENCHMARKS_DIR)/$(CPU_NAME)_$(CC)
 TESTS_DIR = tests
 
 .PHONY: all clean init-submodules update-submodules $(BENCHMARKS)
 
 all: $(BUILD_DIR)
 	@cd $(BUILD_DIR) && \
-	cmake --build . --parallel $(CPUS)
+	cmake --build . --config Release --parallel $(CPUS)
 
 $(BUILD_DIR):
-	@mkdir $(BUILD_DIR) && \
-	cd $(BUILD_DIR) && \
-	cmake -DCMAKE_BUILD_TYPE=Release -DWARNINGS=ON -DOPTIMIZE_FOR_NATIVE=ON ..
+	@conan install . -of=$(BUILD_DIR) -b=missing
+	@cd $(BUILD_DIR) && \
+	cmake .. -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_CXX_COMPILER=$(CC) -DCMAKE_BUILD_TYPE=Release
 clean:
 	@rm -rf $(BUILD_DIR)
 

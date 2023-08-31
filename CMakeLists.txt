@@ -13,27 +13,20 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(WARNINGS "Enable warnings" OFF)
-option(OPTIMIZE_FOR_NATIVE "Build with -march=native" OFF)
+option(OPTIMIZE_FOR_NATIVE "Build with -march=native" ON)
 
 # ################### Modules ####################
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 include(GNUInstallDirs)
 include(CompilerWarnings)
 include(CompilerOptimizations)
-include(Conan)
-run_conan()
-
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}" ${CMAKE_MODULE_PATH})
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}/dependencies/melon"
-                      ${CMAKE_MODULE_PATH})
-
-add_subdirectory(dependencies/melon)
 
 # ################### Packages ####################
 find_package(Boost REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(LEMON REQUIRED)
+find_package(melon REQUIRED)
 
 # ############ COMPILATION OPTIONS MACRO #############
 function(set_common_options _target)
@@ -59,7 +52,7 @@ endfunction()
 
 function(set_melon_options _target)
   set_target_properties(${_target} PROPERTIES CXX_STANDARD 20)
-  target_link_libraries(${_target} melon)
+  target_link_libraries(${_target} melon::melon)
   set_common_options(${_target})
 endfunction()
 
