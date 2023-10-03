@@ -3,8 +3,8 @@ MAKEFLAGS += --no-print-directory
 CPUS?=$(shell getconf _NPROCESSORS_ONLN || echo 1)
 CPU_NAME?=$(shell cat /proc/cpuinfo | grep -i "^model name" | awk -F": " '{print $$2}' | head -1 | sed -E "s/[^A-Za-z0-9]+/_/g" || echo "use_linux_damn_it")
 
-CC = g++
-MARCH_NATIVE = OFF
+CC = g++-12
+MARCH_NATIVE = ON
 BUILD_DIR = build
 BENCHMARKS_DIR = benchmarks
 BENCHMARK_DIR = $(BENCHMARKS_DIR)/$(CPU_NAME)_$(CC)_march-native-${MARCH_NATIVE}
@@ -55,6 +55,7 @@ $(BENCHMARK_DIR)/%.csv: $(BUILD_DIR)/benchmark_$$(basename $$(subst /,_,$$(subst
 	./$< > $@
 
 BENCHMARKS = benchmark-dijkstra-dimacs-csr_graphs \
+benchmark-dijkstra-dimacs-list_graphs \
 benchmark-bfs-snap \
 benchmark-dfs-snap \
 benchmark-dijkstra-dimacs-melon_heap_degree \
@@ -67,7 +68,12 @@ benchmark-dijkstra-dimacs-csr_graphs: $(BENCHMARK_DIR) \
 $(BENCHMARK_DIR)/dijkstra/dimacs/bgl_compressed_sparse_row.csv \
 $(BENCHMARK_DIR)/dijkstra/dimacs/lemon_StaticDigraph.csv \
 $(BENCHMARK_DIR)/dijkstra/dimacs/melon_static_digraph.csv \
-$(BENCHMARK_DIR)/dijkstra/dimacs/melon_static_digraph_8_heap.csv
+$(BENCHMARK_DIR)/dijkstra/dimacs/melon_static_digraph_4_heap.csv
+	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
+
+benchmark-dijkstra-dimacs-list_graphs: $(BENCHMARK_DIR) \
+$(BENCHMARK_DIR)/dijkstra/dimacs/bgl_adjacency_list_vecS.csv \
+$(BENCHMARK_DIR)/dijkstra/dimacs/melon_mutable_digraph.csv
 	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
 
 benchmark-dijkstra-dimacs-melon_heap_degree: $(BENCHMARK_DIR) \

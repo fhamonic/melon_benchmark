@@ -109,6 +109,9 @@ set_melon_options(benchmark_dijkstra_dimacs_melon_static_digraph_8_heap)
 add_executable(benchmark_dijkstra_dimacs_melon_static_digraph_16_heap
                src/benchmarks/dijkstra/dimacs/melon_static_digraph_16_heap.cpp)
 set_melon_options(benchmark_dijkstra_dimacs_melon_static_digraph_16_heap)
+add_executable(benchmark_dijkstra_dimacs_melon_mutable_digraph
+               src/benchmarks/dijkstra/dimacs/melon_mutable_digraph.cpp)
+set_melon_options(benchmark_dijkstra_dimacs_melon_mutable_digraph)
 
 add_executable(benchmark_dijkstra_snap_lemon_StaticDigraph
                src/benchmarks/dijkstra/snap/lemon_StaticDigraph.cpp)
