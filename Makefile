@@ -117,6 +117,18 @@ benchmark-dfs-snap: $(BENCHMARK_DIR) \
 
 
 benchmark-edmonds_karp-BVZtsukuba: $(BENCHMARK_DIR) \
+ $(BENCHMARK_DIR)/edmonds-karp/BVZtsukuba/bgl_compressed_sparse_row.csv \
  $(BENCHMARK_DIR)/edmonds-karp/BVZtsukuba/lemon_StaticDigraph.csv \
  $(BENCHMARK_DIR)/edmonds-karp/BVZtsukuba/melon_static_digraph.csv
+	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
+
+benchmark-dinitz-BVZtsukuba: $(BENCHMARK_DIR) \
+ $(BENCHMARK_DIR)/dinitz/BVZtsukuba/bgl_compressed_sparse_row.csv \
+ $(BENCHMARK_DIR)/dinitz/BVZtsukuba/melon_static_digraph.csv
+	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
+
+benchmark-strongly_connected_components-snap: $(BENCHMARK_DIR) \
+ $(BENCHMARK_DIR)/strongly-connected-components/snap/bgl_compressed_sparse_row.csv \
+ $(BENCHMARK_DIR)/strongly-connected-components/snap/lemon_StaticDigraph.csv \
+ $(BENCHMARK_DIR)/strongly-connected-components/snap/melon_static_digraph.csv
 	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"

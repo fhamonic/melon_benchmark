@@ -83,21 +83,7 @@ int main() {
                   << " arcs" << std::endl;
 
         for(auto && s : graph.vertices()) {
-            // Dijkstra<StaticDigraph, std::vector<double>,
-            // TraversalAlgorithmBehavior::TRACK_NONE> dijkstra(graph,
-            // length_map); Dijkstra dijkstra(graph, length_map);
-            // dijkstra.add_source(s);
-            // std::vector<double> dists(graph.nb_vertices());
-            // for(const auto & [u, dist] : dijkstra) {
-            //     dists[u] = dist;
-            // }
-            // for(StaticDigraph::Node u : graph.vertices()) {
-            //     std::cout << s << ',' << u << ':' << dists[u] << '\n';
-            //     ++rows;
-            // }
-
-            dijkstra<decltype(graph), decltype(length_map), dijkstra_traits>
-                algo(graph, length_map);
+            auto algo = dijkstra(dijkstra_traits{}, graph, length_map);
             algo.add_source(s);
             algo.run();
             for(auto && u : graph.vertices()) {

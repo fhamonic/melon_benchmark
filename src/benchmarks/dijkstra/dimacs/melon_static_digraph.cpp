@@ -11,18 +11,6 @@
 
 using namespace fhamonic::melon;
 
-struct dijkstra_traits {
-    using semiring = shortest_path_semiring<double>;
-    using heap = d_ary_heap<2, vertex_t<static_digraph>, double,
-                            decltype([](const auto & e1, const auto & e2) {
-                                return semiring::less(e1.second, e2.second);
-                            }),
-                            vertex_map_t<static_digraph, std::size_t>>;
-
-    static constexpr bool store_paths = false;
-    static constexpr bool store_distances = false;
-};
-
 int main() {
     std::vector<std::filesystem::path> gr_files(
         {"data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr",
@@ -55,17 +43,7 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            dijkstra<decltype(graph), decltype(length_map), dijkstra_traits>
-                algo(graph, length_map);
-            algo.add_source(s);
-
-            // while(!algo.finished()) {
-            //     const auto & [u, dist] = algo.current();
-            //     sum += dist;
-            //     algo.advance();
-            // }
-
-            for(auto && [u, dist] : algo) {
+            for(auto && [u, dist] : dijkstra(graph, length_map, s)) {
                 sum += dist;
             }
 

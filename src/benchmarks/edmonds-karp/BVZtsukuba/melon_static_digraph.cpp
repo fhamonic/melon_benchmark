@@ -2,8 +2,7 @@
 #include <iostream>
 #include <type_traits>
 
-// #include "melon/algorithm/edmonds_karp.hpp"
-#include "melon/algorithm/dinitz.hpp"
+#include "melon/algorithm/edmonds_karp.hpp"
 #include "melon/container/static_digraph.hpp"
 
 #include "chrono.hpp"
@@ -27,7 +26,7 @@ int main() {
          "data/BVZ-tsukuba/BVZ-tsukuba10.max",
          "data/BVZ-tsukuba/BVZ-tsukuba11.max",
          "data/BVZ-tsukuba/BVZ-tsukuba12.max",
-         "data/BVZ-tsukuba/BVZ-tsukuba13.max",
+        //  "data/BVZ-tsukuba/BVZ-tsukuba13.max",
          "data/BVZ-tsukuba/BVZ-tsukuba14.max",
          "data/BVZ-tsukuba/BVZ-tsukuba15.max"});
 
@@ -43,8 +42,7 @@ int main() {
         const int nb_nodes = graph.nb_vertices();
         Chrono chrono;
 
-        // edmonds_karp algo(graph, capacity_map, 0u, 1u);
-        dinitz algo(graph, capacity_map, 0u, 1u);
+        edmonds_karp algo(graph, capacity_map, 0u, 1u);
         algo.run();
 
         sum += algo.flow_value();

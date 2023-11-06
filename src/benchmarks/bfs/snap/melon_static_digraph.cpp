@@ -44,18 +44,11 @@ int main() {
         const int nb_iterations = int(30000.0 * 1000.0 / nb_nodes);
         for(auto && s : graph.vertices()) {
             Chrono chrono;
-
-            static_assert(output_value_map<static_filter_map<vertex_t<static_digraph>>, vertex_t<static_digraph>>);
-
+            
             int sum = 0;
             breadth_first_search bfs(graph);
             bfs.add_source(s);
 
-            // while(!bfs.finished()) {
-            //     const auto & u = bfs.current();
-            //     bfs.advance();
-            //     sum += u;
-            // }
             for(const auto & u : bfs) {
                 sum += u;
             }

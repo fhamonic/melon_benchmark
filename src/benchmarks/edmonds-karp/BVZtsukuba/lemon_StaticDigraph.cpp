@@ -81,7 +81,7 @@ int main() {
          "data/BVZ-tsukuba/BVZ-tsukuba10.max",
          "data/BVZ-tsukuba/BVZ-tsukuba11.max",
          "data/BVZ-tsukuba/BVZ-tsukuba12.max",
-         "data/BVZ-tsukuba/BVZ-tsukuba13.max",
+        //  "data/BVZ-tsukuba/BVZ-tsukuba13.max",
          "data/BVZ-tsukuba/BVZ-tsukuba14.max",
          "data/BVZ-tsukuba/BVZ-tsukuba15.max"});
 
@@ -108,8 +108,8 @@ int main() {
         int time_ms = (chrono.timeUs() / 1000.0);
 
         std::cout << gr_file.stem() << ',' << nb_nodes << ','
-                  << countArcs(graph) << ',' << time_ms
-                  << ',' << edmonds_karp.flowValue() << std::endl;
+                  << countArcs(graph) << ',' << time_ms << ','
+                  << edmonds_karp.flowValue() << std::endl;
     }
     return 0;
 }

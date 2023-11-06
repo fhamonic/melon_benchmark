@@ -40,9 +40,6 @@ int main() {
 
     std::cout << "instance,nb_nodes,nb_arcs,time_ms\n";
 
-    // auto lmd = [n = gr_files.size()](const std::size_t i) { return i < n; };
-    // static_assert(std::movable<decltype(lmd)>);
-
     (void)warm_up();
 
     for(const auto & gr_file : gr_files) {
@@ -58,24 +55,10 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            dijkstra<decltype(graph), decltype(length_map), dijkstra_traits>
-                algo(graph, length_map);
-            algo.add_source(s);
-
-            // while(!algo.finished()) {
-            //     const auto & [u, dist] = algo.current();
-            //     sum += dist;
-            //     algo.advance();
-            // }
-
-            for(auto && [u, dist] : algo) {
+            for(auto && [u, dist] :
+                dijkstra(dijkstra_traits{}, graph, length_map, s)) {
                 sum += dist;
             }
-
-            // algo.run();
-            // for(auto && u : graph.vertices()) {
-            //     sum += algo.dist(u);
-            // }
 
             double time_ms = (chrono.timeUs() / 1000.0);
             avg_time += time_ms;

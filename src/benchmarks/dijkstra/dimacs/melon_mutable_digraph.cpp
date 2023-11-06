@@ -3,26 +3,14 @@
 #include <type_traits>
 
 #include "melon/algorithm/dijkstra.hpp"
-#include "melon/container/static_digraph.hpp"
 #include "melon/container/mutable_digraph.hpp"
+#include "melon/container/static_digraph.hpp"
 
 #include "chrono.hpp"
 #include "melon_parsers.hpp"
 #include "warm_up.hpp"
 
 using namespace fhamonic::melon;
-
-struct dijkstra_traits {
-    using semiring = shortest_path_semiring<double>;
-    using heap = d_ary_heap<2, vertex_t<static_digraph>, double,
-                            decltype([](const auto & e1, const auto & e2) {
-                                return semiring::less(e1.second, e2.second);
-                            }),
-                            vertex_map_t<static_digraph, std::size_t>>;
-
-    static constexpr bool store_paths = false;
-    static constexpr bool store_distances = false;
-};
 
 int main() {
     std::vector<std::filesystem::path> gr_files(
@@ -49,10 +37,10 @@ int main() {
 
         mutable_digraph graph;
         for(auto && v : vertices(sgraph)) {
-            graph.create_vertex();
+            (void)graph.create_vertex();
         }
         for(auto && [a, arc_pair] : arcs_entries(sgraph)) {
-            graph.create_arc(arc_pair.first, arc_pair.second);
+            (void)graph.create_arc(arc_pair.first, arc_pair.second);
         }
         auto length_map = create_arc_map<double>(graph);
         std::size_t cpt = 0;
@@ -70,17 +58,7 @@ int main() {
             Chrono chrono;
 
             double sum = 0;
-            dijkstra<decltype(graph), decltype(length_map), dijkstra_traits>
-                algo(graph, length_map);
-            algo.add_source(s);
-
-            // while(!algo.finished()) {
-            //     const auto & [u, dist] = algo.current();
-            //     sum += dist;
-            //     algo.advance();
-            // }
-
-            for(auto && [u, dist] : algo) {
+            for(auto && [u, dist] : dijkstra(graph, mapping_ref_view(length_map), s)) {
                 sum += dist;
             }
 

@@ -21,18 +21,22 @@ using namespace boost;
 
 int main() {
     std::vector<std::filesystem::path> gr_files(
-        {"data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr",
-         "data/9th_DIMACS_USA_roads/time/USA-road-t.NY.gr",
-         "data/9th_DIMACS_USA_roads/distance/USA-road-d.BAY.gr",
-         "data/9th_DIMACS_USA_roads/time/USA-road-t.BAY.gr",
-         "data/9th_DIMACS_USA_roads/distance/USA-road-d.COL.gr",
-         "data/9th_DIMACS_USA_roads/time/USA-road-t.COL.gr",
-         "data/9th_DIMACS_USA_roads/distance/USA-road-d.FLA.gr",
-         "data/9th_DIMACS_USA_roads/time/USA-road-t.FLA.gr",
-         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NW.gr",
-         "data/9th_DIMACS_USA_roads/time/USA-road-t.NW.gr",
-         "data/9th_DIMACS_USA_roads/distance/USA-road-d.NE.gr",
-         "data/9th_DIMACS_USA_roads/time/USA-road-t.NE.gr"});
+        {"data/BVZ-tsukuba/BVZ-tsukuba0.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba1.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba2.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba3.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba4.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba5.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba6.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba7.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba8.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba9.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba10.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba11.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba12.max",
+        //  "data/BVZ-tsukuba/BVZ-tsukuba13.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba14.max",
+         "data/BVZ-tsukuba/BVZ-tsukuba15.max"});
 
     std::cout << "instance,nb_nodes,nb_arcs,time_ms\n";
 

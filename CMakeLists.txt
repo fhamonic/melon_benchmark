@@ -158,7 +158,6 @@ set_melon_options(benchmark_dfs_snap_melon_static_digraph)
 
 # ######### EDMONDS_KARP ###########
 
-# error in lemon ...
 add_executable(benchmark_edmonds-karp_BVZtsukuba_lemon_StaticDigraph
 src/benchmarks/edmonds-karp/BVZtsukuba/lemon_StaticDigraph.cpp)
 set_lemon_options(benchmark_edmonds-karp_BVZtsukuba_lemon_StaticDigraph)
@@ -170,3 +169,31 @@ set_melon_options(benchmark_edmonds-karp_BVZtsukuba_melon_static_digraph)
 add_executable(benchmark_edmonds-karp_BVZtsukuba_bgl_compressed_sparse_row
                src/benchmarks/edmonds-karp/BVZtsukuba/bgl_compressed_sparse_row.cpp)
 set_boost_options(benchmark_edmonds-karp_BVZtsukuba_bgl_compressed_sparse_row)
+
+# ######### DINITZ ###########
+
+add_executable(benchmark_dinitz_BVZtsukuba_lemon_StaticDigraph
+src/benchmarks/dinitz/BVZtsukuba/lemon_StaticDigraph.cpp)
+set_lemon_options(benchmark_dinitz_BVZtsukuba_lemon_StaticDigraph)
+
+add_executable(benchmark_dinitz_BVZtsukuba_melon_static_digraph
+src/benchmarks/dinitz/BVZtsukuba/melon_static_digraph.cpp)
+set_melon_options(benchmark_dinitz_BVZtsukuba_melon_static_digraph)
+
+add_executable(benchmark_dinitz_BVZtsukuba_bgl_compressed_sparse_row
+               src/benchmarks/dinitz/BVZtsukuba/bgl_compressed_sparse_row.cpp)
+set_boost_options(benchmark_dinitz_BVZtsukuba_bgl_compressed_sparse_row)
+
+# ######### STRONGLY CONNECTED COMPONENTS ###########
+
+add_executable(benchmark_strongly-connected-components_snap_bgl_compressed_sparse_row
+src/benchmarks/strongly-connected-components/snap/bgl_compressed_sparse_row.cpp)
+set_boost_options(benchmark_strongly-connected-components_snap_bgl_compressed_sparse_row)
+
+add_executable(benchmark_strongly-connected-components_snap_lemon_StaticDigraph
+src/benchmarks/strongly-connected-components/snap/lemon_StaticDigraph.cpp)
+set_lemon_options(benchmark_strongly-connected-components_snap_lemon_StaticDigraph)
+
+add_executable(benchmark_strongly-connected-components_snap_melon_static_digraph
+src/benchmarks/strongly-connected-components/snap/melon_static_digraph.cpp)
+set_melon_options(benchmark_strongly-connected-components_snap_melon_static_digraph)
