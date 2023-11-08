@@ -21,9 +21,11 @@ The build process requires CMake 3.12 (https://cmake.org/) or more and the Conan
     
 ## Benchmarks
 
-![Dijkstra benchmark plot](/benchmarks/Intel_R_Core_TM_i7_9750H_CPU_2_60GHz/dijkstra_dimacs_csr_graphs.png)
-![Breadth First Search benchmark plot](/benchmarks/Intel_R_Core_TM_i7_9750H_CPU_2_60GHz/bfs_snap.png)
-![Depth First Search benchmark plot](/benchmarks/Intel_R_Core_TM_i7_9750H_CPU_2_60GHz/dfs_snap.png)
+The `benchmarks` folder contains all the benchmarks data and plots performed on different CPUs with different compiler options. 
+
+![Dijkstra benchmark plot](/benchmarks/AMD_Ryzen_9_7950X_16_Core_Processor_g++-12_march-native-ON/dijkstra_dimacs_csr_graphs.png)
+![Maximum Flow](/benchmarks/AMD_Ryzen_9_7950X_16_Core_Processor_g++-12_march-native-ON/dinitz_BVZtsukuba.png)
+![Strongly Connected Components](/benchmarks/AMD_Ryzen_9_7950X_16_Core_Processor_g++-12_march-native-ON/strongly_connected_components_snap.png)
     
 | instance | #nodes | #arcs |
 |---|---|---|
