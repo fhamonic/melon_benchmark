@@ -5,19 +5,14 @@
 
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/compressed_sparse_row_graph.hpp>
-#include <boost/graph/push_relabel_max_flow.hpp>
 #include <boost/graph/graph_traits.hpp>
+#include <boost/graph/push_relabel_max_flow.hpp>
 #include <boost/graph/read_dimacs.hpp>
 
 using namespace boost;
 
 #include "chrono.hpp"
 #include "warm_up.hpp"
-
-// typedef compressed_sparse_row_graph<directedS, no_property, Edge_Cost>
-// graph_t; typedef graph_traits<graph_t>::vertex_descriptor vertex_descriptor;
-// typedef graph_traits<graph_t>::edge_descriptor edge_descriptor;
-// typedef std::pair<int, int> Edge;
 
 int main() {
     std::vector<std::filesystem::path> gr_files(
@@ -34,11 +29,11 @@ int main() {
          "data/BVZ-tsukuba/BVZ-tsukuba10.max",
          "data/BVZ-tsukuba/BVZ-tsukuba11.max",
          "data/BVZ-tsukuba/BVZ-tsukuba12.max",
-        //  "data/BVZ-tsukuba/BVZ-tsukuba13.max",
+         //  "data/BVZ-tsukuba/BVZ-tsukuba13.max",
          "data/BVZ-tsukuba/BVZ-tsukuba14.max",
          "data/BVZ-tsukuba/BVZ-tsukuba15.max"});
 
-    std::cout << "instance,nb_nodes,nb_arcs,time_ms\n";
+    std::cout << "instance,nb_nodes,nb_arcs,max_flow,time_ms\n";
 
     (void)warm_up();
 
@@ -62,14 +57,14 @@ int main() {
 
         Traits::vertex_descriptor s, t;
         std::ifstream dimacs(gr_file);
-            read_dimacs_max_flow(g, capacity, rev, s, t, dimacs);
+        read_dimacs_max_flow(g, capacity, rev, s, t, dimacs);
 
         Chrono chrono;
         int flow = push_relabel_max_flow(g, s, t);
 
         std::cout << gr_file.stem() << ',' << num_vertices(g) << ','
-                  << num_edges(g) << ',' << (chrono.timeUs() / 1000.0)
-                  << std::endl;
+                  << num_edges(g) << ',' << flow << ','
+                  << (chrono.timeUs() / 1000.0) << std::endl;
     }
     return 0;
 }

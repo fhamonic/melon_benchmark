@@ -1,0 +1,4 @@
+instance,nb_nodes,nb_arcs,nb_components,count,time_ms
+"web-Stanford",281904,2312497,29915,0,15.52
+"Amazon0505",410236,3356824,13928,0,23.41
+"WikiTalk",2394385,5021410,2281879,0,67.007
