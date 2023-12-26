@@ -4,7 +4,7 @@ CPUS?=$(shell getconf _NPROCESSORS_ONLN || echo 1)
 CPU_NAME?=$(shell cat /proc/cpuinfo | grep -i "^model name" | awk -F": " '{print $$2}' | head -1 | sed -E "s/[^A-Za-z0-9]+/_/g" || echo "use_linux_damn_it")
 
 CC = g++-12
-MARCH_NATIVE = OFF
+MARCH_NATIVE = ON
 BUILD_DIR = build
 BENCHMARKS_DIR = benchmarks
 BENCHMARK_DIR = $(BENCHMARKS_DIR)/$(CPU_NAME)_$(CC)_march-native-${MARCH_NATIVE}
@@ -134,4 +134,9 @@ benchmark-strongly_connected_components-snap: $(BENCHMARK_DIR) \
  $(BENCHMARK_DIR)/strongly-connected-components/snap/bgl_compressed_sparse_row.csv \
  $(BENCHMARK_DIR)/strongly-connected-components/snap/lemon_StaticDigraph.csv \
  $(BENCHMARK_DIR)/strongly-connected-components/snap/melon_static_digraph.csv
+	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"
+
+benchmark-kruskal-BVZtsukuba: $(BENCHMARK_DIR) \
+ $(BENCHMARK_DIR)/kruskal/BVZtsukuba/lemon_ListGraph.csv \
+ $(BENCHMARK_DIR)/kruskal/BVZtsukuba/melon_static_digraph.csv
 	python plot_scripts/execution_times.py "$@" "$(wordlist 2,99,$^)"

@@ -197,3 +197,13 @@ set_lemon_options(benchmark_strongly-connected-components_snap_lemon_StaticDigra
 add_executable(benchmark_strongly-connected-components_snap_melon_static_digraph
 src/benchmarks/strongly-connected-components/snap/melon_static_digraph.cpp)
 set_melon_options(benchmark_strongly-connected-components_snap_melon_static_digraph)
+
+# ##################### KRUSKAL #####################
+
+add_executable(benchmark_kruskal_BVZtsukuba_lemon_ListGraph
+src/benchmarks/kruskal/BVZtsukuba/lemon_ListGraph.cpp)
+set_lemon_options(benchmark_kruskal_BVZtsukuba_lemon_ListGraph)
+
+add_executable(benchmark_kruskal_BVZtsukuba_melon_static_digraph
+src/benchmarks/kruskal/BVZtsukuba/melon_static_digraph.cpp)
+set_melon_options(benchmark_kruskal_BVZtsukuba_melon_static_digraph)
