@@ -547,8 +547,9 @@ function buildFacetControls() {
     field.append(lab, btn, panel);
     slot.appendChild(field);
 
-    const sel = state.facet.get(def.key);
+    def.values = values;
     const refreshBtn = () => {
+      const sel = state.facet.get(def.key);
       btn.textContent = sel.size === values.length ? `All (${values.length})`
         : sel.size === 1 ? [...sel][0] : `${sel.size} of ${values.length}`;
     };
@@ -556,6 +557,7 @@ function buildFacetControls() {
     refreshBtn();
     makeDropdown(btn, panel, () => {
       panel.textContent = "";
+      const sel = state.facet.get(def.key);
       for (const v of values)
         panel.appendChild(checkboxRow(v, sel.has(v), (on) => {
           on ? sel.add(v) : sel.delete(v);
@@ -654,12 +656,103 @@ function buildSegs() {
     () => state.view, (v) => (state.view = v));
 }
 
+/* ---------- URL state ----------
+   Selectors mirror into the query string so a link (or an <iframe> on a docs
+   page) reproduces the view: ?algorithm=dijkstra&params=int%7C4-heap
+   &dataset=9th_dimacs&hardware=...&build=...&inst.<ds>=i1,i2,mean
+   &scale=log&view=table. Only non-default values are written. */
+
+function applyUrlState() {
+  const q = new URLSearchParams(location.search);
+
+  const algo = q.get("algorithm");
+  if (algo && byAlgo.has(algo)) {
+    state.algo = algo;
+    $("algo").value = algo;
+    refreshVariants();
+  }
+  const params = q.get("params");
+  if (params !== null && byAlgo.get(state.algo).has(params)) {
+    state.params = params;
+    $("variant").value = params;
+  }
+
+  for (const def of FACETS) {
+    const raw = q.get(def.key);
+    if (!raw) continue;
+    const want = raw.split(",").filter((v) => def.values.includes(v));
+    if (want.length) state.facet.set(def.key, new Set(want));
+  }
+
+  const avail = availableInstances();
+  const ds = q.get("dataset");
+  if (ds !== null) {
+    const want = new Set(ds.split(","));
+    for (const [dataset, insts] of avail) {
+      const st = instState(dataset);
+      st.picked = want.has(dataset) ? new Set(insts) : new Set();
+      st.avg = false;
+    }
+  }
+  for (const [dataset, insts] of avail) {
+    const raw = q.get("inst." + dataset);
+    if (raw === null) continue;
+    const tokens = raw.split(",");
+    const st = instState(dataset);
+    st.avg = tokens.includes("mean");
+    st.picked = tokens.includes("all") ? new Set(insts)
+      : new Set(tokens.filter((t) => insts.has(t)));
+  }
+
+  const scale = q.get("scale");
+  if (["auto", "linear", "log"].includes(scale)) state.scale = scale;
+  const view = q.get("view");
+  if (["chart", "table"].includes(view)) state.view = view;
+}
+
+function syncUrl() {
+  const q = new URLSearchParams();
+  q.set("algorithm", state.algo);
+  if (state.params) q.set("params", state.params);
+
+  for (const def of FACETS) {
+    const sel = state.facet.get(def.key);
+    if (sel.size < def.values.length) q.set(def.key, [...sel].join(","));
+  }
+
+  const status = [...availableInstances()].map(([dataset, insts]) => {
+    const st = instState(dataset);
+    return { dataset, insts, st, picked: [...insts].filter((i) => st.picked.has(i)) };
+  });
+  const wholeFamilies = status.every(({ st, insts, picked }) =>
+    !st.avg && (picked.length === 0 || picked.length === insts.size));
+  if (wholeFamilies) {
+    if (status.some(({ picked }) => picked.length === 0))
+      q.set("dataset",
+        status.filter(({ picked }) => picked.length).map(({ dataset }) => dataset).join(","));
+  } else {
+    for (const { dataset, insts, st, picked } of status) {
+      if (!st.avg && picked.length === insts.size) continue;
+      const tokens = picked.length === insts.size ? ["all"]
+        : picked.length ? picked : ["none"];
+      if (st.avg) tokens.push("mean");
+      q.set("inst." + dataset, tokens.join(","));
+    }
+  }
+
+  if (state.scale !== "auto") q.set("scale", state.scale);
+  if (state.view !== "chart") q.set("view", state.view);
+
+  history.replaceState(null, "", location.pathname + "?" + q.toString());
+}
+
 /* ---------- top-level render ---------- */
 
 function update() {
   FACETS.forEach((d) => d.refreshBtn && d.refreshBtn());
   $("scale-seg").refresh(); $("view-seg").refresh();
   refreshInstButton();
+  syncUrl();
 
   const slice = assemble();
   const variant = state.params === "" ? "" : ` — ${variantLabel(state.params)}`;
@@ -700,6 +793,7 @@ async function boot() {
   buildAlgoControls();
   buildInstDropdown();
   buildSegs();
+  applyUrlState();
   $("filters").hidden = false;
 
   const stamps = Object.values(DATA.runs).map((r) => r.timestamp).filter(Boolean).sort();
