@@ -1,0 +1,3 @@
+# Plotting and validation tooling (the benchmarks themselves need only Conan).
+matplotlib>=3.7
+numpy>=1.24

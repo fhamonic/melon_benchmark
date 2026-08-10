@@ -1,0 +1,77 @@
+#include <filesystem>
+#include <optional>
+#include <type_traits>
+#include <utility>
+#include <vector>
+
+#include <benchmark/benchmark.h>
+
+#include <lemon/dfs.h>
+#include <lemon/list_graph.h>
+#include <lemon/smart_graph.h>
+#include <lemon/static_graph.h>
+
+using namespace lemon;
+
+#include "checksums.hpp"
+#include "dimacs_instances.hpp"
+#include "parse_dimacs.hpp"
+
+template <typename _Graph>
+struct BM {
+    void operator()(benchmark::State & state,
+                    const std::filesystem::path & gr_file,
+                    const std::vector<unsigned int> & sources) const {
+        _Graph graph;
+        typename _Graph::ArcMap<int> length_map(graph);
+        parse_dimacs<_Graph, int>(gr_file, graph, length_map);
+
+        {
+            checksum cs;
+            for(auto && s : sources) {
+                Dfs<_Graph> algo(graph);
+                algo.init();
+                algo.addSource(
+                    graph.fromId(static_cast<int>(s), typename _Graph::Node()));
+                algo.start();
+                lemon_add_reachability(
+                    graph, cs, [&](const auto & u) { return algo.reached(u); });
+            }
+            state.SetLabel(cs.str());
+        }
+
+        for(auto _ : state) {
+            for(auto && s : sources) {
+                Dfs<_Graph> dfs(graph);
+                dfs.init();
+                dfs.addSource(
+                    graph.fromId(static_cast<int>(s), typename _Graph::Node()));
+
+                while(!dfs.emptyQueue()) {
+                    const auto a = dfs.processNextArc();
+                    benchmark::DoNotOptimize(graph.target(a));
+                }
+            }
+        }
+        state.SetItemsProcessed(int64_t(state.iterations()) * sources.size());
+    }
+};
+
+#define REGISTER(graph)                                                \
+    benchmark::RegisterBenchmark(                                      \
+        std::string(gr_file.stem().c_str()) + "/" #graph, BM<graph>{}, \
+        gr_file, sources);
+
+int main(int argc, char ** argv) {
+    benchmark::MaybeReenterWithoutASLR(argc, argv);
+    for(const auto & [gr_file, n, m] : instances) {
+        const auto sources =
+            instance_sources(n, m, [](int n, int m) { return n + m; });
+        REGISTER(StaticDigraph)
+        REGISTER(SmartDigraph)
+        REGISTER(ListDigraph)
+    }
+    benchmark::Initialize(&argc, argv);
+    benchmark::RunSpecifiedBenchmarks();
+    benchmark::Shutdown();
+}

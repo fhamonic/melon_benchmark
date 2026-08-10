@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>melon benchmarks</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page:        #f9f9f7;
+    --surface:     #fcfcfb;
+    --ink:         #0b0b0b;
+    --ink-2:       #52514e;
+    --muted:       #898781;
+    --grid:        #e1e0d9;
+    --baseline:    #c3c2b7;
+    --border:      rgba(11, 11, 11, 0.10);
+    --accent:      #2a78d6;
+    --decal-ink:   rgba(11, 11, 11, 0.28);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --page:      #0d0d0d;
+      --surface:   #1a1a19;
+      --ink:       #ffffff;
+      --ink-2:     #c3c2b7;
+      --muted:     #898781;
+      --grid:      #2c2c2a;
+      --baseline:  #383835;
+      --border:    rgba(255, 255, 255, 0.10);
+      --accent:    #3987e5;
+      --decal-ink: rgba(255, 255, 255, 0.30);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 1240px; margin: 0 auto; padding: 20px 24px 48px; }
+
+  header h1 { font-size: 22px; font-weight: 600; margin: 6px 0 2px; }
+  header p  { margin: 0 0 18px; color: var(--ink-2); }
+
+  /* ---- filter row ---- */
+  .filters {
+    display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: flex-end;
+    margin-bottom: 12px;
+  }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field.push { margin-left: auto; }
+  .field > label { font-size: 13px; color: var(--muted); }
+  select, .dd-btn, .seg {
+    height: 32px; border: 1px solid var(--border); border-radius: 8px;
+    background: var(--surface); color: var(--ink); font: inherit;
+  }
+  select { padding: 0 8px; }
+  select:focus-visible, .dd-btn:focus-visible, .seg button:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 1px;
+  }
+
+  /* dropdown with checkboxes */
+  .dd { position: relative; }
+  .dd-btn { padding: 0 30px 0 10px; cursor: pointer; text-align: left; min-width: 150px; position: relative; }
+  .dd-btn::after {
+    content: ""; position: absolute; right: 11px; top: 13px;
+    border: 4px solid transparent; border-top-color: var(--muted);
+  }
+  .dd-panel {
+    position: absolute; top: calc(100% + 4px); left: 0; z-index: 30;
+    min-width: 250px; max-height: 380px; overflow: auto;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); padding: 6px;
+  }
+  .dd-panel[hidden] { display: none; }
+  .dd-panel label {
+    display: flex; gap: 8px; align-items: center; padding: 5px 8px;
+    border-radius: 6px; cursor: pointer; white-space: nowrap;
+  }
+  .dd-panel label:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+  .dd-panel input[type=checkbox] { accent-color: var(--accent); margin: 0; }
+  .fam-head {
+    display: flex; align-items: baseline; gap: 8px; padding: 8px 8px 2px;
+    border-top: 1px solid var(--grid); margin-top: 4px;
+  }
+  .fam-head:first-child { border-top: 0; margin-top: 0; }
+  .fam-head b { font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-2); }
+  .fam-head button {
+    border: 0; background: none; color: var(--accent); font-size: 13px;
+    cursor: pointer; padding: 0;
+  }
+  .fam-avg { font-style: italic; }
+
+  /* segmented control */
+  .seg { display: inline-flex; padding: 2px; gap: 2px; }
+  .seg button {
+    border: 0; border-radius: 6px; background: none; color: var(--ink-2);
+    font: inherit; font-size: 14px; padding: 0 10px; cursor: pointer;
+  }
+  .seg button[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--ink); }
+
+  /* ---- card ---- */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 16px 8px;
+  }
+  .card h2 { font-size: 17px; font-weight: 600; margin: 2px 0 0; }
+  .card .sub { color: var(--muted); font-size: 13px; margin: 1px 0 6px; }
+  #chart { width: 100%; }
+  .msg { padding: 48px 12px; text-align: center; color: var(--ink-2); }
+  .msg code { background: color-mix(in srgb, var(--ink) 7%, transparent); padding: 1px 5px; border-radius: 4px; }
+
+  /* ---- table view ---- */
+  #table h3 { font-size: 14px; font-weight: 600; margin: 14px 2px 6px; color: var(--ink-2); }
+  .tblwrap { overflow-x: auto; }
+  table { border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 100%; }
+  th, td { padding: 5px 10px; text-align: right; white-space: nowrap; }
+  th { color: var(--ink-2); font-weight: 500; font-size: 13px; border-bottom: 1px solid var(--baseline); }
+  th:first-child, td:first-child { text-align: left; }
+  tbody tr { border-bottom: 1px solid var(--grid); }
+  tbody tr:hover { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+  td .sd { color: var(--muted); font-size: 12px; margin-left: 4px; }
+  .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: baseline; }
+
+  footer { margin-top: 10px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <div id="filters" hidden>
+    <div class="filters" id="facet-slot"></div>
+    <div class="filters">
+      <div class="field">
+        <label for="algo">Algorithm</label>
+        <select id="algo"></select>
+      </div>
+      <div class="field" id="variant-field">
+        <label for="variant">Variant</label>
+        <select id="variant"></select>
+      </div>
+      <div class="field dd" id="inst-dd">
+        <label>Instances</label>
+        <button type="button" class="dd-btn" id="inst-btn" aria-haspopup="true" aria-expanded="false"></button>
+        <div class="dd-panel" id="inst-panel" hidden></div>
+      </div>
+      <div class="field push">
+        <label>Scale</label>
+        <div class="seg" id="scale-seg"></div>
+      </div>
+      <div class="field">
+        <label>View</label>
+        <div class="seg" id="view-seg"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="card">
+    <h2 id="card-title">&nbsp;</h2>
+    <div class="sub" id="card-sub"></div>
+    <div id="chart"></div>
+    <div id="table" hidden></div>
+    <div id="empty" class="msg" hidden></div>
+  </section>
+  <footer id="foot"></footer>
+</main>
+
+<script src="echarts.min.js"></script>
+<script>
+"use strict";
+
+/* Validated categorical palette (dataviz reference instance): fixed slot
+   order in both modes — the order is the CVD-safety mechanism. Three light
+   slots sit below 3:1 on the surface; the table view is the relief channel. */
+const PALETTE = {
+  light: ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"],
+  dark:  ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"],
+};
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"']/g,
+  (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const natural = new Intl.Collator("en", { numeric: true, sensitivity: "base" });
+const cssVar = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const darkMode = matchMedia("(prefers-color-scheme: dark)");
+
+let DATA = null;
+let FACETS = [];             // [{key, label, of(runId) -> value}]
+let byAlgo = new Map();      // algo -> params -> rows
+let dsInstances = new Map(); // dataset -> Set(instance), across all algorithms
+let chart = null;
+
+const state = {
+  facet: new Map(),     // facet key -> Set of selected values
+  algo: null,
+  params: null,
+  inst: new Map(),      // dataset -> {picked: Set(instance), avg: bool}
+  legendSel: {},        // series name -> false when toggled off in the legend
+  scale: "auto",        // auto | linear | log
+  view: "chart",        // chart | table
+};
+
+/* ---------- data plumbing ---------- */
+
+function facetsOf(runId) { return DATA.runs[runId].facets || {}; }
+
+function buildFacetDefs() {
+  const known = new Set(["hardware", "compiler", "options"]);
+  const extra = new Set();
+  for (const id of Object.keys(DATA.runs))
+    for (const k of Object.keys(facetsOf(id))) if (!known.has(k)) extra.add(k);
+  FACETS = [
+    { key: "hardware", label: "Hardware", of: (id) => facetsOf(id).hardware || "unknown" },
+    { key: "build", label: "Compiler + options",
+      of: (id) => [facetsOf(id).compiler, facetsOf(id).options].filter(Boolean).join(" ") || "unknown" },
+    ...[...extra].sort().map((k) => ({
+      key: k, label: k[0].toUpperCase() + k.slice(1), of: (id) => String(facetsOf(id)[k]),
+    })),
+  ];
+}
+
+function indexRows() {
+  for (const row of DATA.rows) {
+    const [, algo, params, dataset, , instance] = row;
+    if (!byAlgo.has(algo)) byAlgo.set(algo, new Map());
+    const perParams = byAlgo.get(algo);
+    if (!perParams.has(params)) perParams.set(params, []);
+    perParams.get(params).push(row);
+    if (!dsInstances.has(dataset)) dsInstances.set(dataset, new Set());
+    dsInstances.get(dataset).add(instance);
+  }
+}
+
+function selectedRuns() {
+  return Object.keys(DATA.runs)
+    .filter((id) => FACETS.every((d) => state.facet.get(d.key).has(d.of(id))))
+    .sort((a, b) => natural.compare(runLabel(a), runLabel(b)));
+}
+
+function runLabel(id) { return FACETS.map((d) => d.of(id)).join(" · "); }
+
+function currentRows() { return (byAlgo.get(state.algo) || new Map()).get(state.params) || []; }
+
+/* Datasets and instances available for the current algorithm+variant. */
+function availableInstances() {
+  const ds = new Map();
+  for (const r of currentRows()) {
+    if (!ds.has(r[3])) ds.set(r[3], new Set());
+    ds.get(r[3]).add(r[5]);
+  }
+  return new Map([...ds.entries()].sort((a, b) => natural.compare(a[0], b[0])));
+}
+
+function instState(dataset) {
+  if (!state.inst.has(dataset))
+    state.inst.set(dataset, { picked: new Set(dsInstances.get(dataset)), avg: false });
+  return state.inst.get(dataset);
+}
+
+/* ---------- assembling the plotted slice ---------- */
+
+function assemble() {
+  const runs = selectedRuns();
+  const avail = availableInstances();
+
+  const ticks = []; // {dataset, instance|null, label}
+  for (const [dataset, insts] of avail) {
+    const st = instState(dataset);
+    for (const inst of [...insts].sort(natural.compare))
+      if (st.picked.has(inst)) ticks.push({ dataset, instance: inst, label: inst });
+    if (st.avg) ticks.push({ dataset, instance: null, label: dataset + " (mean)" });
+  }
+
+  // value lookup and per-family accumulation for the mean ticks
+  const val = new Map(); // run\0series\0dataset\0instance -> {v, sd}
+  const fam = new Map(); // run\0series\0dataset -> [v, ...]
+  const seriesSet = new Set();
+  const runSet = new Set(runs);
+  for (const [run, , , dataset, series, instance, v, sd] of currentRows()) {
+    if (!runSet.has(run)) continue;
+    seriesSet.add(series);
+    val.set([run, series, dataset, instance].join("\0"), { v, sd });
+    const fk = [run, series, dataset].join("\0");
+    if (!fam.has(fk)) fam.set(fk, []);
+    fam.get(fk).push(v);
+  }
+
+  const names = [...seriesSet].sort(natural.compare);
+  const cells = runs.map((run) => names.map((series) => ticks.map((t) => {
+    if (t.instance !== null)
+      return val.get([run, series, t.dataset, t.instance].join("\0")) || null;
+    const vs = fam.get([run, series, t.dataset].join("\0"));
+    if (!vs || !vs.length) return null;
+    return { v: vs.reduce((a, b) => a + b, 0) / vs.length, sd: null, n: vs.length };
+  })));
+
+  // drop series that have no visible value in any selected run
+  const keep = names.map((_, si) => cells.some((perRun) => perRun[si].some(Boolean)));
+  return {
+    runs, ticks,
+    names: names.filter((_, i) => keep[i]),
+    cells: cells.map((perRun) => perRun.filter((_, i) => keep[i])),
+  };
+}
+
+/* Color follows the series name (fixed sorted order). Past 8 series, fold to
+   composite encoding: hue = the series' base structure, decal = its variant
+   suffix — never a 9th generated hue. */
+function colorPlan(names) {
+  const mode = darkMode.matches ? "dark" : "light";
+  const C = PALETTE[mode];
+  if (names.length <= C.length)
+    return new Map(names.map((n, i) => [n, { color: C[i], decal: 0 }]));
+
+  const split = (n) => {
+    const i = n.lastIndexOf(":");
+    return i > 0 && n[i - 1] !== ":" ? [n.slice(0, i), n.slice(i + 1)] : [n, ""];
+  };
+  const bases = [...new Set(names.map((n) => split(n)[0]))].sort(natural.compare);
+  const variants = [...new Set(names.map((n) => split(n)[1]))].sort(natural.compare);
+  if (bases.length <= C.length)
+    return new Map(names.map((n) => {
+      const [b, v] = split(n);
+      return [n, { color: C[bases.indexOf(b)], decal: variants.indexOf(v) }];
+    }));
+  return new Map(names.map((n, i) => [n, { color: C[i % C.length], decal: Math.floor(i / C.length) }]));
+}
+
+function decalOf(k) {
+  if (!k) return null;
+  const base = { color: cssVar("--decal-ink"), symbol: "rect", symbolSize: 1, dashArrayX: [1, 0] };
+  if (k === 1) return { ...base, dashArrayY: [2, 4], rotation: Math.PI / 4 };
+  if (k === 2) return { ...base, dashArrayY: [2, 4], rotation: -Math.PI / 4 };
+  return { ...base, symbol: "circle", symbolSize: 0.7, dashArrayX: [6, 6], dashArrayY: [6, 6] };
+}
+
+/* ---------- formatting ---------- */
+
+function fmtMs(v) {
+  if (v == null || !isFinite(v)) return "–";
+  if (v >= 1000) return v.toLocaleString("en-US", { maximumFractionDigits: 0 });
+  if (v >= 100) return v.toFixed(0);
+  if (v >= 10) return v.toFixed(1);
+  if (v >= 1) return v.toFixed(2);
+  return v.toPrecision(3);
+}
+
+function variantLabel(p) { return p === "" ? "default" : p.split("|").join(" | "); }
+
+/* ---------- chart ---------- */
+
+const BAND_H = 310, LEGEND_H = 38;
+
+function renderChart(slice) {
+  const { runs, ticks, names, cells } = slice;
+  const plan = colorPlan(names);
+  const multi = runs.length > 1;
+
+  // The whole option is a function of the legend selection: the axis range
+  // (and the auto log/linear choice) follow only the series left visible.
+  const buildOption = () => {
+  const shown = (si) => state.legendSel[names[si]] !== false;
+  const flat = [];
+  cells.forEach((perRun) => perRun.forEach((arr, si) => {
+    if (!shown(si)) return;
+    arr.forEach((c) => { if (c && c.v > 0) flat.push(c.v); });
+  }));
+  const ratio = flat.length ? Math.max(...flat) / Math.min(...flat) : 1;
+  const useLog = state.scale === "log" || (state.scale === "auto" && ratio > 50);
+  const yMax = flat.length ? Math.max(...flat) : 1;
+  const yMin = flat.length ? Math.min(...flat) : 0.1;
+
+  /* ECharts baselines log-axis bars at y=1, so sub-unit values hang downward.
+     Instead plot log10(v) shifted to the decade floor on a linear axis, with
+     power-of-ten tick labels — bars then grow from the axis floor as expected. */
+  const kMin = Math.floor(Math.log10(yMin));
+  const kMax = Math.ceil(Math.log10(yMax));
+  const toPlot = (v) => (useLog ? Math.log10(v) - kMin : v);
+  // Shared across all run grids, so runs stay comparable at a glance.
+  const decade = Math.pow(10, Math.floor(Math.log10(yMax)));
+  const linMax = Math.ceil((yMax / decade) * 2) / 2 * decade;
+
+  const grids = [], xAxes = [], yAxes = [], titles = [], series = [];
+  runs.forEach((run, gi) => {
+    const top = LEGEND_H + gi * BAND_H;
+    if (multi) titles.push({
+      text: runLabel(run), left: 4, top: top + 2,
+      textStyle: { fontSize: 13, fontWeight: 600, color: cssVar("--ink-2") },
+    });
+    grids.push({ left: 64, right: 16, top: top + (multi ? 44 : 26), height: BAND_H - (multi ? 130 : 112) });
+    xAxes.push({
+      gridIndex: gi, type: "category", data: ticks.map((t) => t.label),
+      axisLine: { lineStyle: { color: cssVar("--baseline") } },
+      axisTick: { show: false },
+      axisLabel: { color: cssVar("--muted"), rotate: ticks.length > 5 ? 28 : 0, fontSize: 12.5 },
+    });
+    yAxes.push({
+      gridIndex: gi, type: "value",
+      name: gi === 0 ? "median ms" : "",
+      nameTextStyle: { color: cssVar("--muted"), align: "left", fontSize: 12.5 },
+      min: 0,
+      max: useLog ? kMax - kMin : linMax,
+      interval: useLog ? 1 : undefined,
+      axisLabel: {
+        color: cssVar("--muted"), fontSize: 12.5,
+        formatter: (v) => fmtMs(useLog ? Math.pow(10, v + kMin) : v),
+      },
+      splitLine: { lineStyle: { color: cssVar("--grid"), width: 1 } },
+    });
+    names.forEach((name, si) => {
+      const p = plan.get(name);
+      series.push({
+        name, type: "bar", xAxisIndex: gi, yAxisIndex: gi,
+        data: cells[gi][si].map((c) => c ? { value: toPlot(c.v), real: c.v, sd: c.sd, n: c.n } : { value: null }),
+        barMaxWidth: 32, barGap: "18%", barCategoryGap: "24%",
+        itemStyle: { color: p.color, borderRadius: [4, 4, 0, 0], decal: decalOf(p.decal) },
+        emphasis: { itemStyle: { borderColor: cssVar("--ink"), borderWidth: 1 } },
+      });
+    });
+  });
+
+  return {
+    animationDuration: 200,
+    textStyle: { fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif" },
+    legend: names.length > 1 ? {
+      type: "scroll", top: 2, left: 4, right: 4,
+      itemWidth: 13, itemHeight: 13,
+      selected: Object.fromEntries(names.map((n) => [n, state.legendSel[n] !== false])),
+      textStyle: { color: cssVar("--ink-2"), fontSize: 13 },
+      pageIconColor: cssVar("--ink-2"), pageTextStyle: { color: cssVar("--muted") },
+    } : { show: false },
+    grid: grids, xAxis: xAxes, yAxis: yAxes, title: titles, series,
+    tooltip: {
+      trigger: "axis",
+      axisPointer: { type: "shadow" },
+      backgroundColor: cssVar("--surface"),
+      borderColor: cssVar("--border"),
+      textStyle: { color: cssVar("--ink"), fontSize: 13 },
+      formatter: (params) => {
+        if (!params.length) return "";
+        const gi = xAxes.length > 1 ? series[params[0].seriesIndex].xAxisIndex : 0;
+        let html = `<div style="margin-bottom:4px"><b>${esc(params[0].axisValueLabel)}</b>` +
+          (multi ? `<span style="color:${cssVar("--muted")}"> — ${esc(runLabel(runs[gi]))}</span>` : "") +
+          `</div>`;
+        const rows = params.filter((p) => p.data && p.data.real != null)
+          .sort((a, b) => a.data.real - b.data.real);
+        for (const p of rows) {
+          const d = p.data;
+          const extra = d.n ? ` <span style="color:${cssVar("--muted")}">mean of ${d.n}</span>`
+            : d.sd != null ? ` <span style="color:${cssVar("--muted")}">± ${fmtMs(d.sd)}</span>` : "";
+          html += `<div><span style="display:inline-block;width:12px;border-top:3px solid ${p.color};` +
+            `margin:0 6px 3px 0"></span><b>${fmtMs(d.real)} ms</b>${extra}` +
+            ` <span style="color:${cssVar("--ink-2")}">${esc(p.seriesName)}</span></div>`;
+        }
+        return html;
+      },
+    },
+  };
+  };
+
+  const el = $("chart");
+  el.style.height = (LEGEND_H + runs.length * BAND_H + 6) + "px";
+  if (chart) chart.dispose();
+  chart = echarts.init(el, null, { renderer: "canvas" });
+  chart.setOption(buildOption());
+  chart.on("legendselectchanged", (e) => {
+    state.legendSel = Object.assign({}, state.legendSel, e.selected);
+    chart.setOption(buildOption());
+  });
+}
+
+/* ---------- table view (relief channel: every plotted value, no hover) ---------- */
+
+function renderTable(slice) {
+  const { runs, ticks, names, cells } = slice;
+  const plan = colorPlan(names);
+  let html = "";
+  runs.forEach((run, gi) => {
+    if (runs.length > 1) html += `<h3>${esc(runLabel(run))}</h3>`;
+    html += `<div class="tblwrap"><table><thead><tr><th>instance</th>`;
+    for (const n of names)
+      html += `<th><span class="swatch" style="background:${plan.get(n).color}"></span>${esc(n)}</th>`;
+    html += `</tr></thead><tbody>`;
+    ticks.forEach((t, ti) => {
+      html += `<tr><td>${esc(t.label)}</td>`;
+      names.forEach((_, si) => {
+        const c = cells[gi][si][ti];
+        html += c
+          ? `<td>${fmtMs(c.v)}${c.sd != null ? `<span class="sd">± ${fmtMs(c.sd)}</span>` : ""}</td>`
+          : `<td>–</td>`;
+      });
+      html += `</tr>`;
+    });
+    html += `</tbody></table></div>`;
+  });
+  $("table").innerHTML = html + `<p class="sub" style="padding:8px 2px">values in milliseconds (median over repetitions ± stddev)</p>`;
+}
+
+/* ---------- controls ---------- */
+
+function makeDropdown(btn, panel, renderBody) {
+  const close = () => { panel.hidden = true; btn.setAttribute("aria-expanded", "false"); };
+  btn.addEventListener("click", () => {
+    const open = panel.hidden;
+    document.querySelectorAll(".dd-panel").forEach((p) => (p.hidden = true));
+    if (open) { renderBody(); panel.hidden = false; }
+    btn.setAttribute("aria-expanded", String(open));
+  });
+  document.addEventListener("click", (e) => {
+    // A target detached mid-click (all/none re-rendered the panel) is not an
+    // outside click, even though it is no longer contained anywhere.
+    if (!e.target.isConnected) return;
+    if (!btn.parentElement.contains(e.target)) close();
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+}
+
+function checkboxRow(labelText, checked, onChange, cls) {
+  const label = document.createElement("label");
+  if (cls) label.className = cls;
+  const cb = document.createElement("input");
+  cb.type = "checkbox";
+  cb.checked = checked;
+  cb.addEventListener("change", () => { onChange(cb.checked); update(); });
+  label.appendChild(cb);
+  label.appendChild(document.createTextNode(labelText));
+  return label;
+}
+
+function buildFacetControls() {
+  const slot = $("facet-slot");
+  for (const def of FACETS) {
+    const values = [...new Set(Object.keys(DATA.runs).map((id) => def.of(id)))].sort(natural.compare);
+    state.facet.set(def.key, new Set(values));
+
+    const field = document.createElement("div");
+    field.className = "field dd";
+    const lab = document.createElement("label");
+    lab.textContent = def.label;
+    const btn = document.createElement("button");
+    btn.type = "button"; btn.className = "dd-btn"; btn.setAttribute("aria-haspopup", "true");
+    const panel = document.createElement("div");
+    panel.className = "dd-panel"; panel.hidden = true;
+    field.append(lab, btn, panel);
+    slot.appendChild(field);
+
+    const sel = state.facet.get(def.key);
+    const refreshBtn = () => {
+      btn.textContent = sel.size === values.length ? `All (${values.length})`
+        : sel.size === 1 ? [...sel][0] : `${sel.size} of ${values.length}`;
+    };
+    def.refreshBtn = refreshBtn;
+    refreshBtn();
+    makeDropdown(btn, panel, () => {
+      panel.textContent = "";
+      for (const v of values)
+        panel.appendChild(checkboxRow(v, sel.has(v), (on) => {
+          on ? sel.add(v) : sel.delete(v);
+          refreshBtn();
+        }));
+    });
+  }
+}
+
+function buildAlgoControls() {
+  const algoSel = $("algo");
+  for (const a of [...byAlgo.keys()].sort(natural.compare))
+    algoSel.appendChild(new Option(a, a));
+  state.algo = algoSel.value = [...byAlgo.keys()].sort(natural.compare)[0];
+  algoSel.addEventListener("change", () => {
+    state.algo = algoSel.value;
+    state.legendSel = {};
+    refreshVariants();
+    update();
+  });
+  refreshVariants();
+}
+
+function refreshVariants() {
+  const variants = [...byAlgo.get(state.algo).keys()].sort(natural.compare);
+  const sel = $("variant");
+  sel.textContent = "";
+  for (const p of variants) sel.appendChild(new Option(variantLabel(p), p));
+  state.params = variants.includes(state.params) ? state.params : variants[0];
+  sel.value = state.params;
+  sel.onchange = () => { state.params = sel.value; state.legendSel = {}; update(); };
+  $("variant-field").style.display = variants.length === 1 && variants[0] === "" ? "none" : "";
+}
+
+function refreshInstButton() {
+  const avail = availableInstances();
+  let picked = 0, total = 0, avgs = 0;
+  for (const [ds, insts] of avail) {
+    const st = instState(ds);
+    total += insts.size;
+    picked += [...insts].filter((i) => st.picked.has(i)).length;
+    if (st.avg) avgs++;
+  }
+  $("inst-btn").textContent =
+    (picked === total ? `All instances (${total})` : `${picked} of ${total} instances`) +
+    (avgs ? ` + ${avgs} mean` : "");
+}
+
+function buildInstDropdown() {
+  const panel = $("inst-panel");
+  const renderPanel = () => {
+    panel.textContent = "";
+    for (const [ds, insts] of availableInstances()) {
+      const st = instState(ds);
+      const head = document.createElement("div");
+      head.className = "fam-head";
+      const b = document.createElement("b");
+      b.textContent = ds;
+      head.appendChild(b);
+      for (const [txt, on] of [["all", true], ["none", false]]) {
+        const a = document.createElement("button");
+        a.type = "button"; a.textContent = txt;
+        a.addEventListener("click", () => {
+          st.picked = on ? new Set(insts) : new Set();
+          renderPanel();
+          update();
+        });
+        head.appendChild(a);
+      }
+      panel.appendChild(head);
+      panel.appendChild(checkboxRow(`mean over ${ds}`, st.avg,
+        (on) => { st.avg = on; }, "fam-avg"));
+      for (const inst of [...insts].sort(natural.compare))
+        panel.appendChild(checkboxRow(inst, st.picked.has(inst),
+          (on) => { on ? st.picked.add(inst) : st.picked.delete(inst); }));
+    }
+  };
+  makeDropdown($("inst-btn"), panel, renderPanel);
+}
+
+function buildSegs() {
+  const seg = (el, options, get, set) => {
+    for (const [value, text] of options) {
+      const b = document.createElement("button");
+      b.type = "button"; b.textContent = text;
+      b.addEventListener("click", () => { set(value); update(); });
+      el.appendChild(b);
+    }
+    el.refresh = () => [...el.children].forEach((b, i) =>
+      b.setAttribute("aria-pressed", String(options[i][0] === get())));
+    el.refresh();
+  };
+  seg($("scale-seg"), [["auto", "Auto"], ["linear", "Linear"], ["log", "Log"]],
+    () => state.scale, (v) => (state.scale = v));
+  seg($("view-seg"), [["chart", "Chart"], ["table", "Table"]],
+    () => state.view, (v) => (state.view = v));
+}
+
+/* ---------- top-level render ---------- */
+
+function update() {
+  FACETS.forEach((d) => d.refreshBtn && d.refreshBtn());
+  $("scale-seg").refresh(); $("view-seg").refresh();
+  refreshInstButton();
+
+  const slice = assemble();
+  const variant = state.params === "" ? "" : ` — ${variantLabel(state.params)}`;
+  $("card-title").textContent = state.algo + variant;
+  $("card-sub").textContent = slice.runs.length === 1
+    ? runLabel(slice.runs[0])
+    : `${slice.runs.length} runs`;
+
+  const emptyMsg = !slice.runs.length ? "No run matches the selected hardware and build."
+    : !slice.ticks.length ? "No instances selected — pick some in the Instances dropdown."
+    : !slice.names.length ? "No results for this selection." : null;
+
+  $("empty").hidden = !emptyMsg;
+  $("empty").textContent = emptyMsg || "";
+  $("chart").hidden = !!emptyMsg || state.view !== "chart";
+  $("table").hidden = !!emptyMsg || state.view !== "table";
+  if (emptyMsg) { if (chart) { chart.dispose(); chart = null; } return; }
+
+  if (state.view === "chart") renderChart(slice); else renderTable(slice);
+}
+
+async function boot() {
+  try {
+    const resp = await fetch("data.json");
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    DATA = await resp.json();
+  } catch (err) {
+    $("empty").hidden = false;
+    $("empty").innerHTML = `Could not load <code>data.json</code> (${esc(err.message)}).<br>` +
+      `Generate it with <code>python export_web.py results web/data.json</code> and serve this ` +
+      `directory over HTTP, e.g. <code>python -m http.server</code> in <code>web/</code>.`;
+    return;
+  }
+
+  buildFacetDefs();
+  indexRows();
+  buildFacetControls();
+  buildAlgoControls();
+  buildInstDropdown();
+  buildSegs();
+  $("filters").hidden = false;
+
+  const stamps = Object.values(DATA.runs).map((r) => r.timestamp).filter(Boolean).sort();
+  $("foot").textContent = `${Object.keys(DATA.runs).length} run(s), ${DATA.rows.length} measurements` +
+    (stamps.length ? `, latest ${stamps[stamps.length - 1].slice(0, 10)}` : "");
+
+  update();
+  addEventListener("resize", () => chart && chart.resize());
+  darkMode.addEventListener("change", update);
+}
+
+boot();
+</script>
+</body>
+</html>
