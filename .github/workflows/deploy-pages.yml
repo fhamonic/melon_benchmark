@@ -10,12 +10,21 @@ permissions:
   pages: write
   id-token: write
 
-# One deploy at a time; a newer push supersedes an in-flight one.
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: 🗑 Delete deployment
+        uses: strumwolf/delete-deployment-environment@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          environment: github-pages
+          onlyRemoveDeployments: true
   deploy:
     runs-on: ubuntu-latest
     environment:
@@ -23,17 +32,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-
-      # data.json is generated, not tracked: rebuild it from the tracked
-      # results/ (export_web.py only needs the standard library).
       - name: Aggregate results into web/data.json
         run: python3 export_web.py results web/data.json
-
       - uses: actions/configure-pages@v5
-
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web
-
       - id: deployment
         uses: actions/deploy-pages@v4
