@@ -18,8 +18,11 @@
     --accent:      #2a78d6;
     --decal-ink:   rgba(11, 11, 11, 0.28);
   }
+  /* ?theme=light|dark (mirrored to data-theme before first paint) must beat
+     the media query in both directions, so the dark palette appears twice:
+     once OS-driven unless overridden to light, once forced by the override. */
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
       color-scheme: dark;
       --page:      #0d0d0d;
       --surface:   #1a1a19;
@@ -32,6 +35,19 @@
       --accent:    #3987e5;
       --decal-ink: rgba(255, 255, 255, 0.30);
     }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page:      #0d0d0d;
+    --surface:   #1a1a19;
+    --ink:       #ffffff;
+    --ink-2:     #c3c2b7;
+    --muted:     #898781;
+    --grid:      #2c2c2a;
+    --baseline:  #383835;
+    --border:    rgba(255, 255, 255, 0.10);
+    --accent:    #3987e5;
+    --decal-ink: rgba(255, 255, 255, 0.30);
   }
 
   * { box-sizing: border-box; }
@@ -128,6 +144,13 @@
 
   footer { margin-top: 10px; color: var(--muted); font-size: 13px; }
 </style>
+<script>
+  {
+    const theme = new URLSearchParams(location.search).get("theme");
+    if (theme === "light" || theme === "dark")
+      document.documentElement.dataset.theme = theme;
+  }
+</script>
 </head>
 <body>
 <main>
@@ -186,6 +209,28 @@ const esc = (s) => String(s).replace(/[&<>"']/g,
 const natural = new Intl.Collator("en", { numeric: true, sensitivity: "base" });
 const cssVar = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 const darkMode = matchMedia("(prefers-color-scheme: dark)");
+const themeMode = () =>
+  document.documentElement.dataset.theme || (darkMode.matches ? "dark" : "light");
+/* Registered before boot()'s fetch resolves: an embedding page sends its
+   theme on iframe load, which does not wait for data.json. */
+addEventListener("message", (e) => {
+  const theme = e.data && e.data.theme;
+  if (theme === "light" || theme === "dark")
+    document.documentElement.dataset.theme = theme;
+  else if (theme === "auto") delete document.documentElement.dataset.theme;
+  else return;
+  if (DATA) update();
+});
+/* Height reporting for an embedding page: load and update() cover the
+   app-driven changes deterministically; the ResizeObserver catches pure
+   layout changes no app hook sees (the filter row rewrapping on a width
+   change). */
+const reportHeight = () => {
+  if (window.parent === window) return;
+  parent.postMessage({ height: document.documentElement.offsetHeight }, "*");
+};
+new ResizeObserver(reportHeight).observe(document.documentElement);
+addEventListener("load", reportHeight);
 
 let DATA = null;
 let FACETS = [];             // [{key, label, of(runId) -> value}]
@@ -310,7 +355,7 @@ function assemble() {
    composite encoding: hue = the series' base structure, decal = its variant
    suffix — never a 9th generated hue. */
 function colorPlan(names) {
-  const mode = darkMode.matches ? "dark" : "light";
+  const mode = themeMode();
   const C = PALETTE[mode];
   if (names.length <= C.length)
     return new Map(names.map((n, i) => [n, { color: C[i], decal: 0 }]));
@@ -660,7 +705,10 @@ function buildSegs() {
    Selectors mirror into the query string so a link (or an <iframe> on a docs
    page) reproduces the view: ?algorithm=dijkstra&params=int%7C4-heap
    &dataset=9th_dimacs&hardware=...&build=...&inst.<ds>=i1,i2,mean
-   &scale=log&view=table. Only non-default values are written. */
+   &scale=log&view=table. Only non-default values are written.
+   ?theme=light|dark overrides prefers-color-scheme (applied in <head>);
+   an embedding page can also postMessage({theme}) to switch without a
+   reload, and receives {height} messages to size its iframe with. */
 
 function applyUrlState() {
   const q = new URLSearchParams(location.search);
@@ -743,12 +791,20 @@ function syncUrl() {
   if (state.scale !== "auto") q.set("scale", state.scale);
   if (state.view !== "chart") q.set("view", state.view);
 
+  const theme = document.documentElement.dataset.theme;
+  if (theme) q.set("theme", theme);
+
   history.replaceState(null, "", location.pathname + "?" + q.toString());
 }
 
 /* ---------- top-level render ---------- */
 
 function update() {
+  updateView();
+  reportHeight();
+}
+
+function updateView() {
   FACETS.forEach((d) => d.refreshBtn && d.refreshBtn());
   $("scale-seg").refresh(); $("view-seg").refresh();
   refreshInstButton();
