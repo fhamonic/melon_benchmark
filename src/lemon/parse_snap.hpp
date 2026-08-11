@@ -9,10 +9,12 @@
 #include <lemon/smart_graph.h>
 #include <lemon/static_graph.h>
 
+#include "input_file.hpp"
+
 template <typename _Graph>
 void parse_snap(const std::filesystem::path & file_name, _Graph & graph) {
-    std::ifstream gr_file(file_name);
-    int nb_nodes, nb_arcs;
+    auto gr_file = open_input_file(file_name);
+    int nb_nodes = 0, nb_arcs = 0;
     gr_file >> nb_nodes >> nb_arcs;
 
     for(std::size_t i = 0; i < nb_nodes; ++i) {
@@ -28,8 +30,8 @@ void parse_snap(const std::filesystem::path & file_name, _Graph & graph) {
 
 void parse_snap(const std::filesystem::path & file_name,
                 lemon::StaticDigraph & graph) {
-    std::ifstream gr_file(file_name);
-    int nb_nodes, nb_arcs;
+    auto gr_file = open_input_file(file_name);
+    int nb_nodes = 0, nb_arcs = 0;
     gr_file >> nb_nodes >> nb_arcs;
 
     std::vector<std::pair<int, int>> arcs;

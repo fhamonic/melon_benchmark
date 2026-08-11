@@ -34,11 +34,18 @@ fetch_snap() {
     echo "SNAP directed graphs -> $DATA_DIR/snap"
     mkdir -p "$DATA_DIR/snap"
     local base="https://snap.stanford.edu/data"
-    for name in web-Stanford Amazon0302 Amazon0505 WikiTalk; do
+    # "<local name>:<name SNAP serves it under>". The two differ for three of
+    # the four: SNAP's dataset pages are titled Amazon0302 / Amazon0505 /
+    # WikiTalk, but the archives are amazon0302 / amazon0505 / wiki-Talk and
+    # the titled spellings 404. The local names are the ones
+    # include/snap_instances.hpp asks for, so those are what gets written.
+    for entry in web-Stanford:web-Stanford Amazon0302:amazon0302 \
+                 Amazon0505:amazon0505 WikiTalk:wiki-Talk; do
+        local name="${entry%%:*}" remote="${entry##*:}"
         local gz="$DATA_DIR/snap/$name.txt.gz"
         local out="$DATA_DIR/snap/$name.txt"
         [[ -f "$out" ]] && { echo "  have $name.txt"; continue; }
-        download "$base/$name.txt.gz" "$gz"
+        download "$base/$remote.txt.gz" "$gz"
         echo "  normalizing $name.txt"
         gunzip -c "$gz" | python3 -c '
 import sys
@@ -82,22 +89,40 @@ fetch_dimacs() {
             gunzip -f "$out.gz"
         done
     done
+    # rome99 is the smallest instance in include/dimacs_instances.hpp and the
+    # first one every *-9th_dimacs benchmark loads, but it is not part of the
+    # USA-road family above -- it ships under the challenge's rome/ directory,
+    # and only uncompressed: the .gr.gz path there answers with a redirect
+    # page, not an archive.
+    local rome="$DATA_DIR/9th_DIMACS_USA_roads/rome99.gr"
+    download "http://www.diag.uniroma1.it/challenge9/data/rome/rome99.gr" "$rome"
+    # That redirect page is served with a 200, so a wrong path does not fail the
+    # download -- it lands as an HTML file the benchmarks would abort on. Check
+    # for the DIMACS problem line instead.
+    if ! grep -q '^p sp ' "$rome"; then
+        echo "  rome99.gr is not a DIMACS graph -- removing it" >&2
+        rm -f "$rome"
+        exit 1
+    fi
 }
 
 # ------------------------------------------------------- BVZ-tsukuba max flow
 fetch_bvz() {
     echo "BVZ-tsukuba max-flow instances -> $DATA_DIR/BVZ-tsukuba"
     mkdir -p "$DATA_DIR/BVZ-tsukuba"
-    local base="https://vision.cs.uwaterloo.ca/files/BVZ-tsukuba.zip"
-    local zip="$DATA_DIR/BVZ-tsukuba.zip"
+    # Waterloo publishes this as a bzip2 tarball, not a zip; the .zip name 404s.
+    # The archive is flat -- 16 .max and their 16 .sol siblings, no directory
+    # prefix -- so it extracts straight into the instance directory.
+    local base="https://vision.cs.uwaterloo.ca/files/BVZ-tsukuba.tbz2"
+    local tarball="$DATA_DIR/BVZ-tsukuba.tbz2"
     if [[ -f "$DATA_DIR/BVZ-tsukuba/BVZ-tsukuba0.max" ]]; then
         echo "  have BVZ-tsukuba instances"
         return
     fi
-    have unzip || { echo "unzip is required for BVZ-tsukuba" >&2; exit 1; }
-    download "$base" "$zip"
-    unzip -joq "$zip" -d "$DATA_DIR/BVZ-tsukuba"
-    rm -f "$zip"
+    have tar || { echo "tar is required for BVZ-tsukuba" >&2; exit 1; }
+    download "$base" "$tarball"
+    tar -xjf "$tarball" -C "$DATA_DIR/BVZ-tsukuba"
+    rm -f "$tarball"
     echo "  the .sol files are the reference max-flow values; the benchmarks"
     echo "  check against them, so do not delete them"
 }

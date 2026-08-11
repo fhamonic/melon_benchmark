@@ -35,9 +35,17 @@ PLOTS_DIR = $(PLOTS_ROOT)/$(RUN_ID)
 NATIVE_CONF = -c 'tools.cmake.cmaketoolchain:extra_variables={"OPTIMIZE_FOR_NATIVE": {"value": "ON", "cache": True, "type": "BOOL"}}'
 CONAN_ARGS = -b=missing $(if $(filter ON,$(NATIVE)),$(NATIVE_CONF))
 
-.PHONY: all build benchmark validate plot web clean
+.PHONY: all build benchmark validate plot web data clean
 
 all: plot
+
+# Deliberately not a prerequisite of benchmark: ~800 MB from four third-party
+# publishers is not a side effect `make` should have, and none of it is
+# redistributable by this repository. An absent dataset is self-explanatory
+# anyway -- the benchmarks name the file they could not read and exit 1, which
+# benchmark.py reports as a failed binary.
+data:
+	scripts/fetch_data.sh
 
 build:
 	conan build src/melon -of=$(BUILD_DIR)/melon $(CONAN_ARGS) -pr=$(MELON_PROFILE)

@@ -9,6 +9,8 @@
 
 #include <boost/graph/adjacency_list.hpp>
 
+#include "input_file.hpp"
+
 // Boost's max-flow algorithms work on an explicit residual network: every arc
 // needs a reverse arc, and each of the two must point at the other through an
 // edge_reverse_t property. That is why max-flow needs its own reader rather
@@ -33,7 +35,7 @@ template <typename _Value>
     std::size_t nb_nodes = 0;
     std::vector<std::tuple<std::size_t, std::size_t, _Value>> arcs;
 
-    std::ifstream gr_file(file_name);
+    auto gr_file = open_input_file(file_name);
     std::string line;
     while(getline(gr_file, line)) {
         std::istringstream iss(line);

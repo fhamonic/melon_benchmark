@@ -159,7 +159,7 @@ point-to-point queries.
 
 ```sh
 pip install -r requirements.txt
-scripts/fetch_data.sh          # ~800 MB of third-party graphs into data/
+make data                      # ~800 MB of third-party graphs into data/
 make                           # build -> benchmark -> validate -> plot
 make web                       # aggregate all runs into the web/ chart viewer
 ```

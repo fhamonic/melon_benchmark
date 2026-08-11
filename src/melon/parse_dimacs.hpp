@@ -6,6 +6,8 @@
 #include <ranges>
 #include <sstream>
 
+#include "input_file.hpp"
+
 template <typename V, typename AW>
 using vector_graph = std::vector<std::vector<std::pair<V, AW>>>;
 
@@ -56,7 +58,7 @@ auto parse_dimacs(const std::filesystem::path & gr_file) {
         melon::mutable_digraph graph;
         std::vector<_Value> lengths;
 
-        std::ifstream file(gr_file);
+        auto file = open_input_file(gr_file);
         std::string line;
         std::size_t line_no = 0;
         while(getline(file, line)) {
@@ -69,7 +71,7 @@ auto parse_dimacs(const std::filesystem::path & gr_file) {
                         break;
                     case 'p': {
                         std::string format;
-                        std::size_t nb_nodes, nb_arcs;
+                        std::size_t nb_nodes = 0, nb_arcs = 0;
                         if(iss >> format >> nb_nodes >> nb_arcs) {
                             for(std::size_t i = 0u; i < nb_nodes; ++i) {
                                 (void)graph.create_vertex();
@@ -103,7 +105,7 @@ auto parse_dimacs(const std::filesystem::path & gr_file) {
                         std::same_as<_Graph, vector_cpo_double>) {
         _Graph graph;
 
-        std::ifstream file(gr_file);
+        auto file = open_input_file(gr_file);
         std::string line;
         std::size_t line_no = 0;
         while(getline(file, line)) {
@@ -116,7 +118,7 @@ auto parse_dimacs(const std::filesystem::path & gr_file) {
                         break;
                     case 'p': {
                         std::string format;
-                        std::size_t nb_nodes, nb_arcs;
+                        std::size_t nb_nodes = 0, nb_arcs = 0;
                         if(iss >> format >> nb_nodes >> nb_arcs) {
                             graph.resize(nb_nodes);
                         }
@@ -145,7 +147,7 @@ auto parse_dimacs(const std::filesystem::path & gr_file) {
     } else {
         melon::static_digraph_builder<_Graph, _Value> builder(0);
 
-        std::ifstream file(gr_file);
+        auto file = open_input_file(gr_file);
         std::string line;
         std::size_t line_no = 0;
         while(getline(file, line)) {
@@ -158,7 +160,7 @@ auto parse_dimacs(const std::filesystem::path & gr_file) {
                         break;
                     case 'p': {
                         std::string format;
-                        std::size_t nb_nodes, nb_arcs;
+                        std::size_t nb_nodes = 0, nb_arcs = 0;
                         if(iss >> format >> nb_nodes >> nb_arcs) {
                             builder =
                                 melon::static_digraph_builder<_Graph, _Value>(

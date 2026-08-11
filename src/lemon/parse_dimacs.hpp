@@ -5,6 +5,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "input_file.hpp"
+
 template <typename _Value>
 struct arc_entry {
     int first;
@@ -19,9 +21,9 @@ void parse_dimacs(const std::filesystem::path & file_name, _Graph & graph,
     if constexpr(std::same_as<_Graph, StaticDigraph>) {
         std::vector<arc_entry<_Value>> arcs;
         std::string format;
-        int nb_nodes, nb_arcs;
+        int nb_nodes = 0, nb_arcs = 0;
 
-        std::ifstream gr_file(file_name);
+        auto gr_file = open_input_file(file_name);
         std::string line;
         while(getline(gr_file, line)) {
             std::istringstream iss(line);
@@ -61,7 +63,7 @@ void parse_dimacs(const std::filesystem::path & file_name, _Graph & graph,
             length_map[graph.arcFromId(i)] = arcs[i].weight;
         }
     } else {
-        std::ifstream gr_file(file_name);
+        auto gr_file = open_input_file(file_name);
         std::string line;
         while(getline(gr_file, line)) {
             std::istringstream iss(line);
@@ -74,7 +76,7 @@ void parse_dimacs(const std::filesystem::path & file_name, _Graph & graph,
                         break;
                     case 'p': {
                         std::string format;
-                        int nb_nodes, nb_arcs;
+                        int nb_nodes = 0, nb_arcs = 0;
                         if(iss >> format >> nb_nodes >> nb_arcs) {
                             for(int i = 0; i < nb_nodes; ++i) {
                                 graph.addNode();
@@ -106,7 +108,7 @@ template <typename _Graph, typename _Value>
 void parse_undirected_dimacs(const std::filesystem::path & file_name,
                              _Graph & graph,
                              typename _Graph::EdgeMap<_Value> & length_map) {
-    std::ifstream gr_file(file_name);
+    auto gr_file = open_input_file(file_name);
     std::string line;
     while(getline(gr_file, line)) {
         std::istringstream iss(line);
@@ -119,7 +121,7 @@ void parse_undirected_dimacs(const std::filesystem::path & file_name,
                     break;
                 case 'p': {
                     std::string format;
-                    int nb_nodes, nb_arcs;
+                    int nb_nodes = 0, nb_arcs = 0;
                     if(iss >> format >> nb_nodes >> nb_arcs) {
                         for(int i = 0; i < nb_nodes; ++i) {
                             graph.addNode();

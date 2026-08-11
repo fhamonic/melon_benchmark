@@ -10,6 +10,8 @@
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/graph_traits.hpp>
 
+#include "input_file.hpp"
+
 template <typename _Value>
 auto parse_adj_list_dimacs(const std::filesystem::path & file_name) {
     using graph_t =
@@ -24,10 +26,10 @@ auto parse_adj_list_dimacs(const std::filesystem::path & file_name) {
     typename boost::property_map<graph_t, boost::edge_weight_t>::type
         length_map;
 
-    int nb_nodes;
+    int nb_nodes = 0;
     std::vector<std::tuple<int, int, _Value>> arcs;
 
-    std::ifstream gr_file(file_name);
+    auto gr_file = open_input_file(file_name);
     std::string line;
     while(getline(gr_file, line)) {
         std::istringstream iss(line);
@@ -38,7 +40,7 @@ auto parse_adj_list_dimacs(const std::filesystem::path & file_name) {
                     break;
                 case 'p': {
                     std::string format;
-                    int nb_arcs;
+                    int nb_arcs = 0;
                     iss >> format >> nb_nodes >> nb_arcs;
                     break;
                 }
@@ -92,12 +94,12 @@ auto parse_csr_dimacs(const std::filesystem::path & file_name) {
     graph_t graph;
     std::vector<Edge_Cost<_Value>> weights;
 
-    int nb_nodes;
+    int nb_nodes = 0;
     int nb_arcs;
     std::vector<std::pair<int, int>> arcs;
     weights.resize(0);
 
-    std::ifstream gr_file(file_name);
+    auto gr_file = open_input_file(file_name);
     std::string line;
     while(getline(gr_file, line)) {
         std::istringstream iss(line);

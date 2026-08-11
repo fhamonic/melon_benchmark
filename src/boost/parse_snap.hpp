@@ -10,14 +10,16 @@
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/graph_traits.hpp>
 
+#include "input_file.hpp"
+
 auto parse_adj_list_snap(const std::filesystem::path & file_name) {
     using graph_t =
         boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS,
                               boost::no_property, boost::no_property>;
 
-    std::ifstream gr_file(file_name);
+    auto gr_file = open_input_file(file_name);
 
-    int nb_nodes, nb_arcs;
+    int nb_nodes = 0, nb_arcs = 0;
     gr_file >> nb_nodes >> nb_arcs;
     graph_t graph(nb_nodes);
 
@@ -37,9 +39,9 @@ auto parse_csr_snap(const std::filesystem::path & file_name) {
                                            boost::no_property>;
 
     std::vector<std::pair<int, int>> arcs;
-    std::ifstream gr_file(file_name);
+    auto gr_file = open_input_file(file_name);
 
-    int nb_nodes, nb_arcs;
+    int nb_nodes = 0, nb_arcs = 0;
     gr_file >> nb_nodes >> nb_arcs;
     arcs.reserve(nb_arcs);
 

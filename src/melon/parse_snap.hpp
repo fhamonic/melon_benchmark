@@ -5,20 +5,18 @@
 #include <iostream>
 #include <sstream>
 
+#include "input_file.hpp"
+
 #include "melon/container/mutable_digraph.hpp"
 #include "melon/utility/static_digraph_builder.hpp"
 
 template <typename _Graph>
 auto parse_snap(const std::filesystem::path & file_name) {
-    if(!std::filesystem::exists(file_name))
-        throw std::runtime_error(std::string(file_name.c_str()) +
-                                 " not found !");
-
     if constexpr(std::same_as<_Graph, mutable_digraph>) {
         melon::mutable_digraph graph;
 
-        std::ifstream gr_file(file_name);
-        std::size_t nb_nodes, nb_arcs;
+        auto gr_file = open_input_file(file_name);
+        std::size_t nb_nodes = 0, nb_arcs = 0;
         gr_file >> nb_nodes >> nb_arcs;
 
         for(std::size_t i = 0u; i < nb_nodes; ++i) {
@@ -30,8 +28,8 @@ auto parse_snap(const std::filesystem::path & file_name) {
 
         return graph;
     } else {
-        std::ifstream gr_file(file_name);
-        std::size_t nb_nodes, nb_arcs;
+        auto gr_file = open_input_file(file_name);
+        std::size_t nb_nodes = 0, nb_arcs = 0;
         gr_file >> nb_nodes >> nb_arcs;
 
         melon::static_digraph_builder<melon::static_digraph> builder(nb_nodes);

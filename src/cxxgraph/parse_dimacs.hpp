@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "input_file.hpp"
+
 #include "CXXGraph/CXXGraph.hpp"
 
 // CXXGraph models a graph as a set of shared_ptr edges over shared_ptr nodes,
@@ -31,14 +33,10 @@ struct cxxgraph_instance {
 template <bool _Weighted = false>
 [[nodiscard]] inline cxxgraph_instance parse_dimacs(
     const std::filesystem::path & file_name) {
-    if(!std::filesystem::exists(file_name))
-        throw std::runtime_error(std::string(file_name.c_str()) +
-                                 " not found !");
-
     cxxgraph_instance instance;
     CXXGraph::id_t arc_id = 0;
 
-    std::ifstream gr_file(file_name);
+    auto gr_file = open_input_file(file_name);
     std::string line;
     while(std::getline(gr_file, line)) {
         std::istringstream iss(line);
