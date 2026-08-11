@@ -221,6 +221,16 @@ addEventListener("message", (e) => {
   else return;
   if (DATA) update();
 });
+/* Height reporting for an embedding page: load and update() cover the
+   app-driven changes deterministically; the ResizeObserver catches pure
+   layout changes no app hook sees (the filter row rewrapping on a width
+   change). */
+const reportHeight = () => {
+  if (window.parent === window) return;
+  parent.postMessage({ height: document.documentElement.offsetHeight }, "*");
+};
+new ResizeObserver(reportHeight).observe(document.documentElement);
+addEventListener("load", reportHeight);
 
 let DATA = null;
 let FACETS = [];             // [{key, label, of(runId) -> value}]
@@ -698,7 +708,7 @@ function buildSegs() {
    &scale=log&view=table. Only non-default values are written.
    ?theme=light|dark overrides prefers-color-scheme (applied in <head>);
    an embedding page can also postMessage({theme}) to switch without a
-   reload. */
+   reload, and receives {height} messages to size its iframe with. */
 
 function applyUrlState() {
   const q = new URLSearchParams(location.search);
@@ -790,6 +800,11 @@ function syncUrl() {
 /* ---------- top-level render ---------- */
 
 function update() {
+  updateView();
+  reportHeight();
+}
+
+function updateView() {
   FACETS.forEach((d) => d.refreshBtn && d.refreshBtn());
   $("scale-seg").refresh(); $("view-seg").refresh();
   refreshInstButton();
