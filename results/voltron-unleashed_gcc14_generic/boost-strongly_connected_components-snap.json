@@ -1,6 +1,6 @@
 {
   "context": {
-    "date": "2026-09-06T03:44:01+02:00",
+    "date": "2026-09-06T12:07:06+02:00",
     "host_name": "Voltron-Unleashed",
     "executable": "build/generic/boost/build/Release/strongly_connected_components-snap",
     "num_cpus": 16,
@@ -33,7 +33,7 @@
         "num_sharing": 16
       }
     ],
-    "load_avg": [1.08838,1.38525,1.2998],
+    "load_avg": [1.26758,1.06641,0.585938],
     "library_version": "v1.9.4",
     "library_build_type": "release",
     "json_schema_version": 1
@@ -50,8 +50,8 @@
       "aggregate_name": "mean",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.6690735473821407e+07,
-      "cpu_time": 1.6690052975000003e+07,
+      "real_time": 1.6562935125000427e+07,
+      "cpu_time": 1.6561432949999999e+07,
       "time_unit": "ns",
       "label": "ae9acee10ee8b08b"
     },
@@ -66,8 +66,8 @@
       "aggregate_name": "median",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.6666063493175898e+07,
-      "cpu_time": 1.6665728000000006e+07,
+      "real_time": 1.6557450249990780e+07,
+      "cpu_time": 1.6555614500000009e+07,
       "time_unit": "ns",
       "label": "ae9acee10ee8b08b"
     },
@@ -82,8 +82,8 @@
       "aggregate_name": "stddev",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 5.1784855943610790e+04,
-      "cpu_time": 5.1295374658674591e+04,
+      "real_time": 1.4303229220934174e+05,
+      "cpu_time": 1.4394660252076734e+05,
       "time_unit": "ns",
       "label": "ae9acee10ee8b08b"
     },
@@ -98,8 +98,8 @@
       "aggregate_name": "cv",
       "aggregate_unit": "percentage",
       "iterations": 5,
-      "real_time": 3.1026107881724427e-03,
-      "cpu_time": 3.0734099367755053e-03,
+      "real_time": 8.6356851083384360e-03,
+      "cpu_time": 8.6916755908351129e-03,
       "time_unit": "ns",
       "label": "ae9acee10ee8b08b"
     },
@@ -114,8 +114,8 @@
       "aggregate_name": "mean",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.2391658619427208e+07,
-      "cpu_time": 1.2390986000000006e+07,
+      "real_time": 1.2268195581815565e+07,
+      "cpu_time": 1.2266966418181818e+07,
       "time_unit": "ns",
       "label": "de11940d0310d6e6"
     },
@@ -130,8 +130,8 @@
       "aggregate_name": "median",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.2426738272717390e+07,
-      "cpu_time": 1.2426489272727270e+07,
+      "real_time": 1.2276450727271864e+07,
+      "cpu_time": 1.2276200181818167e+07,
       "time_unit": "ns",
       "label": "de11940d0310d6e6"
     },
@@ -146,8 +146,8 @@
       "aggregate_name": "stddev",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 7.2429889863927194e+04,
-      "cpu_time": 7.2570417466220606e+04,
+      "real_time": 3.2658005426504493e+04,
+      "cpu_time": 3.3494080533543834e+04,
       "time_unit": "ns",
       "label": "de11940d0310d6e6"
     },
@@ -162,8 +162,8 @@
       "aggregate_name": "cv",
       "aggregate_unit": "percentage",
       "iterations": 5,
-      "real_time": 5.8450520699766676e-03,
-      "cpu_time": 5.8567104721303524e-03,
+      "real_time": 2.6620056069950140e-03,
+      "cpu_time": 2.7304289741838434e-03,
       "time_unit": "ns",
       "label": "de11940d0310d6e6"
     },
@@ -178,8 +178,8 @@
       "aggregate_name": "mean",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 2.5334913231199615e+07,
-      "cpu_time": 2.5333638600000031e+07,
+      "real_time": 2.4461582566668011e+07,
+      "cpu_time": 2.4459784066666670e+07,
       "time_unit": "ns",
       "label": "cd5ccff09437f44c"
     },
@@ -194,8 +194,8 @@
       "aggregate_name": "median",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 2.5187806662870571e+07,
-      "cpu_time": 2.5185785166666735e+07,
+      "real_time": 2.4548037666666765e+07,
+      "cpu_time": 2.4547621166666646e+07,
       "time_unit": "ns",
       "label": "cd5ccff09437f44c"
     },
@@ -210,8 +210,8 @@
       "aggregate_name": "stddev",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 3.9334295847905136e+05,
-      "cpu_time": 3.9379512663945614e+05,
+      "real_time": 1.8564350238443472e+05,
+      "cpu_time": 1.8634510086115412e+05,
       "time_unit": "ns",
       "label": "cd5ccff09437f44c"
     },
@@ -226,8 +226,8 @@
       "aggregate_name": "cv",
       "aggregate_unit": "percentage",
       "iterations": 5,
-      "real_time": 1.5525727476921240e-02,
-      "cpu_time": 1.5544357163106277e-02,
+      "real_time": 7.5891860994062336e-03,
+      "cpu_time": 7.6184278795454162e-03,
       "time_unit": "ns",
       "label": "cd5ccff09437f44c"
     },
@@ -242,8 +242,8 @@
       "aggregate_name": "mean",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.0711407180642709e+08,
-      "cpu_time": 1.0705147640000004e+08,
+      "real_time": 1.0181088919998729e+08,
+      "cpu_time": 1.0179970159999989e+08,
       "time_unit": "ns",
       "label": "dcea8c251dbcb719"
     },
@@ -258,8 +258,8 @@
       "aggregate_name": "median",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.0678132798057050e+08,
-      "cpu_time": 1.0677334900000001e+08,
+      "real_time": 1.0103105599989703e+08,
+      "cpu_time": 1.0102981600000004e+08,
       "time_unit": "ns",
       "label": "dcea8c251dbcb719"
     },
@@ -274,8 +274,8 @@
       "aggregate_name": "stddev",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.5548336567618330e+06,
-      "cpu_time": 1.5867524874779938e+06,
+      "real_time": 1.7407431896117770e+06,
+      "cpu_time": 1.7479583401423011e+06,
       "time_unit": "ns",
       "label": "dcea8c251dbcb719"
     },
@@ -290,8 +290,8 @@
       "aggregate_name": "cv",
       "aggregate_unit": "percentage",
       "iterations": 5,
-      "real_time": 1.4515680624779865e-02,
-      "cpu_time": 1.4822331656118974e-02,
+      "real_time": 1.7097809510262033e-02,
+      "cpu_time": 1.7170564477787260e-02,
       "time_unit": "ns",
       "label": "dcea8c251dbcb719"
     }

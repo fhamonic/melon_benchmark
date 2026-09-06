@@ -78,10 +78,10 @@ struct BM_network_simplex {
             std::string error;
         };
         const auto & result = cached_setup(min_file, [&] {
-            auto algo = network_simplex(traits{}, graph, capacities, costs,
-                                        supplies);
+            auto algo =
+                network_simplex(traits{}, graph, capacities, costs, supplies);
             algo.run();
-            if(algo.optimal())
+            if(!algo.optimal())
                 return verified{{}, "instance reported not optimal"};
             const auto cost = algo.total_cost();
 
@@ -125,15 +125,14 @@ struct BM_network_simplex {
 // same container solves the same instance, so it belongs after the value in
 // the name rather than in the container's own dimension, where it would split
 // one container into two series that no longer pair across libraries.
-#define REGISTER(graph, value, mixing, tag)                                 \
-    benchmark::RegisterBenchmark(std::string(min_file.stem().c_str()) +     \
-                                     "/" #graph ":network_simplex/" #value  \
-                                     "/" tag,                               \
-                                 BM_network_simplex<graph, value, mixing>{},\
-                                 min_file);
+#define REGISTER(graph, value, mixing, tag)                \
+    benchmark::RegisterBenchmark(                          \
+        std::string(min_file.stem().c_str()) +             \
+            "/" #graph ":network_simplex/" #value "/" tag, \
+        BM_network_simplex<graph, value, mixing>{}, min_file);
 
-#define REGISTER_BOTH(graph, value)         \
-    REGISTER(graph, value, true, "mixed")   \
+#define REGISTER_BOTH(graph, value)       \
+    REGISTER(graph, value, true, "mixed") \
     REGISTER(graph, value, false, "unmixed")
 
 int main(int argc, char ** argv) {

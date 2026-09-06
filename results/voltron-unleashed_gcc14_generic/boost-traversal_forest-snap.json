@@ -1,6 +1,6 @@
 {
   "context": {
-    "date": "2026-09-06T03:44:12+02:00",
+    "date": "2026-09-06T12:07:16+02:00",
     "host_name": "Voltron-Unleashed",
     "executable": "build/generic/boost/build/Release/traversal_forest-snap",
     "num_cpus": 16,
@@ -33,7 +33,7 @@
         "num_sharing": 16
       }
     ],
-    "load_avg": [1.07422,1.37207,1.2959],
+    "load_avg": [1.22607,1.06348,0.59082],
     "library_version": "v1.9.4",
     "library_build_type": "release",
     "json_schema_version": 1
@@ -50,8 +50,8 @@
       "aggregate_name": "mean",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.1353366350522267e+07,
-      "cpu_time": 1.1352860916666668e+07,
+      "real_time": 1.1582741633333173e+07,
+      "cpu_time": 1.1582290700000003e+07,
       "time_unit": "ns",
       "label": "283ffc7908931107"
     },
@@ -66,8 +66,8 @@
       "aggregate_name": "median",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.1344672830697771e+07,
-      "cpu_time": 1.1343797416666668e+07,
+      "real_time": 1.1500315999995792e+07,
+      "cpu_time": 1.1500088499999996e+07,
       "time_unit": "ns",
       "label": "283ffc7908931107"
     },
@@ -82,8 +82,8 @@
       "aggregate_name": "stddev",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 2.0862618800803568e+04,
-      "cpu_time": 2.0803327354277768e+04,
+      "real_time": 1.2690476953735326e+05,
+      "cpu_time": 1.2701774581313747e+05,
       "time_unit": "ns",
       "label": "283ffc7908931107"
     },
@@ -98,8 +98,8 @@
       "aggregate_name": "cv",
       "aggregate_unit": "percentage",
       "iterations": 5,
-      "real_time": 1.8375711799209109e-03,
-      "cpu_time": 1.8324303897475972e-03,
+      "real_time": 1.0956367115376450e-02,
+      "cpu_time": 1.0966547905168487e-02,
       "time_unit": "ns",
       "label": "283ffc7908931107"
     },
@@ -114,8 +114,8 @@
       "aggregate_name": "mean",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 8.4356439998373408e+06,
-      "cpu_time": 8.4353205647058822e+06,
+      "real_time": 8.3565325176470447e+06,
+      "cpu_time": 8.3560196823529433e+06,
       "time_unit": "ns",
       "label": "22ac77252f2d8c85"
     },
@@ -130,8 +130,8 @@
       "aggregate_name": "median",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 8.4222453536794465e+06,
-      "cpu_time": 8.4218858235294037e+06,
+      "real_time": 8.3348513529365258e+06,
+      "cpu_time": 8.3346868823529426e+06,
       "time_unit": "ns",
       "label": "22ac77252f2d8c85"
     },
@@ -146,8 +146,8 @@
       "aggregate_name": "stddev",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 4.0773888176578592e+04,
-      "cpu_time": 4.0557379344722271e+04,
+      "real_time": 4.0252800614475018e+04,
+      "cpu_time": 3.9974888832206925e+04,
       "time_unit": "ns",
       "label": "22ac77252f2d8c85"
     },
@@ -162,8 +162,8 @@
       "aggregate_name": "cv",
       "aggregate_unit": "percentage",
       "iterations": 5,
-      "real_time": 4.8335240530971687e-03,
-      "cpu_time": 4.8080424488451436e-03,
+      "real_time": 4.8169262226252941e-03,
+      "cpu_time": 4.7839629813976846e-03,
       "time_unit": "ns",
       "label": "22ac77252f2d8c85"
     },
@@ -178,8 +178,8 @@
       "aggregate_name": "mean",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.6156320324807893e+07,
-      "cpu_time": 1.6150341000000000e+07,
+      "real_time": 1.6125777911111075e+07,
+      "cpu_time": 1.6124343933333337e+07,
       "time_unit": "ns",
       "label": "ecdeda7a64b6e925"
     },
@@ -194,8 +194,8 @@
       "aggregate_name": "median",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.6095196500828024e+07,
-      "cpu_time": 1.6087052500000034e+07,
+      "real_time": 1.5953507555562079e+07,
+      "cpu_time": 1.5953197555555576e+07,
       "time_unit": "ns",
       "label": "ecdeda7a64b6e925"
     },
@@ -210,8 +210,8 @@
       "aggregate_name": "stddev",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.0726181455190445e+05,
-      "cpu_time": 1.1137606206260482e+05,
+      "real_time": 3.1055156311533874e+05,
+      "cpu_time": 3.1115125469201856e+05,
       "time_unit": "ns",
       "label": "ecdeda7a64b6e925"
     },
@@ -226,8 +226,8 @@
       "aggregate_name": "cv",
       "aggregate_unit": "percentage",
       "iterations": 5,
-      "real_time": 6.6390002423512761e-03,
-      "cpu_time": 6.8962049818393810e-03,
+      "real_time": 1.9258082607063610e-02,
+      "cpu_time": 1.9296986964460958e-02,
       "time_unit": "ns",
       "label": "ecdeda7a64b6e925"
     },
@@ -242,8 +242,8 @@
       "aggregate_name": "mean",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 6.7372099694330245e+07,
-      "cpu_time": 6.7369805399999946e+07,
+      "real_time": 6.6664205099993981e+07,
+      "cpu_time": 6.6658121900000021e+07,
       "time_unit": "ns",
       "label": "f51fe3a3a98459ff"
     },
@@ -258,8 +258,8 @@
       "aggregate_name": "median",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 6.7070567980408669e+07,
-      "cpu_time": 6.7063936000000045e+07,
+      "real_time": 6.6375044499977782e+07,
+      "cpu_time": 6.6373862499999881e+07,
       "time_unit": "ns",
       "label": "f51fe3a3a98459ff"
     },
@@ -274,8 +274,8 @@
       "aggregate_name": "stddev",
       "aggregate_unit": "time",
       "iterations": 5,
-      "real_time": 1.0757512742002769e+06,
-      "cpu_time": 1.0761815916667585e+06,
+      "real_time": 9.7269669408908708e+05,
+      "cpu_time": 9.6813941808824870e+05,
       "time_unit": "ns",
       "label": "f51fe3a3a98459ff"
     },
@@ -290,8 +290,8 @@
       "aggregate_name": "cv",
       "aggregate_unit": "percentage",
       "iterations": 5,
-      "real_time": 1.5967311083979883e-02,
-      "cpu_time": 1.5974242248097088e-02,
+      "real_time": 1.4590989161725939e-02,
+      "cpu_time": 1.4523952828143638e-02,
       "time_unit": "ns",
       "label": "f51fe3a3a98459ff"
     }
