@@ -17,10 +17,12 @@ template <typename _Graph>
 struct BM {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file) const {
-        auto [graph, lengths] = parse_dimacs<_Graph, int>(gr_file);
+        auto & [graph, lengths] = cached_parse(
+            gr_file, [&] { return parse_dimacs<_Graph, int>(gr_file); });
 
-        state.SetLabel(
-            melon_partition_checksum(graph, traversal_forest(graph)));
+        state.SetLabel(cached_setup(gr_file, [&] {
+            return melon_partition_checksum(graph, traversal_forest(graph));
+        }));
 
         for(auto _ : state) {
             for(auto && component : traversal_forest(graph)) {

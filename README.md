@@ -7,7 +7,7 @@ graph libraries — [LEMON](https://lemon.cs.elte.hu/) and
 
 Interactive charts of every recorded run: **https://fhamonic.github.io/melon_benchmark/**
 
-All numbers below are medians of 10 repetitions on an AMD Ryzen 7 7800X3D, GCC 14.1.0,
+All numbers below are medians of 5 repetitions on an AMD Ryzen 7 7800X3D, GCC 14.1.0,
 `-O3` + LTO, generic x86-64 codegen. Every library is built with the **same compiler**
 (only the language standard differs: MELON requires C++23, the baselines build as C++20),
 and every timed configuration must produce the same result digest as all the others — see
@@ -104,15 +104,17 @@ every graph container and every value type produced the same digest** per (algor
 dataset, instance); `make plot` refuses to draw anything otherwise. Digests are canonical:
 values are read in vertex-id order (never traversal order), component partitions are
 canonicalized before hashing, and values are quantized so the `int` series of an algorithm
-checks against its `double` series. Max-flow results are additionally checked against
-shipped optimal `.sol` values.
+checks against its `double` series. Max-flow and min-cost-flow results are additionally
+checked against shipped optimal `.sol` values.
 
-Two benchmarks need a note. `traversal_forest`'s result legitimately depends on the
-container's root-iteration order, so `validate.py` checks agreement within each root order
-instead of across all. And `kruskal` currently has a known int-vs-double digest mismatch on
-the four largest road networks (all libraries agree within each value type — it is an
-equal-weight tie-breaking artifact, not a wrong tree), so no kruskal timings are published
-above.
+Three benchmarks need a note. `network_simplex` digests the optimal *cost* rather than the
+flow: degenerate optima let two correct implementations return different flows of the same
+cost, so the flow is not a canonical answer and the cost is. `traversal_forest`'s result
+legitimately depends on the container's root-iteration order, so `validate.py` checks
+agreement within each root order instead of across all. And `kruskal` currently has a known
+int-vs-double digest mismatch on the four largest road networks (all libraries agree within
+each value type — it is an equal-weight tie-breaking artifact, not a wrong tree), so no
+kruskal timings are published above.
 
 Timed loops are guarded against elision: `benchmark::DoNotOptimize` on every produced
 value, and `dijkstra_bounded` counts settled vertices *inside* the timed loop and requires
@@ -142,6 +144,7 @@ off, but that is measured as its own benchmark, not smuggled into the comparison
 | `weakly_connected_components` | snap, 9th_dimacs | ✅ | ✅ | ❌ none correct |
 | `traversal_forest` | snap, 9th_dimacs | ✅ | ✅ | CSR only |
 | `max_flow` | bvz_tsukuba, rmf, snap | dinitz | preflow | push_relabel, boykov_kolmogorov (not snap) |
+| `network_simplex` | netgen, assignment, transport, circulation | static/mutable × {int,double} | Static/Smart/List × {int,double} | ❌ none |
 | `kruskal` | 9th_dimacs, bvz_tsukuba | ✅ | ✅ | ❌ |
 | `bentley_ottmann` | random segments | int64/int128/bounded8/16/32 | vs **CGAL** `epeck` | — |
 
@@ -149,6 +152,46 @@ The `max_flow` chart compares each library's flagship algorithm, so it answers "
 each library give you", not "whose Dinitz is faster". Boost's Boykov–Kolmogorov is included
 because BVZ-tsukuba is the vision dataset it was published for — and on it, it is roughly an
 order of magnitude faster than everything else.
+
+The `network_simplex` chart is the opposite kind of comparison: MELON's implementation is a
+reimplementation of LEMON's, both are passed the block-search pivot rule explicitly with the
+same block-size constants, both search the same arc set (supplies balance, so LEMON takes its
+EQ branch and its artificial arcs stay out of the search, matching MELON's virtual arcs), and
+both are handed the same capacities, costs and supplies — so it really does answer "whose
+network simplex is faster". Boost has no network simplex (it offers cycle cancelling and
+successive shortest paths), so it is absent rather than losing.
+
+Four instance families, because they disagree about which library wins and any one of them
+alone would be a misleading result. `netgen` is the structure where a source-packed arc order
+hurts the block rule most; `assignment` (k×k, unit supplies and capacities) is the opposite
+extreme, where the pivot count is tiny next to the arc count and setup cost decides it;
+`transport` is the classic dense-bipartite OR shape, long enough that the entering-arc scan
+dominates; `circulation` has zero supplies and 30% negative-cost arcs, and is the only family
+here that exercises negative costs at all. Setup is inside the timed region on both sides —
+LEMON's constructor building its internal copy, MELON's `reset()` — because for short solves
+that *is* the cost.
+
+What separates them on `netgen` is one feature, **arc mixing**, so it is swept rather than fixed:
+it is a benchmark parameter like the value type, and each chart is one setting (`int/mixed`,
+`int/unmixed`, ...) with the containers compared inside it as usual. LEMON copies the arcs into its own
+arrays in a scattered order, so each block-search block samples many source vertices; MELON has
+the same permutation as a *scan* order over its arcs (a traits flag, off by default), and its
+`mutable_digraph` is charted unmixed only, since a strided visit needs random access to the arcs
+range and a join over per-vertex out-arc lists does not give it. Unmixed, both scan the order the
+graph stores, and both MELON containers group arcs by source (87.5% of consecutive arcs share a
+source on these instances). Correlated blocks make worse entering-arc choices, and unmixed MELON
+needs 1.4×–2.1× the pivots as a result. Two measurements pin it: turning LEMON's mixing off
+doubles its time on the largest `netgen` instance (25.1 ms → 48.2 ms, landing next to unmixed
+MELON), and giving both the order-independent Dantzig rule instead makes their pivot counts
+identical to within 1%. Everything else — the basis representation, the leaving-arc rule and
+Cunningham's tie-break, the artificial cost, the block size, the cursor mechanics — measured as no
+difference at all.
+
+The same packing that costs MELON pivots on `netgen` is what makes its scan cheap elsewhere: it
+reads `pi[source]` in runs of one vertex where LEMON's mixed order randomises both endpoint
+gathers. On `assignment` that reverses: mixing costs the same container more time than it saves on
+`netgen`. Which effect wins is a property of the instance, which is why there are four families
+and not one, and why both settings are charted rather than one picked.
 
 Adapters for [CXXGraph](https://github.com/ZigRazor/CXXGraph) exist under `src/cxxgraph/`
 but are disabled: its traversals are O(|V|·|A|) (visited set scanned linearly per edge), so
@@ -163,6 +206,11 @@ make data                      # ~800 MB of third-party graphs into data/
 make                           # build -> benchmark -> validate -> plot
 make web                       # aggregate all runs into the web/ chart viewer
 ```
+
+`make benchmark` takes about half an hour. Roughly 1200 benchmark cases each cost at least
+`--repetitions x --min-time`, so those two defaults (5 and `0.1s`) are what the runtime is
+made of rather than the measurements themselves -- four fifths of the cases run in under
+20 ms. Both are flags on `benchmark.py` if a longer, steadier run is wanted.
 
 Requirements: Conan 2, CMake ≥ 3.12, Python 3. Each library is a self-contained Conan/CMake
 project under `src/<library>/`, so libraries never share a translation unit or fight over
@@ -189,8 +237,14 @@ build and results directories, so generic and native numbers can never mix. Data
 from their original publishers: [SNAP](https://snap.stanford.edu/data/) directed graphs, the
 [9th DIMACS Implementation Challenge](http://www.diag.uniroma1.it/challenge9/download.shtml)
 USA road networks, [BVZ-tsukuba](https://vision.cs.uwaterloo.ca/data/maxflow) max-flow
-instances, and locally generated Goldfarb–Grigoriadis RMF max-flow instances with
-independently cross-checked `.sol` optima.
+instances, locally generated Goldfarb–Grigoriadis RMF max-flow instances with
+independently cross-checked `.sol` optima, and four locally generated min-cost-flow families
+(NETGEN, assignment, transportation, circulation). Their `.sol` optima carry a verified dual
+certificate — feasibility plus non-negative reduced costs on every residual arc, which is a
+proof rather than a second opinion. The largest instance of each family exceeds what the
+Python reference can certify in reasonable time and ships without one; there the gate is
+`validate.py`'s cross-library digest agreement, as it already is for the SNAP max-flow
+instances. Generating them takes about three minutes, nearly all of it in that solver.
 
 ## Known limitations
 
@@ -199,7 +253,11 @@ independently cross-checked `.sol` optima.
 2. **Generic codegen** for the published numbers (`-march=native` runs are kept separately).
 3. **`kruskal` int-vs-double digest mismatch** on the four largest road networks (see
    [Validation](#validation)); kruskal timings are withheld until it is resolved.
-4. **Source-set bias.** Sources are evenly spaced vertex ids; on road networks ids are
+4. **Bellman-Ford instance range.** Its `n*m` work makes one run over the three largest
+   road networks cost tens of seconds, so those instances are skipped for it and for it
+   only (`instance_is_affordable` in `include/helper.hpp`). The three smaller ones order the
+   libraries and the containers the same way.
+5. **Source-set bias.** Sources are evenly spaced vertex ids; on road networks ids are
    spatially correlated, so the sample is not uniform over the graph. It is identical
    across libraries, and the digests prove it.
 

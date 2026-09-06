@@ -40,9 +40,10 @@ struct BM_adj_breadth_first_search {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources) const {
-        auto [graph, length_map] = parse_adj_list_dimacs<int>(gr_file);
+        auto & [graph, length_map] = cached_parse(
+            gr_file, [&] { return parse_adj_list_dimacs<int>(gr_file); });
 
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             checksum cs;
             for(auto && s : sources) {
                 std::vector<char> reached(num_vertices(graph), 0);
@@ -50,8 +51,8 @@ struct BM_adj_breadth_first_search {
                 boost::breadth_first_search(graph, s, boost::visitor(vis));
                 boost_add_reachability(cs, reached);
             }
-            state.SetLabel(cs.str());
-        }
+            return cs.str();
+        }));
 
         for(auto _ : state) {
             for(auto && s : sources) {
@@ -72,9 +73,10 @@ struct BM_csr_breadth_first_search {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources) const {
-        auto [graph, length_map] = parse_csr_dimacs<int>(gr_file);
+        auto & [graph, length_map] = cached_parse(
+            gr_file, [&] { return parse_csr_dimacs<int>(gr_file); });
 
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             checksum cs;
             for(auto && s : sources) {
                 std::vector<char> reached(num_vertices(graph), 0);
@@ -82,8 +84,8 @@ struct BM_csr_breadth_first_search {
                 boost::breadth_first_search(graph, s, boost::visitor(vis));
                 boost_add_reachability(cs, reached);
             }
-            state.SetLabel(cs.str());
-        }
+            return cs.str();
+        }));
 
         for(auto _ : state) {
             for(auto && s : sources) {

@@ -25,20 +25,28 @@
 using namespace melon;
 
 #include "checksum.hpp"
+#include "helper.hpp"
 #include "max_flow_reference.hpp"
 #include "parse_dimacs.hpp"
 
 template <typename _Graph, typename _Value, typename _Make>
 void run_max_flow(benchmark::State & state,
                   const std::filesystem::path & gr_file, _Make && make) {
-    auto [graph, capacities] = parse_dimacs<_Graph, _Value>(gr_file);
+    auto & [graph, capacities] = cached_parse(
+        gr_file, [&] { return parse_dimacs<_Graph, _Value>(gr_file); });
     // Terminals come from the file's "n <id> s" / "n <id> t" lines rather than
     // being assumed to be vertices 0 and 1.
     const auto [source_id, sink_id] = max_flow_terminals(gr_file);
     const auto s = static_cast<vertex_t<_Graph>>(source_id);
     const auto t = static_cast<vertex_t<_Graph>>(sink_id);
 
-    {
+    // The reference check is a property of the instance, not of the
+    // repetition, so it is cached together with the digest it guards.
+    struct verified {
+        std::string label;
+        std::string error;
+    };
+    const auto & result = cached_setup(gr_file, [&] {
         auto algo = make(graph, capacities, s, t);
         algo.run();
         const auto flow = algo.flow_value();
@@ -47,17 +55,21 @@ void run_max_flow(benchmark::State & state,
         // max-flow benchmark that does not check it is timing an unknown
         // computation.
         if(const auto expected = reference_flow_value(gr_file)) {
-            if(static_cast<long long>(flow) != *expected) {
-                state.SkipWithError("flow value " + std::to_string(flow) +
+            if(static_cast<long long>(flow) != *expected)
+                return verified{{},
+                                "flow value " + std::to_string(flow) +
                                     " != reference " +
-                                    std::to_string(*expected));
-                return;
-            }
+                                    std::to_string(*expected)};
         }
         checksum cs;
         cs.add(flow);
-        state.SetLabel(cs.str());
+        return verified{cs.str(), {}};
+    });
+    if(!result.error.empty()) {
+        state.SkipWithError(result.error);
+        return;
     }
+    state.SetLabel(result.label);
 
     for(auto _ : state) {
         auto algo = make(graph, capacities, s, t);

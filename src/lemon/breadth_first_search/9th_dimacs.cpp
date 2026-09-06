@@ -22,11 +22,9 @@ struct BM {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources) const {
-        _Graph graph;
-        typename _Graph::ArcMap<int> length_map(graph);
-        parse_dimacs<_Graph, int>(gr_file, graph, length_map);
+        auto & [graph, length_map] = cached_parse_dimacs<_Graph, int>(gr_file);
 
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             checksum cs;
             for(auto && s : sources) {
                 Bfs<_Graph> algo(graph);
@@ -37,8 +35,8 @@ struct BM {
                 lemon_add_reachability(
                     graph, cs, [&](const auto & u) { return algo.reached(u); });
             }
-            state.SetLabel(cs.str());
-        }
+            return cs.str();
+        }));
 
         for(auto _ : state) {
             for(auto && s : sources) {

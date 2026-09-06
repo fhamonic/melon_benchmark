@@ -62,7 +62,7 @@
   header h1 { font-size: 22px; font-weight: 600; margin: 6px 0 2px; }
   header p  { margin: 0 0 18px; color: var(--ink-2); }
 
-  /* ---- filter row ---- */
+  /* ---- filter rows ---- */
   .filters {
     display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: flex-end;
     margin-bottom: 12px;
@@ -70,12 +70,11 @@
   .field { display: flex; flex-direction: column; gap: 4px; }
   .field.push { margin-left: auto; }
   .field > label { font-size: 13px; color: var(--muted); }
-  select, .dd-btn, .seg {
+  .dd-btn, .seg {
     height: 32px; border: 1px solid var(--border); border-radius: 8px;
     background: var(--surface); color: var(--ink); font: inherit;
   }
-  select { padding: 0 8px; }
-  select:focus-visible, .dd-btn:focus-visible, .seg button:focus-visible {
+  .dd-btn:focus-visible, .seg button:focus-visible {
     outline: 2px solid var(--accent); outline-offset: 1px;
   }
 
@@ -119,19 +118,20 @@
   }
   .seg button[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--ink); }
 
-  /* ---- card ---- */
+  /* ---- cards, one per (algorithm, variant) ---- */
+  #cards { display: flex; flex-direction: column; gap: 14px; }
   .card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 12px; padding: 14px 16px 8px;
   }
   .card h2 { font-size: 17px; font-weight: 600; margin: 2px 0 0; }
   .card .sub { color: var(--muted); font-size: 13px; margin: 1px 0 6px; }
-  #chart { width: 100%; }
+  .card .chart { width: 100%; }
   .msg { padding: 48px 12px; text-align: center; color: var(--ink-2); }
   .msg code { background: color-mix(in srgb, var(--ink) 7%, transparent); padding: 1px 5px; border-radius: 4px; }
 
   /* ---- table view ---- */
-  #table h3 { font-size: 14px; font-weight: 600; margin: 14px 2px 6px; color: var(--ink-2); }
+  .tbl h3 { font-size: 14px; font-weight: 600; margin: 14px 2px 6px; color: var(--ink-2); }
   .tblwrap { overflow-x: auto; }
   table { border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 100%; }
   th, td { padding: 5px 10px; text-align: right; white-space: nowrap; }
@@ -156,21 +156,8 @@
 <main>
   <div id="filters" hidden>
     <div class="filters" id="facet-slot"></div>
-    <div class="filters">
-      <div class="field">
-        <label for="algo">Algorithm</label>
-        <select id="algo"></select>
-      </div>
-      <div class="field" id="variant-field">
-        <label for="variant">Variant</label>
-        <select id="variant"></select>
-      </div>
-      <div class="field dd" id="inst-dd">
-        <label>Instances</label>
-        <button type="button" class="dd-btn" id="inst-btn" aria-haspopup="true" aria-expanded="false"></button>
-        <div class="dd-panel" id="inst-panel" hidden></div>
-      </div>
-      <div class="field push">
+    <div class="filters" id="main-row">
+      <div class="field push" id="scale-field">
         <label>Scale</label>
         <div class="seg" id="scale-seg"></div>
       </div>
@@ -181,13 +168,10 @@
     </div>
   </div>
 
-  <section class="card">
-    <h2 id="card-title">&nbsp;</h2>
-    <div class="sub" id="card-sub"></div>
-    <div id="chart"></div>
-    <div id="table" hidden></div>
-    <div id="empty" class="msg" hidden></div>
+  <section class="card" id="empty-card" hidden>
+    <div id="empty" class="msg"></div>
   </section>
+  <div id="cards"></div>
   <footer id="foot"></footer>
 </main>
 
@@ -233,17 +217,18 @@ new ResizeObserver(reportHeight).observe(document.documentElement);
 addEventListener("load", reportHeight);
 
 let DATA = null;
-let FACETS = [];             // [{key, label, of(runId) -> value}]
+let FACETS = [];             // [{key, label, of(runId) -> value, values}]
 let byAlgo = new Map();      // algo -> params -> rows
 let dsInstances = new Map(); // dataset -> Set(instance), across all algorithms
-let chart = null;
+let charts = [];             // live ECharts instances, one per rendered card
+const dropdowns = [];        // checkDropdown fields, for refreshing button texts
 
 const state = {
   facet: new Map(),     // facet key -> Set of selected values
-  algo: null,
-  params: null,
+  algos: new Set(),     // selected algorithms
+  variants: new Map(),  // algo -> Set of selected params (lazy default: first)
   inst: new Map(),      // dataset -> {picked: Set(instance), avg: bool}
-  legendSel: {},        // series name -> false when toggled off in the legend
+  legendSel: new Map(), // combo key -> {series name: false when toggled off}
   scale: "auto",        // auto | linear | log
   view: "chart",        // chart | table
 };
@@ -287,15 +272,43 @@ function selectedRuns() {
 
 function runLabel(id) { return FACETS.map((d) => d.of(id)).join(" · "); }
 
-function currentRows() { return (byAlgo.get(state.algo) || new Map()).get(state.params) || []; }
+const allAlgos = () => [...byAlgo.keys()].sort(natural.compare);
+const variantsOf = (algo) => [...byAlgo.get(algo).keys()].sort(natural.compare);
 
-/* Datasets and instances available for the current algorithm+variant. */
-function availableInstances() {
-  const ds = new Map();
-  for (const r of currentRows()) {
-    if (!ds.has(r[3])) ds.set(r[3], new Set());
-    ds.get(r[3]).add(r[5]);
+function variantState(algo) {
+  if (!state.variants.has(algo))
+    state.variants.set(algo, new Set([variantsOf(algo)[0]]));
+  return state.variants.get(algo);
+}
+
+/* The charts to draw: one per selected (algorithm, variant), in stable order. */
+function selectedCombos() {
+  const combos = [];
+  for (const algo of allAlgos()) {
+    if (!state.algos.has(algo)) continue;
+    const sel = variantState(algo);
+    for (const params of variantsOf(algo))
+      if (sel.has(params)) combos.push({ algo, params });
   }
+  return combos;
+}
+
+function comboRows(combo) { return byAlgo.get(combo.algo).get(combo.params) || []; }
+
+function legendSelOf(combo) {
+  const key = combo.algo + " " + combo.params;
+  if (!state.legendSel.has(key)) state.legendSel.set(key, {});
+  return state.legendSel.get(key);
+}
+
+/* Datasets and instances available across the given combos. */
+function availableInstances(combos) {
+  const ds = new Map();
+  for (const combo of combos)
+    for (const r of comboRows(combo)) {
+      if (!ds.has(r[3])) ds.set(r[3], new Set());
+      ds.get(r[3]).add(r[5]);
+    }
   return new Map([...ds.entries()].sort((a, b) => natural.compare(a[0], b[0])));
 }
 
@@ -305,11 +318,11 @@ function instState(dataset) {
   return state.inst.get(dataset);
 }
 
-/* ---------- assembling the plotted slice ---------- */
+/* ---------- assembling one card's slice ---------- */
 
-function assemble() {
-  const runs = selectedRuns();
-  const avail = availableInstances();
+function assemble(combo) {
+  let runs = selectedRuns();
+  const avail = availableInstances([combo]);
 
   const ticks = []; // {dataset, instance|null, label}
   for (const [dataset, insts] of avail) {
@@ -324,7 +337,7 @@ function assemble() {
   const fam = new Map(); // run\0series\0dataset -> [v, ...]
   const seriesSet = new Set();
   const runSet = new Set(runs);
-  for (const [run, , , dataset, series, instance, v, sd] of currentRows()) {
+  for (const [run, , , dataset, series, instance, v, sd] of comboRows(combo)) {
     if (!runSet.has(run)) continue;
     seriesSet.add(series);
     val.set([run, series, dataset, instance].join("\0"), { v, sd });
@@ -334,13 +347,18 @@ function assemble() {
   }
 
   const names = [...seriesSet].sort(natural.compare);
-  const cells = runs.map((run) => names.map((series) => ticks.map((t) => {
+  let cells = runs.map((run) => names.map((series) => ticks.map((t) => {
     if (t.instance !== null)
       return val.get([run, series, t.dataset, t.instance].join("\0")) || null;
     const vs = fam.get([run, series, t.dataset].join("\0"));
     if (!vs || !vs.length) return null;
     return { v: vs.reduce((a, b) => a + b, 0) / vs.length, sd: null, n: vs.length };
   })));
+
+  // a run with no data for this combo would render as an empty grid — drop it
+  const runKeep = runs.map((_, gi) => cells[gi].some((arr) => arr.some(Boolean)));
+  runs = runs.filter((_, i) => runKeep[i]);
+  cells = cells.filter((_, i) => runKeep[i]);
 
   // drop series that have no visible value in any selected run
   const keep = names.map((_, si) => cells.some((perRun) => perRun[si].some(Boolean)));
@@ -355,8 +373,7 @@ function assemble() {
    composite encoding: hue = the series' base structure, decal = its variant
    suffix — never a 9th generated hue. */
 function colorPlan(names) {
-  const mode = themeMode();
-  const C = PALETTE[mode];
+  const C = PALETTE[themeMode()];
   if (names.length <= C.length)
     return new Map(names.map((n, i) => [n, { color: C[i], decal: 0 }]));
 
@@ -399,7 +416,7 @@ function variantLabel(p) { return p === "" ? "default" : p.split("|").join(" | "
 
 const BAND_H = 310, LEGEND_H = 38;
 
-function renderChart(slice) {
+function renderChart(card, slice, legendSel) {
   const { runs, ticks, names, cells } = slice;
   const plan = colorPlan(names);
   const multi = runs.length > 1;
@@ -407,7 +424,7 @@ function renderChart(slice) {
   // The whole option is a function of the legend selection: the axis range
   // (and the auto log/linear choice) follow only the series left visible.
   const buildOption = () => {
-  const shown = (si) => state.legendSel[names[si]] !== false;
+  const shown = (si) => legendSel[names[si]] !== false;
   const flat = [];
   cells.forEach((perRun) => perRun.forEach((arr, si) => {
     if (!shown(si)) return;
@@ -473,7 +490,7 @@ function renderChart(slice) {
     legend: names.length > 1 ? {
       type: "scroll", top: 2, left: 4, right: 4,
       itemWidth: 13, itemHeight: 13,
-      selected: Object.fromEntries(names.map((n) => [n, state.legendSel[n] !== false])),
+      selected: Object.fromEntries(names.map((n) => [n, legendSel[n] !== false])),
       textStyle: { color: cssVar("--ink-2"), fontSize: 13 },
       pageIconColor: cssVar("--ink-2"), pageTextStyle: { color: cssVar("--muted") },
     } : { show: false },
@@ -506,20 +523,22 @@ function renderChart(slice) {
   };
   };
 
-  const el = $("chart");
+  const el = document.createElement("div");
+  el.className = "chart";
   el.style.height = (LEGEND_H + runs.length * BAND_H + 6) + "px";
-  if (chart) chart.dispose();
-  chart = echarts.init(el, null, { renderer: "canvas" });
+  card.appendChild(el);
+  const chart = echarts.init(el, null, { renderer: "canvas" });
+  charts.push(chart);
   chart.setOption(buildOption());
   chart.on("legendselectchanged", (e) => {
-    state.legendSel = Object.assign({}, state.legendSel, e.selected);
+    Object.assign(legendSel, e.selected);
     chart.setOption(buildOption());
   });
 }
 
 /* ---------- table view (relief channel: every plotted value, no hover) ---------- */
 
-function renderTable(slice) {
+function renderTable(card, slice) {
   const { runs, ticks, names, cells } = slice;
   const plan = colorPlan(names);
   let html = "";
@@ -541,10 +560,21 @@ function renderTable(slice) {
     });
     html += `</tbody></table></div>`;
   });
-  $("table").innerHTML = html + `<p class="sub" style="padding:8px 2px">values in milliseconds (median over repetitions ± stddev)</p>`;
+  const div = document.createElement("div");
+  div.className = "tbl";
+  div.innerHTML = html + `<p class="sub" style="padding:8px 2px">values in milliseconds (median over repetitions ± stddev)</p>`;
+  card.appendChild(div);
 }
 
-/* ---------- controls ---------- */
+/* ---------- the one dropdown component ----------
+   Every selector is a checkbox dropdown described declaratively:
+     label     — the field caption
+     summary() — current button text
+     groups()  — [{ title?, links?: [{text, apply()}], rows: [{text, checked,
+                  set(on), cls?}] }]; title-less groups render as a flat list,
+                  links (all/none) re-render the open panel and update().
+   The component owns the open/close/outside-click behavior; row changes go
+   through checkboxRow, which calls update() after mutating state. */
 
 function makeDropdown(btn, panel, renderBody) {
   const close = () => { panel.hidden = true; btn.setAttribute("aria-expanded", "false"); };
@@ -555,7 +585,7 @@ function makeDropdown(btn, panel, renderBody) {
     btn.setAttribute("aria-expanded", String(open));
   });
   document.addEventListener("click", (e) => {
-    // A target detached mid-click (all/none re-rendered the panel) is not an
+    // A target detached mid-click (a link re-rendered the panel) is not an
     // outside click, even though it is no longer contained anywhere.
     if (!e.target.isConnected) return;
     if (!btn.parentElement.contains(e.target)) close();
@@ -575,112 +605,149 @@ function checkboxRow(labelText, checked, onChange, cls) {
   return label;
 }
 
-function buildFacetControls() {
-  const slot = $("facet-slot");
-  for (const def of FACETS) {
-    const values = [...new Set(Object.keys(DATA.runs).map((id) => def.of(id)))].sort(natural.compare);
-    state.facet.set(def.key, new Set(values));
+function checkDropdown(spec) {
+  const field = document.createElement("div");
+  field.className = "field dd";
+  const lab = document.createElement("label");
+  lab.textContent = spec.label;
+  const btn = document.createElement("button");
+  btn.type = "button"; btn.className = "dd-btn"; btn.setAttribute("aria-haspopup", "true");
+  const panel = document.createElement("div");
+  panel.className = "dd-panel"; panel.hidden = true;
+  field.append(lab, btn, panel);
 
-    const field = document.createElement("div");
-    field.className = "field dd";
-    const lab = document.createElement("label");
-    lab.textContent = def.label;
-    const btn = document.createElement("button");
-    btn.type = "button"; btn.className = "dd-btn"; btn.setAttribute("aria-haspopup", "true");
-    const panel = document.createElement("div");
-    panel.className = "dd-panel"; panel.hidden = true;
-    field.append(lab, btn, panel);
-    slot.appendChild(field);
-
-    def.values = values;
-    const refreshBtn = () => {
-      const sel = state.facet.get(def.key);
-      btn.textContent = sel.size === values.length ? `All (${values.length})`
-        : sel.size === 1 ? [...sel][0] : `${sel.size} of ${values.length}`;
-    };
-    def.refreshBtn = refreshBtn;
-    refreshBtn();
-    makeDropdown(btn, panel, () => {
-      panel.textContent = "";
-      const sel = state.facet.get(def.key);
-      for (const v of values)
-        panel.appendChild(checkboxRow(v, sel.has(v), (on) => {
-          on ? sel.add(v) : sel.delete(v);
-          refreshBtn();
-        }));
-    });
-  }
-}
-
-function buildAlgoControls() {
-  const algoSel = $("algo");
-  for (const a of [...byAlgo.keys()].sort(natural.compare))
-    algoSel.appendChild(new Option(a, a));
-  state.algo = algoSel.value = [...byAlgo.keys()].sort(natural.compare)[0];
-  algoSel.addEventListener("change", () => {
-    state.algo = algoSel.value;
-    state.legendSel = {};
-    refreshVariants();
-    update();
-  });
-  refreshVariants();
-}
-
-function refreshVariants() {
-  const variants = [...byAlgo.get(state.algo).keys()].sort(natural.compare);
-  const sel = $("variant");
-  sel.textContent = "";
-  for (const p of variants) sel.appendChild(new Option(variantLabel(p), p));
-  state.params = variants.includes(state.params) ? state.params : variants[0];
-  sel.value = state.params;
-  sel.onchange = () => { state.params = sel.value; state.legendSel = {}; update(); };
-  $("variant-field").style.display = variants.length === 1 && variants[0] === "" ? "none" : "";
-}
-
-function refreshInstButton() {
-  const avail = availableInstances();
-  let picked = 0, total = 0, avgs = 0;
-  for (const [ds, insts] of avail) {
-    const st = instState(ds);
-    total += insts.size;
-    picked += [...insts].filter((i) => st.picked.has(i)).length;
-    if (st.avg) avgs++;
-  }
-  $("inst-btn").textContent =
-    (picked === total ? `All instances (${total})` : `${picked} of ${total} instances`) +
-    (avgs ? ` + ${avgs} mean` : "");
-}
-
-function buildInstDropdown() {
-  const panel = $("inst-panel");
   const renderPanel = () => {
     panel.textContent = "";
-    for (const [ds, insts] of availableInstances()) {
-      const st = instState(ds);
-      const head = document.createElement("div");
-      head.className = "fam-head";
-      const b = document.createElement("b");
-      b.textContent = ds;
-      head.appendChild(b);
-      for (const [txt, on] of [["all", true], ["none", false]]) {
-        const a = document.createElement("button");
-        a.type = "button"; a.textContent = txt;
-        a.addEventListener("click", () => {
-          st.picked = on ? new Set(insts) : new Set();
-          renderPanel();
-          update();
-        });
-        head.appendChild(a);
+    for (const g of spec.groups()) {
+      if (g.title !== undefined) {
+        const head = document.createElement("div");
+        head.className = "fam-head";
+        const b = document.createElement("b");
+        b.textContent = g.title;
+        head.appendChild(b);
+        for (const link of g.links || []) {
+          const a = document.createElement("button");
+          a.type = "button"; a.textContent = link.text;
+          a.addEventListener("click", () => { link.apply(); renderPanel(); update(); });
+          head.appendChild(a);
+        }
+        panel.appendChild(head);
       }
-      panel.appendChild(head);
-      panel.appendChild(checkboxRow(`mean over ${ds}`, st.avg,
-        (on) => { st.avg = on; }, "fam-avg"));
-      for (const inst of [...insts].sort(natural.compare))
-        panel.appendChild(checkboxRow(inst, st.picked.has(inst),
-          (on) => { on ? st.picked.add(inst) : st.picked.delete(inst); }));
+      for (const row of g.rows)
+        panel.appendChild(checkboxRow(row.text, row.checked, row.set, row.cls));
     }
   };
-  makeDropdown($("inst-btn"), panel, renderPanel);
+  makeDropdown(btn, panel, renderPanel);
+  field.refresh = () => { btn.textContent = spec.summary(); };
+  field.refresh();
+  dropdowns.push(field);
+  return field;
+}
+
+/* ---------- the five selectors, declared against checkDropdown ---------- */
+
+function setToggler(set) {
+  return (value) => (on) => { on ? set.add(value) : set.delete(value); };
+}
+
+function buildControls() {
+  for (const def of FACETS) {
+    const values = [...new Set(Object.keys(DATA.runs).map((id) => def.of(id)))].sort(natural.compare);
+    def.values = values;
+    state.facet.set(def.key, new Set(values));
+    $("facet-slot").appendChild(checkDropdown({
+      label: def.label,
+      summary: () => {
+        const sel = state.facet.get(def.key);
+        return sel.size === values.length ? `All (${values.length})`
+          : sel.size === 1 ? [...sel][0] : `${sel.size} of ${values.length}`;
+      },
+      groups: () => {
+        const toggle = setToggler(state.facet.get(def.key));
+        return [{ rows: values.map((v) => ({
+          text: v, checked: state.facet.get(def.key).has(v), set: toggle(v),
+        })) }];
+      },
+    }));
+  }
+
+  const mainRow = $("main-row"), anchor = $("scale-field");
+
+  state.algos = new Set([allAlgos()[0]]);
+  mainRow.insertBefore(checkDropdown({
+    label: "Algorithms",
+    summary: () => state.algos.size === 1 ? [...state.algos][0]
+      : `${state.algos.size} of ${allAlgos().length}`,
+    groups: () => {
+      const toggle = setToggler(state.algos);
+      return [{ rows: allAlgos().map((a) => ({
+        text: a, checked: state.algos.has(a), set: toggle(a),
+      })) }];
+    },
+  }), anchor);
+
+  // Variants grouped by algorithm, mirroring instances-by-family; algorithms
+  // with a single variant have nothing to choose and get no group.
+  const multiVariantAlgos = () =>
+    allAlgos().filter((a) => state.algos.has(a) && variantsOf(a).length > 1);
+  const variantField = checkDropdown({
+    label: "Variants",
+    summary: () => {
+      const algos = multiVariantAlgos();
+      const total = algos.reduce((s, a) => s + variantsOf(a).length, 0);
+      const sel = algos.reduce((s, a) => s + variantState(a).size, 0);
+      return sel === total ? `All (${total})` : `${sel} of ${total}`;
+    },
+    groups: () => multiVariantAlgos().map((algo) => {
+      const sel = variantState(algo);
+      return {
+        title: algo,
+        links: [
+          { text: "all", apply: () => variantsOf(algo).forEach((p) => sel.add(p)) },
+          { text: "none", apply: () => sel.clear() },
+        ],
+        rows: variantsOf(algo).map((p) => ({
+          text: variantLabel(p), checked: sel.has(p), set: setToggler(sel)(p),
+        })),
+      };
+    }),
+  });
+  variantField.id = "variant-field";
+  mainRow.insertBefore(variantField, anchor);
+
+  mainRow.insertBefore(checkDropdown({
+    label: "Instances",
+    summary: () => {
+      let picked = 0, total = 0, avgs = 0;
+      for (const [ds, insts] of availableInstances(selectedCombos())) {
+        const st = instState(ds);
+        total += insts.size;
+        picked += [...insts].filter((i) => st.picked.has(i)).length;
+        if (st.avg) avgs++;
+      }
+      return (picked === total ? `All instances (${total})` : `${picked} of ${total} instances`) +
+        (avgs ? ` + ${avgs} mean` : "");
+    },
+    groups: () => [...availableInstances(selectedCombos())].map(([ds, insts]) => {
+      const st = instState(ds);
+      return {
+        title: ds,
+        links: [
+          { text: "all", apply: () => { st.picked = new Set(insts); } },
+          { text: "none", apply: () => { st.picked = new Set(); } },
+        ],
+        rows: [
+          { text: `mean over ${ds}`, cls: "fam-avg", checked: st.avg,
+            set: (on) => { st.avg = on; } },
+          ...[...insts].sort(natural.compare).map((i) => ({
+            text: i, checked: instState(ds).picked.has(i), set: (on) => {
+              on ? instState(ds).picked.add(i) : instState(ds).picked.delete(i);
+            },
+          })),
+        ],
+      };
+    }),
+  }), anchor);
 }
 
 function buildSegs() {
@@ -703,9 +770,10 @@ function buildSegs() {
 
 /* ---------- URL state ----------
    Selectors mirror into the query string so a link (or an <iframe> on a docs
-   page) reproduces the view: ?algorithm=dijkstra&params=int%7C4-heap
+   page) reproduces the view: ?algorithm=a1,a2&variant.<algo>=p1,p2
    &dataset=9th_dimacs&hardware=...&build=...&inst.<ds>=i1,i2,mean
-   &scale=log&view=table. Only non-default values are written.
+   &scale=log&view=table. `params=X` is the legacy single-variant spelling and
+   is still read. Only non-default values are written.
    ?theme=light|dark overrides prefers-color-scheme (applied in <head>);
    an embedding page can also postMessage({theme}) to switch without a
    reload, and receives {height} messages to size its iframe with. */
@@ -713,16 +781,21 @@ function buildSegs() {
 function applyUrlState() {
   const q = new URLSearchParams(location.search);
 
-  const algo = q.get("algorithm");
-  if (algo && byAlgo.has(algo)) {
-    state.algo = algo;
-    $("algo").value = algo;
-    refreshVariants();
+  const algoRaw = q.get("algorithm");
+  if (algoRaw) {
+    const want = algoRaw.split(",").filter((a) => byAlgo.has(a));
+    if (want.length) state.algos = new Set(want);
   }
-  const params = q.get("params");
-  if (params !== null && byAlgo.get(state.algo).has(params)) {
-    state.params = params;
-    $("variant").value = params;
+  const legacy = q.get("params");
+  for (const algo of state.algos) {
+    const raw = q.get("variant." + algo);
+    if (raw !== null) {
+      const tokens = raw.split(",");
+      state.variants.set(algo, tokens.includes("all") ? new Set(variantsOf(algo))
+        : new Set(tokens.filter((t) => byAlgo.get(algo).has(t))));
+    } else if (legacy !== null && byAlgo.get(algo).has(legacy)) {
+      state.variants.set(algo, new Set([legacy]));
+    }
   }
 
   for (const def of FACETS) {
@@ -732,7 +805,7 @@ function applyUrlState() {
     if (want.length) state.facet.set(def.key, new Set(want));
   }
 
-  const avail = availableInstances();
+  const avail = availableInstances(selectedCombos());
   const ds = q.get("dataset");
   if (ds !== null) {
     const want = new Set(ds.split(","));
@@ -760,15 +833,24 @@ function applyUrlState() {
 
 function syncUrl() {
   const q = new URLSearchParams();
-  q.set("algorithm", state.algo);
-  if (state.params) q.set("params", state.params);
+  q.set("algorithm", [...state.algos].sort(natural.compare).join(","));
+
+  for (const algo of allAlgos()) {
+    if (!state.algos.has(algo)) continue;
+    const vs = variantsOf(algo);
+    const sel = variantState(algo);
+    if (sel.size === 1 && sel.has(vs[0])) continue; // the default: first variant
+    const tokens = sel.size === vs.length ? ["all"]
+      : sel.size ? vs.filter((p) => sel.has(p)) : ["none"];
+    q.set("variant." + algo, tokens.join(","));
+  }
 
   for (const def of FACETS) {
     const sel = state.facet.get(def.key);
     if (sel.size < def.values.length) q.set(def.key, [...sel].join(","));
   }
 
-  const status = [...availableInstances()].map(([dataset, insts]) => {
+  const status = [...availableInstances(selectedCombos())].map(([dataset, insts]) => {
     const st = instState(dataset);
     return { dataset, insts, st, picked: [...insts].filter((i) => st.picked.has(i)) };
   });
@@ -805,29 +887,49 @@ function update() {
 }
 
 function updateView() {
-  FACETS.forEach((d) => d.refreshBtn && d.refreshBtn());
+  dropdowns.forEach((d) => d.refresh());
   $("scale-seg").refresh(); $("view-seg").refresh();
-  refreshInstButton();
+  const anyVariants = allAlgos().some((a) => state.algos.has(a) && variantsOf(a).length > 1);
+  $("variant-field").style.display = anyVariants ? "" : "none";
   syncUrl();
 
-  const slice = assemble();
-  const variant = state.params === "" ? "" : ` — ${variantLabel(state.params)}`;
-  $("card-title").textContent = state.algo + variant;
-  $("card-sub").textContent = slice.runs.length === 1
-    ? runLabel(slice.runs[0])
-    : `${slice.runs.length} runs`;
+  charts.forEach((c) => c.dispose());
+  charts = [];
+  $("cards").textContent = "";
 
-  const emptyMsg = !slice.runs.length ? "No run matches the selected hardware and build."
-    : !slice.ticks.length ? "No instances selected — pick some in the Instances dropdown."
-    : !slice.names.length ? "No results for this selection." : null;
+  const runs = selectedRuns();
+  const combos = selectedCombos();
+  const globalMsg = !runs.length ? "No run matches the selected hardware and build."
+    : !combos.length ? "Nothing selected — pick an algorithm (and at least one variant)." : null;
+  $("empty-card").hidden = !globalMsg;
+  $("empty").textContent = globalMsg || "";
+  if (globalMsg) return;
 
-  $("empty").hidden = !emptyMsg;
-  $("empty").textContent = emptyMsg || "";
-  $("chart").hidden = !!emptyMsg || state.view !== "chart";
-  $("table").hidden = !!emptyMsg || state.view !== "table";
-  if (emptyMsg) { if (chart) { chart.dispose(); chart = null; } return; }
+  for (const combo of combos) {
+    const slice = assemble(combo);
+    const card = document.createElement("section");
+    card.className = "card";
+    const h2 = document.createElement("h2");
+    h2.textContent = combo.algo + (combo.params ? ` — ${variantLabel(combo.params)}` : "");
+    const sub = document.createElement("div");
+    sub.className = "sub";
+    sub.textContent = slice.runs.length === 1 ? runLabel(slice.runs[0]) : `${slice.runs.length} runs`;
+    card.append(h2, sub);
+    $("cards").appendChild(card);
 
-  if (state.view === "chart") renderChart(slice); else renderTable(slice);
+    const msg = !slice.ticks.length ? "No instances selected for this chart's families."
+      : !slice.names.length ? "No results for this selection." : null;
+    if (msg) {
+      const div = document.createElement("div");
+      div.className = "msg";
+      div.textContent = msg;
+      card.appendChild(div);
+    } else if (state.view === "chart") {
+      renderChart(card, slice, legendSelOf(combo));
+    } else {
+      renderTable(card, slice);
+    }
+  }
 }
 
 async function boot() {
@@ -836,7 +938,7 @@ async function boot() {
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     DATA = await resp.json();
   } catch (err) {
-    $("empty").hidden = false;
+    $("empty-card").hidden = false;
     $("empty").innerHTML = `Could not load <code>data.json</code> (${esc(err.message)}).<br>` +
       `Generate it with <code>python export_web.py results web/data.json</code> and serve this ` +
       `directory over HTTP, e.g. <code>python -m http.server</code> in <code>web/</code>.`;
@@ -845,9 +947,7 @@ async function boot() {
 
   buildFacetDefs();
   indexRows();
-  buildFacetControls();
-  buildAlgoControls();
-  buildInstDropdown();
+  buildControls();
   buildSegs();
   applyUrlState();
   $("filters").hidden = false;
@@ -857,7 +957,7 @@ async function boot() {
     (stamps.length ? `, latest ${stamps[stamps.length - 1].slice(0, 10)}` : "");
 
   update();
-  addEventListener("resize", () => chart && chart.resize());
+  addEventListener("resize", () => charts.forEach((c) => c.resize()));
   darkMode.addEventListener("change", update);
 }
 

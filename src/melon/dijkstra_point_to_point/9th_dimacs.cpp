@@ -92,10 +92,12 @@ struct BM {
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources,
                     int num_vertices) const {
-        auto [graph, length_map] = parse_dimacs<_Graph, _Value>(gr_file);
+        auto & [graph, length_map] = cached_parse(
+            gr_file, [&] { return parse_dimacs<_Graph, _Value>(gr_file); });
 
-        state.SetLabel(
-            result_checksum(graph, length_map, sources, num_vertices));
+        state.SetLabel(cached_setup(gr_file, [&] {
+            return result_checksum(graph, length_map, sources, num_vertices);
+        }));
 
         for(auto _ : state) {
             for(auto && s : sources) {
@@ -144,10 +146,12 @@ struct BM_bidirectional {
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources,
                     int num_vertices) const {
-        auto [graph, length_map] = parse_dimacs<_Graph, _Value>(gr_file);
+        auto & [graph, length_map] = cached_parse(
+            gr_file, [&] { return parse_dimacs<_Graph, _Value>(gr_file); });
 
-        state.SetLabel(
-            result_checksum(graph, length_map, sources, num_vertices));
+        state.SetLabel(cached_setup(gr_file, [&] {
+            return result_checksum(graph, length_map, sources, num_vertices);
+        }));
 
         for(auto _ : state) {
             for(auto && s : sources) {

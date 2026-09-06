@@ -7,6 +7,8 @@
 #include <string>
 #include <utility>
 
+#include "reference_solution.hpp"
+
 // The DIMACS max-flow format declares its terminals with "n <id> s" and
 // "n <id> t" lines, before the arcs. The benchmarks used to hardcode vertices
 // 0 and 1, which happens to be right for BVZ-tsukuba and is not a property of
@@ -34,24 +36,8 @@
     return {source, sink};
 }
 
-// BVZ-tsukuba ships a reference max-flow value next to each instance, in a
-// sibling ".sol" file whose "s <value>" line holds the answer. Benchmarks
-// check against it, so a max-flow implementation cannot be merely fast.
-// Returns nullopt when no reference file exists (e.g. the SNAP instances).
+// The max-flow instances' ".sol" optimum; see reference_solution_value.
 [[nodiscard]] inline std::optional<long long> reference_flow_value(
     const std::filesystem::path & max_file) {
-    std::filesystem::path sol_file = max_file;
-    sol_file.replace_extension(".sol");
-    std::ifstream f(sol_file);
-    if(!f) return std::nullopt;
-    std::string line;
-    while(std::getline(f, line)) {
-        std::istringstream iss(line);
-        char ch;
-        if(iss >> ch && ch == 's') {
-            long long value;
-            if(iss >> value) return value;
-        }
-    }
-    return std::nullopt;
+    return reference_solution_value(max_file);
 }

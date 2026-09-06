@@ -18,10 +18,13 @@ struct BM {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources) const {
-        auto [graph, length_map] = parse_dimacs<_Graph, int>(gr_file);
+        auto & [graph, length_map] = cached_parse(
+            gr_file, [&] { return parse_dimacs<_Graph, int>(gr_file); });
 
-        state.SetLabel(melon_traversal_checksum(graph, sources, [&](auto && s) {
-            return depth_first_search(graph, s);
+        state.SetLabel(cached_setup(gr_file, [&] {
+            return melon_traversal_checksum(graph, sources, [&](auto && s) {
+                return depth_first_search(graph, s);
+            });
         }));
         for(auto _ : state) {
             for(auto && s : sources) {

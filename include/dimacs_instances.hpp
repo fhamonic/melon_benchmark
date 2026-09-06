@@ -7,7 +7,7 @@
 #include "helper.hpp"
 
 std::vector<std::tuple<std::filesystem::path, int, int>> instances = {
-    {"data/9th_DIMACS_USA_roads/rome99.gr", 3353, 8870},
+    // {"data/9th_DIMACS_USA_roads/rome99.gr", 3353, 8870},
     // {"data/9th_DIMACS_USA_roads/distance/USA-road-d.NY.gr", 264346, 733846},
     {"data/9th_DIMACS_USA_roads/time/USA-road-t.NY.gr", 264346, 733846},
     // {"data/9th_DIMACS_USA_roads/distance/USA-road-d.BAY.gr", 321270, 800172},

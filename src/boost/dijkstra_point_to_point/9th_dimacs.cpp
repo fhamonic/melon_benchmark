@@ -48,7 +48,8 @@ struct BM_csr {
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources,
                     int num_vertices) const {
-        auto [graph, length_map] = parse_csr_dimacs<_Value>(gr_file);
+        auto & [graph, length_map] = cached_parse(
+            gr_file, [&] { return parse_csr_dimacs<_Value>(gr_file); });
         const std::size_t nb_nodes = num_vertices_of(graph);
 
         const auto query = [&](unsigned int s, std::vector<_Value> & d) {
@@ -64,7 +65,7 @@ struct BM_csr {
             return d[target];
         };
 
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             checksum cs;
             for(auto && s : sources) {
                 std::vector<_Value> d(nb_nodes);
@@ -74,8 +75,8 @@ struct BM_csr {
                 else
                     cs.add(distance);
             }
-            state.SetLabel(cs.str());
-        }
+            return cs.str();
+        }));
 
         for(auto _ : state) {
             for(auto && s : sources) {

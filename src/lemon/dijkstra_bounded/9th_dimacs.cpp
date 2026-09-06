@@ -112,11 +112,12 @@ struct BM {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources) const {
-        _Graph graph;
-        typename _Graph::template ArcMap<_Value> length_map(graph);
-        parse_dimacs<_Graph, _Value>(gr_file, graph, length_map);
+        auto & [graph, length_map] =
+            cached_parse_dimacs<_Graph, _Value>(gr_file);
 
-        state.SetLabel(result_checksum(graph, length_map, sources));
+        state.SetLabel(cached_setup(gr_file, [&] {
+            return result_checksum(graph, length_map, sources);
+        }));
 
         std::size_t total_settled = 0;
         for(auto _ : state) {

@@ -44,12 +44,13 @@ public:
 // series silently accumulated truncated integer arithmetic -- it was not
 // measuring a double-precision Dijkstra at all.
 template <typename _Graph, typename _Value, typename _Run>
-void run_dijkstra(benchmark::State & state, _Graph & graph,
+void run_dijkstra(benchmark::State & state,
+                  const std::filesystem::path & gr_file, _Graph & graph,
                   const std::vector<unsigned int> & sources, _Run && run) {
     const std::size_t nb_nodes = num_vertices(graph);
     using vertex_descriptor = typename graph_traits<_Graph>::vertex_descriptor;
 
-    {
+    state.SetLabel(cached_setup(gr_file, [&] {
         checksum cs;
         for(auto && s : sources) {
             std::vector<vertex_descriptor> p(nb_nodes);
@@ -57,8 +58,8 @@ void run_dijkstra(benchmark::State & state, _Graph & graph,
             run(graph, s, p, d, boost::default_dijkstra_visitor{});
             boost_add_distances(cs, d);
         }
-        state.SetLabel(cs.str());
-    }
+        return cs.str();
+    }));
 
     for(auto _ : state) {
         for(auto && s : sources) {
@@ -75,9 +76,10 @@ struct BM_adj_dijkstra {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources) const {
-        auto [graph, length_map] = parse_adj_list_dimacs<_Value>(gr_file);
+        auto & [graph, length_map] = cached_parse(
+            gr_file, [&] { return parse_adj_list_dimacs<_Value>(gr_file); });
         run_dijkstra<decltype(graph), _Value>(
-            state, graph, sources,
+            state, gr_file, graph, sources,
             [](auto & g, auto s, auto & p, auto & d, auto vis) {
                 dijkstra_shortest_paths(
                     g, s,
@@ -96,9 +98,10 @@ struct BM_csr_dijkstra {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources) const {
-        auto [graph, length_map] = parse_csr_dimacs<_Value>(gr_file);
+        auto & [graph, length_map] = cached_parse(
+            gr_file, [&] { return parse_csr_dimacs<_Value>(gr_file); });
         run_dijkstra<decltype(graph), _Value>(
-            state, graph, sources,
+            state, gr_file, graph, sources,
             [](auto & g, auto s, auto & p, auto & d, auto vis) {
                 dijkstra_shortest_paths(
                     g, s,

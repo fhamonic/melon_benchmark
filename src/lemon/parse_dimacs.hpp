@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "helper.hpp"
 #include "input_file.hpp"
 
 template <typename _Value>
@@ -146,4 +147,40 @@ void parse_undirected_dimacs(const std::filesystem::path & file_name,
             }
         }
     }
+}
+// A parsed instance, owned in one place so that cached_parse_into can hand it
+// out by reference: LEMON's graphs are neither copyable nor movable, and its
+// maps hold a pointer to the graph they were built from, so an instance can
+// only be built where it will live. See helper.hpp for why it is built once
+// per (type, file) rather than once per repetition.
+template <typename _Graph, typename _Value>
+struct dimacs_instance {
+    _Graph graph;
+    typename _Graph::template ArcMap<_Value> length_map{graph};
+};
+
+template <typename _Graph, typename _Value>
+[[nodiscard]] dimacs_instance<_Graph, _Value> & cached_parse_dimacs(
+    const std::filesystem::path & gr_file) {
+    return cached_parse_into<dimacs_instance<_Graph, _Value>>(
+        gr_file, [&](auto & instance) {
+            parse_dimacs<_Graph, _Value>(gr_file, instance.graph,
+                                         instance.length_map);
+        });
+}
+
+template <typename _Graph, typename _Value>
+struct undirected_dimacs_instance {
+    _Graph graph;
+    typename _Graph::template EdgeMap<_Value> costs{graph};
+};
+
+template <typename _Graph, typename _Value>
+[[nodiscard]] undirected_dimacs_instance<_Graph, _Value> &
+cached_parse_undirected_dimacs(const std::filesystem::path & gr_file) {
+    return cached_parse_into<undirected_dimacs_instance<_Graph, _Value>>(
+        gr_file, [&](auto & instance) {
+            parse_undirected_dimacs<_Graph, _Value>(gr_file, instance.graph,
+                                                    instance.costs);
+        });
 }

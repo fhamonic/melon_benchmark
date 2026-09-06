@@ -23,31 +23,43 @@
 using namespace boost;
 
 #include "checksum.hpp"
+#include "helper.hpp"
 #include "max_flow_reference.hpp"
 #include "parse_max_flow.hpp"
 
 template <typename _Value, typename _Run>
 void run_max_flow(benchmark::State & state,
                   const std::filesystem::path & gr_file, _Run && run) {
-    auto graph = parse_max_flow_dimacs<_Value>(gr_file);
+    auto & graph = cached_parse(
+        gr_file, [&] { return parse_max_flow_dimacs<_Value>(gr_file); });
     const auto [source_id, sink_id] = max_flow_terminals(gr_file);
     const auto s = vertex(source_id, graph);
     const auto t = vertex(sink_id, graph);
 
-    {
+    // The reference check is a property of the instance, not of the
+    // repetition, so it is cached together with the digest it guards.
+    struct verified {
+        std::string label;
+        std::string error;
+    };
+    const auto & result = cached_setup(gr_file, [&] {
         const _Value flow = run(graph, s, t);
         if(const auto expected = reference_flow_value(gr_file)) {
-            if(static_cast<long long>(flow) != *expected) {
-                state.SkipWithError("flow value " + std::to_string(flow) +
+            if(static_cast<long long>(flow) != *expected)
+                return verified{{},
+                                "flow value " + std::to_string(flow) +
                                     " != reference " +
-                                    std::to_string(*expected));
-                return;
-            }
+                                    std::to_string(*expected)};
         }
         checksum cs;
         cs.add(flow);
-        state.SetLabel(cs.str());
+        return verified{cs.str(), {}};
+    });
+    if(!result.error.empty()) {
+        state.SkipWithError(result.error);
+        return;
     }
+    state.SetLabel(result.label);
 
     for(auto _ : state) {
         benchmark::DoNotOptimize(run(graph, s, t));

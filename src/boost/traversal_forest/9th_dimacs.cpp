@@ -19,18 +19,19 @@ using namespace boost;
 struct BM_csr_strongly_sonnected_components {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file) const {
-        auto [graph, length_map] = parse_csr_dimacs<int>(gr_file);
+        auto & [graph, length_map] = cached_parse(
+            gr_file, [&] { return parse_csr_dimacs<int>(gr_file); });
         using graph_t = std::decay_t<decltype(graph)>;
         const int nb_nodes = num_vertices(graph);
 
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             std::vector<int> compMap(static_cast<std::size_t>(nb_nodes));
             boost::connected_components(
                 graph,
                 make_iterator_property_map(
                     compMap.begin(), boost::get(boost::vertex_index, graph)));
-            state.SetLabel(boost_partition_checksum(compMap));
-        }
+            return boost_partition_checksum(compMap);
+        }));
 
         for(auto _ : state) {
             std::vector<int> compMap(nb_nodes);

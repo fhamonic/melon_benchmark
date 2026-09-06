@@ -21,14 +21,13 @@ template <typename _Graph>
 struct BM {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file) const {
-        _Graph graph;
-        parse_snap(gr_file, graph);
+        auto & graph = cached_parse_snap<_Graph>(gr_file);
 
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             typename _Graph::NodeMap<int> compMap(graph);
             lemon::connectedComponents(graph, compMap);
-            state.SetLabel(lemon_partition_checksum(graph, compMap));
-        }
+            return lemon_partition_checksum(graph, compMap);
+        }));
 
         for(auto _ : state) {
             typename _Graph::NodeMap<int> compMap(graph);

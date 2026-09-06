@@ -34,9 +34,8 @@ struct BM {
         using capacity_map = typename _Graph::template ArcMap<_Value>;
         using algorithm = _Algorithm<_Graph, capacity_map>;
 
-        _Graph graph;
-        capacity_map capacities(graph);
-        parse_dimacs<_Graph, _Value>(gr_file, graph, capacities);
+        auto & [graph, capacities] =
+            cached_parse_dimacs<_Graph, _Value>(gr_file);
 
         const auto [source_id, sink_id] = max_flow_terminals(gr_file);
         const auto s =
@@ -44,22 +43,32 @@ struct BM {
         const auto t =
             graph.fromId(static_cast<int>(sink_id), typename _Graph::Node());
 
-        {
+        // The reference check is a property of the instance, not of the
+        // repetition, so it is cached together with the digest it guards.
+        struct verified {
+            std::string label;
+            std::string error;
+        };
+        const auto & result = cached_setup(gr_file, [&] {
             algorithm algo(graph, capacities, s, t);
             algo.run();
             const auto flow = algo.flowValue();
             if(const auto expected = reference_flow_value(gr_file)) {
-                if(static_cast<long long>(flow) != *expected) {
-                    state.SkipWithError("flow value " + std::to_string(flow) +
+                if(static_cast<long long>(flow) != *expected)
+                    return verified{{},
+                                    "flow value " + std::to_string(flow) +
                                         " != reference " +
-                                        std::to_string(*expected));
-                    return;
-                }
+                                        std::to_string(*expected)};
             }
             checksum cs;
             cs.add(flow);
-            state.SetLabel(cs.str());
+            return verified{cs.str(), {}};
+        });
+        if(!result.error.empty()) {
+            state.SkipWithError(result.error);
+            return;
         }
+        state.SetLabel(result.label);
 
         for(auto _ : state) {
             algorithm algo(graph, capacities, s, t);

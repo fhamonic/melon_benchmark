@@ -40,6 +40,8 @@ configure_target(dijkstra_bounded-9th_dimacs)
 add_executable(dijkstra_point_to_point-9th_dimacs dijkstra_point_to_point/9th_dimacs.cpp)
 configure_target(dijkstra_point_to_point-9th_dimacs)
 
+add_executable(bellman_ford-9th_dimacs bellman_ford/9th_dimacs.cpp)
+configure_target(bellman_ford-9th_dimacs)
 
 add_executable(breadth_first_search-snap breadth_first_search/snap.cpp)
 configure_target(breadth_first_search-snap)

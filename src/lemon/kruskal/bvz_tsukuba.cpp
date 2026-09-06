@@ -23,12 +23,10 @@ template <typename _Graph, typename _Value>
 struct BM {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file) const {
-        _Graph graph;
-        typename _Graph::EdgeMap<_Value> costs(graph);
+        auto & [graph, costs] =
+            cached_parse_undirected_dimacs<_Graph, _Value>(gr_file);
 
-        parse_undirected_dimacs<_Graph, _Value>(gr_file, graph, costs);
-
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             typename _Graph::EdgeMap<bool> tree_map(graph);
             kruskal(graph, costs, tree_map);
             std::size_t num_tree_edges = 0;
@@ -41,8 +39,8 @@ struct BM {
             checksum cs;
             cs.add(num_tree_edges);
             cs.add(total);
-            state.SetLabel(cs.str());
-        }
+            return cs.str();
+        }));
 
         for(auto _ : state) {
             typename _Graph::EdgeMap<bool> tree_map(graph);

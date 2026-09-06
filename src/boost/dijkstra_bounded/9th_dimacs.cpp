@@ -76,11 +76,12 @@ public:
 
 template <typename _Graph, typename _Value, bool _Store, std::size_t _K,
           typename _Run>
-void run_bounded(benchmark::State & state, _Graph & graph,
+void run_bounded(benchmark::State & state,
+                 const std::filesystem::path & gr_file, _Graph & graph,
                  const std::vector<unsigned int> & sources, _Run && run) {
     const std::size_t nb_nodes = num_vertices(graph);
 
-    {
+    state.SetLabel(cached_setup(gr_file, [&] {
         std::vector<_Value> settled;
         checksum cs;
         for(auto && s : sources) {
@@ -97,8 +98,8 @@ void run_bounded(benchmark::State & state, _Graph & graph,
             cs.add(settled.size());
             for(const _Value & value : settled) cs.add(value);
         }
-        state.SetLabel(cs.str());
-    }
+        return cs.str();
+    }));
 
     std::size_t total_settled = 0;
     for(auto _ : state) {
@@ -126,14 +127,15 @@ struct BM_csr {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources) const {
-        auto [graph, length_map] = parse_csr_dimacs<_Value>(gr_file);
+        auto & [graph, length_map] = cached_parse(
+            gr_file, [&] { return parse_csr_dimacs<_Value>(gr_file); });
         using graph_t = std::decay_t<decltype(graph)>;
         using vertex_descriptor =
             typename graph_traits<graph_t>::vertex_descriptor;
         const std::size_t nb_nodes = num_vertices(graph);
 
         run_bounded<graph_t, _Value, _Store, _K>(
-            state, graph, sources,
+            state, gr_file, graph, sources,
             [nb_nodes](auto & g, auto s, auto & d, auto & vis) {
                 auto weights = get(&Edge_Cost<_Value>::weight, g);
                 if constexpr(_Store) {

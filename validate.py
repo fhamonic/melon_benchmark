@@ -36,6 +36,10 @@ from bench_results import parse_result_filename
 IMPLEMENTATION_PARAMS = (
     re.compile(r"^(int|double|unweighted)$"),  # value type
     re.compile(r"^\d+-heap$"),  # heap arity
+    # Network simplex arc mixing: an order to scan the arcs for the entering
+    # one in, so it changes which optimal basis is reached and how fast, never
+    # the optimal cost the digest is taken over.
+    re.compile(r"^(mixed|unmixed)$"),
 )
 
 

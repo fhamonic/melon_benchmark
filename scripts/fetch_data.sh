@@ -5,7 +5,7 @@
 # Roughly 800 MB unpacked. Everything is downloaded from its original
 # publisher; nothing is redistributed by this repository.
 #
-# Usage: scripts/fetch_data.sh [snap|dimacs|bvz|rmf|all]
+# Usage: scripts/fetch_data.sh [snap|dimacs|bvz|rmf|netgen|mcf|all]
 
 set -euo pipefail
 
@@ -137,13 +137,39 @@ generate_rmf() {
     python3 scripts/generate_rmf.py
 }
 
+# ------------------------------------------- NETGEN min-cost-flow family
+generate_netgen() {
+    echo "NETGEN min-cost-flow instances -> $DATA_DIR/netgen (generated, not downloaded)"
+    if [[ -f "$DATA_DIR/netgen/netgen_n1024_m8192.min" ]]; then
+        echo "  have NETGEN instances"
+        return
+    fi
+    # Under a minute, most of it in the reference solver.
+    python3 scripts/generate_netgen.py
+}
+
+# ------------------------- assignment / transport / circulation families ----
+generate_mcf_families() {
+    echo "assignment, transport and circulation instances -> $DATA_DIR/{assignment,transport,circulation} (generated)"
+    if [[ -f "$DATA_DIR/assignment/assignment_k200.min" ]]; then
+        echo "  have the min-cost-flow families"
+        return
+    fi
+    # Around eight minutes, nearly all of it in the reference solver proving
+    # the optima it can prove; the graphs themselves take seconds.
+    python3 scripts/generate_mcf_families.py
+}
+
 case "${1:-all}" in
     snap)   fetch_snap ;;
     dimacs) fetch_dimacs ;;
     bvz)    fetch_bvz ;;
     rmf)    generate_rmf ;;
-    all)    fetch_snap; echo; fetch_dimacs; echo; fetch_bvz; echo; generate_rmf ;;
-    *)      echo "usage: $0 [snap|dimacs|bvz|rmf|all]" >&2; exit 1 ;;
+    netgen) generate_netgen ;;
+    mcf)    generate_mcf_families ;;
+    all)    fetch_snap; echo; fetch_dimacs; echo; fetch_bvz; echo; generate_rmf
+            echo; generate_netgen; echo; generate_mcf_families ;;
+    *)      echo "usage: $0 [snap|dimacs|bvz|rmf|netgen|mcf|all]" >&2; exit 1 ;;
 esac
 
 echo

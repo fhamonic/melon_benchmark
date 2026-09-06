@@ -57,12 +57,10 @@ struct BM {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources) const {
-        _Graph graph;
-        typename _Graph::ArcMap<_Value> length_map(graph);
+        auto & [graph, length_map] =
+            cached_parse_dimacs<_Graph, _Value>(gr_file);
 
-        parse_dimacs<_Graph, _Value>(gr_file, graph, length_map);
-
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             checksum cs;
             for(auto && s : sources) {
                 Dijkstra<_Graph, typename _Graph::ArcMap<_Value>,
@@ -76,8 +74,8 @@ struct BM {
                     graph, cs, [&](const auto & u) { return algo.reached(u); },
                     [&](const auto & u) { return algo.dist(u); });
             }
-            state.SetLabel(cs.str());
-        }
+            return cs.str();
+        }));
 
         for(auto _ : state) {
             for(auto && s : sources) {

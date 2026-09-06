@@ -18,9 +18,10 @@ template <typename _Graph, typename _Value>
 struct BM {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file) const {
-        auto [graph, costs] = parse_dimacs<_Graph, _Value>(gr_file);
+        auto & [graph, costs] = cached_parse(
+            gr_file, [&] { return parse_dimacs<_Graph, _Value>(gr_file); });
 
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             std::size_t num_edges = 0;
             _Value total = 0;
             for(auto && e : kruskal(views::undirect(graph), costs)) {
@@ -30,8 +31,8 @@ struct BM {
             checksum cs;
             cs.add(num_edges);
             cs.add(total);
-            state.SetLabel(cs.str());
-        }
+            return cs.str();
+        }));
 
         for(auto _ : state) {
             for(auto && e : kruskal(views::undirect(graph), costs)) {

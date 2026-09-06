@@ -9,6 +9,7 @@
 #include <lemon/smart_graph.h>
 #include <lemon/static_graph.h>
 
+#include "helper.hpp"
 #include "input_file.hpp"
 
 template <typename _Graph>
@@ -45,4 +46,11 @@ void parse_snap(const std::filesystem::path & file_name,
         return a.first < b.first;
     });
     graph.build(nb_nodes, arcs.begin(), arcs.end());
+}
+// See cached_parse_dimacs: the graph is the whole instance here.
+template <typename _Graph>
+[[nodiscard]] _Graph & cached_parse_snap(
+    const std::filesystem::path & gr_file) {
+    return cached_parse_into<_Graph>(
+        gr_file, [&](_Graph & graph) { parse_snap(gr_file, graph); });
 }

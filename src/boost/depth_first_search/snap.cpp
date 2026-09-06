@@ -63,9 +63,10 @@ struct BM_adj_depth_first_search {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources) const {
-        auto graph = parse_adj_list_snap(gr_file);
+        auto & graph =
+            cached_parse(gr_file, [&] { return parse_adj_list_snap(gr_file); });
 
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             checksum cs;
             for(auto && s : sources) {
                 std::vector<char> reached(num_vertices(graph), 0);
@@ -75,8 +76,8 @@ struct BM_adj_depth_first_search {
                 depth_first_visit_from(graph, s, vis, colors);
                 boost_add_reachability(cs, reached);
             }
-            state.SetLabel(cs.str());
-        }
+            return cs.str();
+        }));
 
         for(auto _ : state) {
             for(auto && s : sources) {
@@ -99,9 +100,10 @@ struct BM_csr_depth_first_search {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources) const {
-        auto graph = parse_csr_snap(gr_file);
+        auto & graph =
+            cached_parse(gr_file, [&] { return parse_csr_snap(gr_file); });
 
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             checksum cs;
             for(auto && s : sources) {
                 std::vector<char> reached(num_vertices(graph), 0);
@@ -111,8 +113,8 @@ struct BM_csr_depth_first_search {
                 depth_first_visit_from(graph, s, vis, colors);
                 boost_add_reachability(cs, reached);
             }
-            state.SetLabel(cs.str());
-        }
+            return cs.str();
+        }));
 
         for(auto _ : state) {
             for(auto && s : sources) {

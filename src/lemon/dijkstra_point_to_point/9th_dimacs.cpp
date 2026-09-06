@@ -92,11 +92,10 @@ struct BM {
                     const std::filesystem::path & gr_file,
                     const std::vector<unsigned int> & sources,
                     int num_vertices) const {
-        _Graph graph;
-        typename _Graph::template ArcMap<_Value> length_map(graph);
-        parse_dimacs<_Graph, _Value>(gr_file, graph, length_map);
+        auto & [graph, length_map] =
+            cached_parse_dimacs<_Graph, _Value>(gr_file);
 
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             checksum cs;
             for_each_query(graph, length_map, sources, num_vertices,
                            [&](bool found, _Value d) {
@@ -105,8 +104,8 @@ struct BM {
                                else
                                    cs.add_unreached();
                            });
-            state.SetLabel(cs.str());
-        }
+            return cs.str();
+        }));
 
         for(auto _ : state) {
             _Value acc = 0;

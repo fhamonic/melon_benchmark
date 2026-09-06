@@ -29,20 +29,19 @@ struct BM {
         using capacity_map = ConstMap<typename _Graph::Arc, int>;
         using algorithm = _Algorithm<_Graph, capacity_map>;
 
-        _Graph graph;
-        parse_snap(gr_file, graph);
+        auto & graph = cached_parse_snap<_Graph>(gr_file);
         capacity_map capacities(1);
 
         const auto s = graph.fromId(0, typename _Graph::Node());
         const auto t = graph.fromId(1, typename _Graph::Node());
 
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             algorithm algo(graph, capacities, s, t);
             algo.run();
             checksum cs;
             cs.add(algo.flowValue());
-            state.SetLabel(cs.str());
-        }
+            return cs.str();
+        }));
 
         for(auto _ : state) {
             algorithm algo(graph, capacities, s, t);

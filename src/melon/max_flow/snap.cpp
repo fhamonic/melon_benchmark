@@ -22,16 +22,17 @@ using namespace melon;
 template <typename _Graph, typename _Make>
 void run_max_flow(benchmark::State & state,
                   const std::filesystem::path & gr_file, _Make && make) {
-    auto graph = parse_snap<_Graph>(gr_file);
+    auto & graph =
+        cached_parse(gr_file, [&] { return parse_snap<_Graph>(gr_file); });
     const auto unit_capacity = [](auto &&) { return 1; };
 
-    {
+    state.SetLabel(cached_setup(gr_file, [&] {
         auto algo = make(graph, unit_capacity, 0u, 1u);
         algo.run();
         checksum cs;
         cs.add(algo.flow_value());
-        state.SetLabel(cs.str());
-    }
+        return cs.str();
+    }));
 
     for(auto _ : state) {
         auto algo = make(graph, unit_capacity, 0u, 1u);

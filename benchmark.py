@@ -300,17 +300,23 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("build_dir")
     parser.add_argument("results_dir")
+    # Both defaults are wall-time floors on a suite of ~1200 cases, four
+    # fifths of which run in under 20 ms: every case costs at least
+    # repetitions x min_time whatever it measures. At 10 x 1s that floor alone
+    # was over three hours. Five repetitions still give a median and a standard
+    # deviation, and 0.1s still buys tens of iterations for a millisecond-scale
+    # case -- the dispersion these produce is a fraction of a percent.
     parser.add_argument(
         "--repetitions",
         type=int,
-        default=10,
+        default=5,
         help="Google Benchmark repetitions per case; plot.py needs >1 to draw "
-        "error bars (default: 10)",
+        "error bars (default: 5)",
     )
     parser.add_argument(
         "--min-time",
-        default="1s",
-        help="Google Benchmark --benchmark_min_time (default: 1s)",
+        default="0.1s",
+        help="Google Benchmark --benchmark_min_time (default: 0.1s)",
     )
     parser.add_argument("--filter", default=None, help="only run matching benchmarks")
     parser.add_argument(

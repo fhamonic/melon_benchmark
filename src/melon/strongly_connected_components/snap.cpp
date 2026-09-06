@@ -17,10 +17,13 @@ template <typename _Graph>
 struct BM {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file) const {
-        auto graph = parse_snap<_Graph>(gr_file);
+        auto & graph =
+            cached_parse(gr_file, [&] { return parse_snap<_Graph>(gr_file); });
 
-        state.SetLabel(melon_partition_checksum(
-            graph, strongly_connected_components(graph)));
+        state.SetLabel(cached_setup(gr_file, [&] {
+            return melon_partition_checksum(
+                graph, strongly_connected_components(graph));
+        }));
 
         for(auto _ : state) {
             for(auto && component : strongly_connected_components(graph)) {

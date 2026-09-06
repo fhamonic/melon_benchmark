@@ -40,6 +40,8 @@ configure_target(dijkstra_bounded-9th_dimacs)
 add_executable(dijkstra_point_to_point-9th_dimacs dijkstra_point_to_point/9th_dimacs.cpp)
 configure_target(dijkstra_point_to_point-9th_dimacs)
 
+add_executable(bellman_ford_moore-9th_dimacs bellman_ford_moore/9th_dimacs.cpp)
+configure_target(bellman_ford_moore-9th_dimacs)
 
 add_executable(breadth_first_search-snap breadth_first_search/snap.cpp)
 configure_target(breadth_first_search-snap)
@@ -79,6 +81,21 @@ add_executable(max_flow-snap max_flow/snap.cpp)
 configure_target(max_flow-snap)
 add_executable(max_flow-rmf max_flow/rmf.cpp)
 configure_target(max_flow-rmf)
+
+# Min-cost flow on four instance families -- NETGEN, assignment,
+# transportation and circulation -- because the families disagree about
+# which library wins and one of them alone is not a result. Registered
+# under
+# "<instance>/<container>:network_simplex/<value>" so that LEMON's network
+# simplex shares a chart with MELON's.
+add_executable(network_simplex-netgen network_simplex/netgen.cpp)
+configure_target(network_simplex-netgen)
+add_executable(network_simplex-assignment network_simplex/assignment.cpp)
+configure_target(network_simplex-assignment)
+add_executable(network_simplex-transport network_simplex/transport.cpp)
+configure_target(network_simplex-transport)
+add_executable(network_simplex-circulation network_simplex/circulation.cpp)
+configure_target(network_simplex-circulation)
 
 add_executable(kruskal-bvz_tsukuba kruskal/bvz_tsukuba.cpp)
 configure_target(kruskal-bvz_tsukuba)

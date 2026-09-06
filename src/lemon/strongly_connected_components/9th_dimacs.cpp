@@ -21,16 +21,13 @@ template <typename _Graph>
 struct BM {
     void operator()(benchmark::State & state,
                     const std::filesystem::path & gr_file) const {
-        _Graph graph;
-        typename _Graph::ArcMap<int> length_map(graph);
+        auto & [graph, length_map] = cached_parse_dimacs<_Graph, int>(gr_file);
 
-        parse_dimacs<_Graph, int>(gr_file, graph, length_map);
-
-        {
+        state.SetLabel(cached_setup(gr_file, [&] {
             typename _Graph::NodeMap<int> compMap(graph);
             lemon::stronglyConnectedComponents(graph, compMap);
-            state.SetLabel(lemon_partition_checksum(graph, compMap));
-        }
+            return lemon_partition_checksum(graph, compMap);
+        }));
 
         for(auto _ : state) {
             typename _Graph::NodeMap<int> compMap(graph);
