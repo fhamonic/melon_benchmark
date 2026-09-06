@@ -81,7 +81,7 @@ struct BM_network_simplex {
             auto algo = network_simplex(traits{}, graph, capacities, costs,
                                         supplies);
             algo.run();
-            if(algo.status() != mcf_status::optimal)
+            if(algo.optimal())
                 return verified{{}, "instance reported not optimal"};
             const auto cost = algo.total_cost();
 

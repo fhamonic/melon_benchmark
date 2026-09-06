@@ -172,7 +172,7 @@ auto parse_dimacs(const std::filesystem::path & gr_file) {
                         melon::vertex_t<_Graph> from, to;
                         _Value length;
                         if(iss >> from >> to >> length) {
-                            builder.add_arc(from - 1, to - 1, length);
+                            builder.add_arc({from - 1, to - 1}, length);
                         }
                         break;
                     }

@@ -48,7 +48,7 @@ struct bench_dijkstra_traits {
         updatable_d_ary_heap<4, std::pair<vertex_t<_Graph>, _Value>,
                              std::less<_Value>,
                              vertex_map_t<_Graph, std::size_t>,
-                             maps::element_map<1>, maps::element_map<0>>;
+                             maps::element<1>, maps::element<0>>;
 
     // The point of the benchmark: MELON lets the caller say "I do not need
     // these". vertex_map_if is then an empty [[no_unique_address]] member --

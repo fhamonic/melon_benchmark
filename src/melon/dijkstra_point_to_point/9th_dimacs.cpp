@@ -43,7 +43,7 @@ struct bench_dijkstra_traits {
         updatable_d_ary_heap<4, std::pair<vertex_t<_Graph>, _Value>,
                              std::less<_Value>,
                              vertex_map_t<_Graph, std::size_t>,
-                             maps::element_map<1>, maps::element_map<0>>;
+                             maps::element<1>, maps::element<0>>;
 
     static constexpr bool store_distances = false;
     static constexpr bool store_paths = false;
@@ -56,7 +56,7 @@ struct bench_bidirectional_traits {
         updatable_d_ary_heap<4, std::pair<vertex_t<_Graph>, _Value>,
                              typename semiring::less_t,
                              vertex_map_t<_Graph, std::size_t>,
-                             maps::element_map<1>, maps::element_map<0>>;
+                             maps::element<1>, maps::element<0>>;
 
     // Only the distance is wanted, so the path is not reconstructed -- the
     // same policy as the unidirectional variant it is compared against.

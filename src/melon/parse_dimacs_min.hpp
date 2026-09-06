@@ -104,8 +104,8 @@ auto parse_dimacs_min(const std::filesystem::path & min_file) {
     } else {
         melon::static_digraph_builder<_Graph, _Value, _Value> builder(nb_nodes);
         for(const auto & e : arcs)
-            builder.add_arc(static_cast<melon::vertex_t<_Graph>>(e.source),
-                            static_cast<melon::vertex_t<_Graph>>(e.target),
+            builder.add_arc({static_cast<melon::vertex_t<_Graph>>(e.source),
+                            static_cast<melon::vertex_t<_Graph>>(e.target)},
                             e.capacity, e.cost);
         auto [graph, capacities, costs] = std::move(builder).build();
         return std::make_tuple(std::move(graph), std::move(capacities),
